@@ -1,4 +1,11 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using MvcStation.Data;
+var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Services.AddDbContext<MvcStationContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("MvcStationContext")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
