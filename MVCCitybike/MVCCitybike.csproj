@@ -17,4 +17,10 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Views\Station\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Station\" />
+  </ItemGroup>
 </Project>
