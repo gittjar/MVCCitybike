@@ -20,11 +20,32 @@ namespace MVCCitybike.Controllers
         }
 
         // GET: Station
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchItem)
         {
-              return _context.Station != null ? 
-                          View(await _context.Station.ToListAsync()) :
-                          Problem("Entity set 'MvcStationContext.Station'  is null.");
+
+            /*
+           return _context.Station != null ?
+          View(await _context.Station.ToListAsync()) :
+          Problem("Entity set 'MvcStationContext.Station'  is null.");
+            */
+
+            if (_context.Station == null)
+            {
+                return Problem("Entity set 'MvcStationContext.Station'  is null.");
+            }
+
+            var stations = from m in _context.Station
+                           select m;
+            if (!String.IsNullOrEmpty(searchItem))
+            {
+                stations = stations.Where(s => s.Nimi!.Contains(searchItem));
+            }
+
+            return View(await stations.ToListAsync());
+
+
+
+
         }
 
         // GET: Station/Details/5
@@ -159,5 +180,13 @@ namespace MVCCitybike.Controllers
         {
           return (_context.Station?.Any(e => e.ID == id)).GetValueOrDefault();
         }
+        // For search testing
+        /*
+        [HttpPost]
+        public string Index(string searchItem, bool notUsed)
+        {
+            return "From [HttpPost]Index: filter on " + searchItem;
+        }
+        */
     }
 }
