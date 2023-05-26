@@ -3,9 +3,15 @@ using Microsoft.Extensions.DependencyInjection;
 using MvcStation.Data;
 var builder = WebApplication.CreateBuilder(args);
 
-
+/*
 builder.Services.AddDbContext<MvcStationContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("MvcStationContext")));
+*/
+
+// UseSqlServer
+builder.Services.AddDbContext<MvcStationContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("CitybikeDBContext") ??
+    throw new InvalidOperationException("Connection string 'CitybikeDBContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
