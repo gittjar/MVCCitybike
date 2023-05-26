@@ -1,4 +1,4 @@
-@model IEnumerable<MVCCitybike.Models.Station>
+@model MVCCitybike.Models.StationCityViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -12,73 +12,80 @@
 
 <form asp-controller="Station" asp-action="Index" method="get">
     <p>
-        Title: <input type="text" name="searchItem" />
-        <input class="btn btn-primary" type="submit" value="Filter" />
+
+       Kaupunki: <select asp-for="StationKaupunki" asp-items="Model.Kaupungit">
+            <option value="">Kaikki</option>
+        </select>
+        
+
+        Nimi: <input type="text" name="SearchItem" />
+        <input class="btn btn-primary" type="submit" value="Etsi" />
     </p>
 </form>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FID)
+                @Html.DisplayNameFor(model => model.Stations![0].FID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Nimi)
+                @Html.DisplayNameFor(model => model.Stations![0].Nimi)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Osoite)
+                @Html.DisplayNameFor(model => model.Stations![0].Osoite)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Kaupunki)
+                @Html.DisplayNameFor(model => model.Stations![0].Kaupunki)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Operaattor)
+                @Html.DisplayNameFor(model => model.Stations![0].Operaattor)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Kapasiteet)
+                @Html.DisplayNameFor(model => model.Stations![0].Kapasiteet)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.x) (LNG)
+                @Html.DisplayNameFor(model => model.Stations![0].x) (LNG)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.y) (LAT)
+                @Html.DisplayNameFor(model => model.Stations![0].y) (LAT)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nimi)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Osoite)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Kaupunki)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Operaattor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Kapasiteet)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.x)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.y)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Muokkaa</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Lisätiedot</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Poista</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Stations!)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nimi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Osoite)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kaupunki)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Operaattor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kapasiteet)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.x)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.y)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Muokkaa</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Lisätiedot</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Poista</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

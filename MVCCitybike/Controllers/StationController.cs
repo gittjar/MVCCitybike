@@ -20,7 +20,7 @@ namespace MVCCitybike.Controllers
         }
 
         // GET: Station
-        public async Task<IActionResult> Index(string searchItem)
+        public async Task<IActionResult> Index(string stationKaupunki, string searchItem)
         {
 
             /*
@@ -29,22 +29,40 @@ namespace MVCCitybike.Controllers
           Problem("Entity set 'MvcStationContext.Station'  is null.");
             */
 
+       
+
             if (_context.Station == null)
             {
                 return Problem("Entity set 'MvcStationContext.Station'  is null.");
             }
 
+            // Use LINQ to get list of cities
+            IQueryable<string> kaupunkiQuery = from m in _context.Station
+                                               orderby m.Kaupunki
+                                               select m.Kaupunki;
             var stations = from m in _context.Station
                            select m;
-            if (!String.IsNullOrEmpty(searchItem))
+            //
+
+            if (!string.IsNullOrEmpty(searchItem))
             {
                 stations = stations.Where(s => s.Nimi!.Contains(searchItem));
             }
 
-            return View(await stations.ToListAsync());
+            //return View(await stations.ToListAsync());
 
+            if (!string.IsNullOrEmpty(stationKaupunki))
+            {
+                stations = stations.Where(x => x.Kaupunki == stationKaupunki);
+            }
 
+            var stationKaupunkiVM = new StationCityViewModel
+            {
+                Kaupungit = new SelectList(await kaupunkiQuery.Distinct().ToListAsync()),
+                Stations = await stations.ToListAsync()
+            };
 
+            return View(stationKaupunkiVM);
 
         }
 
