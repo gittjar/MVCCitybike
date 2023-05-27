@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MvcStation.Data;
 
@@ -10,9 +11,11 @@ using MvcStation.Data;
 namespace MVCCitybike.Migrations
 {
     [DbContext(typeof(MvcStationContext))]
-    partial class MvcStationContextModelSnapshot : ModelSnapshot
+    [Migration("20230526100043_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

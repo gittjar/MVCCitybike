@@ -1,0 +1,69 @@
+@model MVCCitybike.Models.BiketripsMay2021
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>BiketripsMay2021</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            <div class="form-group">
+                <label asp-for="Departure" class="control-label"></label>
+                <input asp-for="Departure" class="form-control" />
+                <span asp-validation-for="Departure" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Return" class="control-label"></label>
+                <input asp-for="Return" class="form-control" />
+                <span asp-validation-for="Return" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Departure_station_id" class="control-label"></label>
+                <input asp-for="Departure_station_id" class="form-control" />
+                <span asp-validation-for="Departure_station_id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Departure_station_name" class="control-label"></label>
+                <input asp-for="Departure_station_name" class="form-control" />
+                <span asp-validation-for="Departure_station_name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Return_station_id" class="control-label"></label>
+                <input asp-for="Return_station_id" class="form-control" />
+                <span asp-validation-for="Return_station_id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Return_station_name" class="control-label"></label>
+                <input asp-for="Return_station_name" class="form-control" />
+                <span asp-validation-for="Return_station_name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Covered_distance_m" class="control-label"></label>
+                <input asp-for="Covered_distance_m" class="form-control" />
+                <span asp-validation-for="Covered_distance_m" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Duration_sec" class="control-label"></label>
+                <input asp-for="Duration_sec" class="form-control" />
+                <span asp-validation-for="Duration_sec" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,14 +1,22 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MvcStation.Data;
-var builder = WebApplication.CreateBuilder(args);
+using MvcBiketripsMay2021.Data;
 
-/*
+
+// Use SqlServer get Citybiketrips Data
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<MvcBiketripsMay2021Context>(options =>
+    // use here same connection string than bellow StationContext!
+    options.UseSqlServer(builder.Configuration.GetConnectionString("CitybikeDBContext") ??
+    throw new InvalidOperationException("Connection string 'CitybikeDBContext' not found.")));
+
+/* SQLite
 builder.Services.AddDbContext<MvcStationContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("MvcStationContext")));
 */
 
-// UseSqlServer
+// Use SqlServer get Stations Data
 builder.Services.AddDbContext<MvcStationContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("CitybikeDBContext") ??
     throw new InvalidOperationException("Connection string 'CitybikeDBContext' not found.")));

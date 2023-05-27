@@ -26,7 +26,6 @@ namespace MVCCitybike.Models
         public decimal x { get; set; }
         [Column(TypeName = "decimal(9, 6)")]
         public decimal y { get; set; }
-
     }
 }
 
