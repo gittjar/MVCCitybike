@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVCCitybike.Models;
 using MvcBiketripsMay2021.Data;
+using X.PagedList;
 
 namespace MVCCitybike.Controllers
 {
@@ -20,11 +21,14 @@ namespace MVCCitybike.Controllers
         }
 
         // GET: BiketripsMay2021
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNumber)
         {
-              return _context.BiketripsMay2021 != null ? 
-                          View(await _context.BiketripsMay2021.ToListAsync()) :
-                          Problem("Entity set 'MvcBiketripsMay2021Context.BiketripsMay2021'  is null.");
+
+            var biketripsmay2021 = from s in _context.BiketripsMay2021
+                           select s;
+
+            int pageSize = 50;
+            return View(await PaginatedList<BiketripsMay2021>.CreateAsync(biketripsmay2021.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: BiketripsMay2021/Details/5

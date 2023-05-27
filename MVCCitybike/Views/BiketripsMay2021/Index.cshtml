@@ -1,4 +1,10 @@
-@model IEnumerable<MVCCitybike.Models.BiketripsMay2021>
+
+@model PaginatedList<MVCCitybike.Models.BiketripsMay2021>
+
+
+
+
+
 
 @{
     ViewData["Title"] = "Index";
@@ -13,65 +19,87 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Departure)
+                Lähtö
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Return)
+                Palautus
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Departure_station_id)
+                Lähtöasema ID
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Departure_station_name)
+                Lähtöasema nimi
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Return_station_id)
+                Palautusasema ID
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Return_station_name)
+                Palautusasema nimi
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Covered_distance_m)
+                Matka (m)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Duration_sec)
-            </th>
+                Kesto (sec)
+               </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Departure)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Return)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Departure_station_id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Departure_station_name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Return_station_id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Return_station_name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Covered_distance_m)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Duration_sec)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Departure)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Return)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Departure_station_id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Departure_station_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Return_station_id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Return_station_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Covered_distance_m)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Duration_sec)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Edellinen
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Seuraava
+</a>
+
