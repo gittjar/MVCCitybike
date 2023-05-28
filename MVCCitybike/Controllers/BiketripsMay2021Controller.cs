@@ -21,11 +21,33 @@ namespace MVCCitybike.Controllers
         }
 
         // GET: BiketripsMay2021
-        public async Task<IActionResult> Index(int? pageNumber)
+        public async Task<IActionResult> Index(int? pageNumber, string sortOrder)
         {
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewData["DateSortParmReturn"] = sortOrder == "ReturnDate" ? "return_date_desc" : "ReturnDate";
+
 
             var biketripsmay2021 = from s in _context.BiketripsMay2021
                            select s;
+
+            switch (sortOrder)
+            {
+                // departure
+                case "Date":
+                    biketripsmay2021 = biketripsmay2021.OrderBy(s => s.Departure);
+                    break;
+                case "date_desc":
+                    biketripsmay2021 = biketripsmay2021.OrderByDescending(s => s.Departure);
+                    break;
+          
+                // return
+                case "ReturnDate":
+                    biketripsmay2021 = biketripsmay2021.OrderBy(s => s.Return);
+                    break;
+                case "return_date_desc":
+                    biketripsmay2021 = biketripsmay2021.OrderByDescending(s => s.Return);
+                    break;
+            }
 
             int pageSize = 50;
             return View(await PaginatedList<BiketripsMay2021>.CreateAsync(biketripsmay2021.AsNoTracking(), pageNumber ?? 1, pageSize));
