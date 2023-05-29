@@ -1,7 +1,12 @@
-MVC Citybike
-Update data to SQL (CRUD) >
+## MVC Citybike CRUD ##
 
 - Stations
 - Biketrips
 
-Connections to right resources on working ...
+Features:
+- Create stations / trips
+- Update stations / trips
+- Delete stations / trips
+- Sort data by departure time or return time in trips section
+
+Connected to Azure SQL.
