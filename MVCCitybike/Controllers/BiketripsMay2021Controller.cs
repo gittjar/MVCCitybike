@@ -21,14 +21,19 @@ namespace MVCCitybike.Controllers
         }
 
         // GET: BiketripsMay2021
-        public async Task<IActionResult> Index(int? pageNumber, string sortOrder)
+        public async Task<IActionResult> Index(int? pageNumber, string sortOrder, string searchString)
         {
             ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
             ViewData["DateSortParmReturn"] = sortOrder == "ReturnDate" ? "return_date_desc" : "ReturnDate";
-
+            ViewData["CurrentFilter"] = searchString;
 
             var biketripsmay2021 = from s in _context.BiketripsMay2021
                            select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                biketripsmay2021 = biketripsmay2021.Where(s => s.Return_station_name.Contains(searchString)
+                                       || s.Departure_station_name.Contains(searchString));
+            }
 
             switch (sortOrder)
             {

@@ -20,8 +20,10 @@ namespace MVCCitybike.Controllers
         }
 
         // GET: Station
-        public async Task<IActionResult> Index(string stationKaupunki, string searchItem)
+        public async Task<IActionResult> Index(string stationKaupunki, string searchItem, string sortOrder)
         {
+
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
 
             /*
            return _context.Station != null ?
@@ -29,7 +31,7 @@ namespace MVCCitybike.Controllers
           Problem("Entity set 'MvcStationContext.Station'  is null.");
             */
 
-       
+
 
             if (_context.Station == null)
             {
@@ -47,6 +49,16 @@ namespace MVCCitybike.Controllers
             if (!string.IsNullOrEmpty(searchItem))
             {
                 stations = stations.Where(s => s.Nimi!.Contains(searchItem));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    stations = stations.OrderByDescending(s => s.Nimi);
+                    break;
+                default:
+                    stations = stations.OrderBy(s => s.Nimi);
+                    break;
             }
 
             //return View(await stations.ToListAsync());
