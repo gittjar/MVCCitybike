@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-
+// sivujen vaihtoa varten
 namespace MVCCitybike
 {
     public class PaginatedList<T> : List<T>

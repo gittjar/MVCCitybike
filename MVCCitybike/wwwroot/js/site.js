@@ -29,3 +29,9 @@ function hide() {
         clearInterval(intervalID);
     }
 }
+// User IP address
+$.getJSON("https://api.ipify.org?format=json", function (data) {
+
+    // Setting text of element
+    $("#yourip").html(data.ip);
+})
