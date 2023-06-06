@@ -4,11 +4,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
+
+
 namespace MVCCitybike.Models
 {
 	public class Station
 	{
+
         public int FID { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // autoupdate increase +1 id
         public int ID { get; set; }
         [Comment("Citybike aseman nimi")]
         [Required]
