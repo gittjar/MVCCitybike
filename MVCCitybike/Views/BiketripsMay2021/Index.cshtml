@@ -6,10 +6,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index of Biketrips</h1>
+<h1>Pyörämatkat</h1>
 
 <p>
-    <a asp-action="Create">Luo uusi matka</a>
+    <a class="btn btn-outline-success"  asp-action="Create">Luo uusi matka</a>
 </p>
 
 <section class="d-flex justify-content-evenly mb-2">
@@ -39,7 +39,7 @@
     </article>
 </section>
 
-<table class="table">
+<table class="table biketrips">
     <thead>
         <tr>
             <th>
@@ -71,7 +71,12 @@
                 Palautusasema nimi
             </th>
             <th>
-                Matka (m)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DistanceSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    Matka (m)
+                    <i class="fas fa-arrow-down"></i>
+                    <i class="fas fa-arrow-up"></i>
+
+                </a>
             </th>
             <th>
                 Kesto (sec)
@@ -108,9 +113,9 @@
                     @Html.DisplayFor(modelItem => item.Duration_sec)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Muokkaa</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Lisätiedot</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Poista</a>
                 </td>
             </tr>
         }

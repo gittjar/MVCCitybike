@@ -25,6 +25,7 @@ namespace MVCCitybike.Controllers
         {
             ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
             ViewData["DateSortParmReturn"] = sortOrder == "ReturnDate" ? "return_date_desc" : "ReturnDate";
+            ViewData["DistanceSortParm"] = sortOrder == "Distance" ? "Distance_desc" : "Distance";
             ViewData["CurrentFilter"] = searchString;
 
             var biketripsmay2021 = from s in _context.BiketripsMay2021
@@ -44,7 +45,7 @@ namespace MVCCitybike.Controllers
                 case "date_desc":
                     biketripsmay2021 = biketripsmay2021.OrderByDescending(s => s.Departure);
                     break;
-          
+
                 // return
                 case "ReturnDate":
                     biketripsmay2021 = biketripsmay2021.OrderBy(s => s.Return);
@@ -52,7 +53,18 @@ namespace MVCCitybike.Controllers
                 case "return_date_desc":
                     biketripsmay2021 = biketripsmay2021.OrderByDescending(s => s.Return);
                     break;
+
+                // distance_m
+                case "Distance":
+                    biketripsmay2021 = biketripsmay2021.OrderBy(s => s.Covered_distance_m);
+                    break;
+                case "Distance_desc":
+                    biketripsmay2021 = biketripsmay2021.OrderByDescending(s => s.Covered_distance_m);
+                    break;
             }
+
+
+
 
             int pageSize = 50;
             return View(await PaginatedList<BiketripsMay2021>.CreateAsync(biketripsmay2021.AsNoTracking(), pageNumber ?? 1, pageSize));
