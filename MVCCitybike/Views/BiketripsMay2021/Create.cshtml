@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Luo matka</h1>
 
 <h4>BiketripsMay2021</h4>
 <hr />
@@ -13,54 +13,54 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Departure" class="control-label"></label>
+                <label asp-for="Departure" class="control-label">Lähtö päivämäärä</label>
                 <input asp-for="Departure" class="form-control" />
                 <span asp-validation-for="Departure" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Return" class="control-label"></label>
+                <label asp-for="Return" class="control-label">Palautus päivämäärä</label>
                 <input asp-for="Return" class="form-control" />
                 <span asp-validation-for="Return" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Departure_station_id" class="control-label"></label>
+                <label asp-for="Departure_station_id" class="control-label">Lähtöaseman ID</label>
                 <input asp-for="Departure_station_id" class="form-control" />
                 <span asp-validation-for="Departure_station_id" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Departure_station_name" class="control-label"></label>
+                <label asp-for="Departure_station_name" class="control-label">Palautusaseman nimi</label>
                 <input asp-for="Departure_station_name" class="form-control" />
                 <span asp-validation-for="Departure_station_name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Return_station_id" class="control-label"></label>
+                <label asp-for="Return_station_id" class="control-label">Palautusaseman ID</label>
                 <input asp-for="Return_station_id" class="form-control" />
                 <span asp-validation-for="Return_station_id" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Return_station_name" class="control-label"></label>
+                <label asp-for="Return_station_name" class="control-label">Palautusaseman nimi</label>
                 <input asp-for="Return_station_name" class="form-control" />
                 <span asp-validation-for="Return_station_name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Covered_distance_m" class="control-label"></label>
+                <label asp-for="Covered_distance_m" class="control-label">Ajettu matka (m)</label>
                 <input asp-for="Covered_distance_m" class="form-control" />
                 <span asp-validation-for="Covered_distance_m" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Duration_sec" class="control-label"></label>
+                <label asp-for="Duration_sec" class="control-label">Kesto (s)</label>
                 <input asp-for="Duration_sec" class="form-control" />
                 <span asp-validation-for="Duration_sec" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Vahvista" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Takaisin listalle</a>
 </div>
 
 @section Scripts {

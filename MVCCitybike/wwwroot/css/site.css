@@ -8,8 +8,12 @@ a {
     font-weight: 600
 }
 
+#clock, #date {
+    margin-right: 1.2%;
+}
+
     a:hover {
-        color: darkmagenta;
+        color: navy;
     }
 
 .container {
