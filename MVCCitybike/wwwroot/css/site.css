@@ -10,6 +10,13 @@ a {
 
 #clock, #date {
     margin-right: 1.2%;
+    padding: 0.2%;
+}
+
+.text-container {
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    color: black;
 }
 
     a:hover {

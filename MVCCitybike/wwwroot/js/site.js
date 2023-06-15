@@ -62,7 +62,7 @@ updateClock();
 // Update the clock every second
 setInterval(updateClock, 1000);
 
-// Fontawesome icons
+// Fontawesome icons 
 function createIcons() {
     const iconContainer = document.getElementById('icon-container');
 
@@ -75,7 +75,37 @@ function createIcons() {
     const arrowRightIcon = document.createElement('i');
     arrowRightIcon.classList.add('fas', 'fa-arrow-right');
     iconContainer.appendChild(arrowRightIcon);
+
+    // Create the arrow down icon
+    const arrowDownIcon = document.createElement('i');
+    arrowDownIcon.classList.add('fas', 'fa-arrow-down');
+    iconContainer.appendChild(arrowDownIcon);
+
+    // Create the arrow up icon
+    const arrowUpIcon = document.createElement('i');
+    arrowUpIcon.classList.add('fas', 'fa-arrow-up');
+    iconContainer.appendChild(arrowUpIcon);
+
 }
+
+// change fonts
+function changeFont(font) {
+    document.getElementById('textContainer').style.fontFamily = font;
+}
+
+function changeFontSize(fontSize) {
+    document.getElementById('textContainer').style.fontSize = fontSize + 'px';
+}
+
+function changeFontColor(color) {
+    document.getElementById('textContainer').style.color = color;
+
+}
+function changeTableBGColor(backgroundColor) {
+    document.getElementById('textContainer').style.backgroundColor = backgroundColor;
+}
+
+
 
 // Call the createIcons function to generate the icons
 createIcons();
