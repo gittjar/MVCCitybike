@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGeneration;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
@@ -7,6 +8,7 @@ namespace MVCCitybike.Models
 {
     public class BiketripsMay2021
     {
+        [Key]
         public int ID { get; set; }
         public DateTime Departure { get; set; }
         public DateTime Return { get; set; }

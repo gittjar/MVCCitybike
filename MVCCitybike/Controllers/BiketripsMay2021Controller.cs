@@ -40,26 +40,41 @@ namespace MVCCitybike.Controllers
             {
                 // departure
                 case "Date":
-                    biketripsmay2021 = biketripsmay2021.OrderBy(s => s.Departure);
+                    biketripsmay2021 = biketripsmay2021.GroupBy(s => s.Departure)
+                                                        .OrderBy(g => g.Key)
+                                                        .Select(g => g.First());
                     break;
                 case "date_desc":
-                    biketripsmay2021 = biketripsmay2021.OrderByDescending(s => s.Departure);
+                    biketripsmay2021 = biketripsmay2021.GroupBy(s => s.Departure)
+                                                        .OrderByDescending(g => g.Key)
+                                                         .Select(g => g.First());
+
                     break;
 
                 // return
                 case "ReturnDate":
-                    biketripsmay2021 = biketripsmay2021.OrderBy(s => s.Return);
+                    biketripsmay2021 = biketripsmay2021.GroupBy(s => s.Return)
+                                                        .OrderBy(g => g.Key)
+                                                        .Select(g => g.First());
                     break;
+
+
                 case "return_date_desc":
-                    biketripsmay2021 = biketripsmay2021.OrderByDescending(s => s.Return);
+                    biketripsmay2021 = biketripsmay2021.GroupBy(s => s.Return)
+                                                        .OrderByDescending(g => g.Key)
+                                                        .Select(g => g.First());
                     break;
 
                 // distance_m
                 case "Distance":
-                    biketripsmay2021 = biketripsmay2021.OrderBy(s => s.Covered_distance_m);
+                    biketripsmay2021 = biketripsmay2021.GroupBy(s => s.Covered_distance_m)
+                                                        .OrderBy(g => g.Key)
+                                                        .Select(g => g.First());
                     break;
                 case "Distance_desc":
-                    biketripsmay2021 = biketripsmay2021.OrderByDescending(s => s.Covered_distance_m);
+                    biketripsmay2021 = biketripsmay2021.GroupBy(s => s.Covered_distance_m)
+                                                       .OrderByDescending(g => g.Key)
+                                                       .Select(g => g.First());
                     break;
             }
 
