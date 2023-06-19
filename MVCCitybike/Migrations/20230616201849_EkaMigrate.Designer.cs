@@ -11,8 +11,8 @@ using MvcStation.Data;
 namespace MVCCitybike.Migrations
 {
     [DbContext(typeof(MvcStationContext))]
-    [Migration("20230526100043_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230616201849_EkaMigrate")]
+    partial class EkaMigrate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,6 +45,9 @@ namespace MVCCitybike.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<byte>("Kuva")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -60,6 +63,7 @@ namespace MVCCitybike.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Osoite")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Stad")

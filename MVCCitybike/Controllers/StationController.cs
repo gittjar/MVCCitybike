@@ -105,9 +105,10 @@ namespace MVCCitybike.Controllers
         // POST: Station/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FID,ID,Nimi,Namn,Name,Osoite,Adress,Kaupunki,Stad,Operaattor,Kapasiteet,x,y")] Station station)
+        public async Task<IActionResult> Create([Bind("FID,ID,Nimi,Namn,Name,Osoite,Adress,Kaupunki,Stad,Operaattor,Kapasiteet,x,y,Kuva")] Station station)
         {
             if (ModelState.IsValid)
             {
@@ -117,7 +118,8 @@ namespace MVCCitybike.Controllers
             }
             return View(station);
         }
-
+        
+        
         // GET: Station/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -137,9 +139,10 @@ namespace MVCCitybike.Controllers
         // POST: Station/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FID,ID,Nimi,Namn,Name,Osoite,Adress,Kaupunki,Stad,Operaattor,Kapasiteet,x,y")] Station station)
+        public async Task<IActionResult> Edit(int id, [Bind("FID,ID,Nimi,Namn,Name,Osoite,Adress,Kaupunki,Stad,Operaattor,Kapasiteet,x,y,Kuva")] Station station)
         {
             if (id != station.ID)
             {
@@ -148,6 +151,7 @@ namespace MVCCitybike.Controllers
 
             if (ModelState.IsValid)
             {
+
                 try
                 {
                     _context.Update(station);
@@ -168,6 +172,7 @@ namespace MVCCitybike.Controllers
             }
             return View(station);
         }
+    
 
         // GET: Station/Delete/5
         public async Task<IActionResult> Delete(int? id)

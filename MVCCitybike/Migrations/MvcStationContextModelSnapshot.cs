@@ -42,6 +42,9 @@ namespace MVCCitybike.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<byte>("Kuva")
+                        .HasColumnType("tinyint");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -57,6 +60,7 @@ namespace MVCCitybike.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Osoite")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Stad")
