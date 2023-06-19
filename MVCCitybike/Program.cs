@@ -4,6 +4,14 @@ using MvcStation.Data;
 using MvcBiketripsMay2021.Data;
 
 
+
+
+// MIGRATIONS FOR DB
+// dotnet ef migrations add InitMigrate --context MvcBiketripsMay2021Context
+// dotnet ef migrations add InitMigrate --context MvcStationContext
+//
+
+
 // Use SqlServer get Citybiketrips Data
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<MvcBiketripsMay2021Context>(options =>
