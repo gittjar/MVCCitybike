@@ -14,3 +14,4 @@ Features:
 - Show today date and current time
 
 Connected to Azure SQL.
+DevOps activated.
