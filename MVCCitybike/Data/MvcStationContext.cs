@@ -16,4 +16,6 @@ namespace MvcStation.Data
 
         public DbSet<MVCCitybike.Models.Station> Station { get; set; } = default!;
     }
+
+    
 }

@@ -17,11 +17,7 @@
     </a>
 </p>
 
-
-
 <section class="d-flex justify-content-evenly mb-2">
-
-
     <article>
         <form asp-controller="Station" asp-action="Index" method="get">
             <p>
@@ -29,24 +25,13 @@
                     <select class="form-select form-select-l" asp-for="StationKaupunki" asp-items="Model.Kaupungit">
                         <option value="">Kaupunki</option>
                     </select>
-
-
                     <input type="text" class="form-control" name="SearchItem" placeholder="Aseman nimi..">
                     <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Etsi</button>
                 </div>
-
-
-
             </p>
         </form>
     </article>
-
-    <article id="infobox" class="alert alert-info d-inline-flex p-2">
-        Data ladattu ja päivitetty onnistuneesti!
-    </article>
-
 </section>
-
 
 <table class="stations-table text-container" id="textContainer">
     <thead>
@@ -119,3 +104,4 @@
         }
     </tbody>
 </table>
+

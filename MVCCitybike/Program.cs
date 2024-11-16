@@ -3,9 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using MvcStation.Data;
 using MvcBiketripsMay2021.Data;
 
-
-
-
 // MIGRATIONS FOR DB
 // dotnet ef migrations add InitMigrate --context MvcBiketripsMay2021Context
 // dotnet ef migrations add InitMigrate --context MvcStationContext

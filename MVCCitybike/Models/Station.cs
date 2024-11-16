@@ -4,8 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
-
-
 namespace MVCCitybike.Models
 {
     public class Station
