@@ -17,17 +17,6 @@ function fadeOutInfobox() {
 
 window.onload = fadeOutInfobox;
 
-// Show toastr notifications
-$(document).ready(function() {
-    toastr.success('Data ladattu ja päivitetty onnistuneesti!');
-   
-});
-
-// Show toastr error notification
-function showErrorToast() {
-    toastr.error('Virhe ladattaessa tietoja!');
-}
-
 
 
 

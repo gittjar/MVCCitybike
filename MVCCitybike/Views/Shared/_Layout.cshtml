@@ -75,6 +75,7 @@
             @RenderBody()
         </main>
     </div>
+    
     <footer class="border-top footer text-muted">
         <div class="container text-center">
             &copy; 2023 - MVCCitybike - gittjar - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
@@ -85,7 +86,44 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <!-- Toastr JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "timeOut": "3000"
+            };
+            toastr.success('@TempData["SuccessMessage"]');
+        </script>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "timeOut": "5000"
+            };
+            toastr.error('@TempData["ErrorMessage"]');
+        </script>
+    }
+    @if (TempData["InfoMessage"] != null)
+    {
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "timeOut": "3000"
+            };
+            toastr.info('@TempData["InfoMessage"]');
+        </script>
+    }
+    
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

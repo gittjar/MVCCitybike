@@ -120,8 +120,10 @@ namespace MVCCitybike.Controllers
             {
                 _context.Add(biketripsMay2021);
                 await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = $"Pyörämatka {biketripsMay2021.Departure_station_name} → {biketripsMay2021.Return_station_name} luotu onnistuneesti!";
                 return RedirectToAction(nameof(Index));
             }
+            TempData["ErrorMessage"] = "Pyörämatkan luominen epäonnistui. Tarkista lomakkeen tiedot.";
             return View(biketripsMay2021);
         }
 
@@ -159,20 +161,24 @@ namespace MVCCitybike.Controllers
                 {
                     _context.Update(biketripsMay2021);
                     await _context.SaveChangesAsync();
+                    TempData["SuccessMessage"] = $"Pyörämatka päivitetty onnistuneesti!";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!BiketripsMay2021Exists(biketripsMay2021.ID))
                     {
+                        TempData["ErrorMessage"] = "Pyörämatkaa ei löytynyt. Se on saatettu poistaa.";
                         return NotFound();
                     }
                     else
                     {
+                        TempData["ErrorMessage"] = "Virhe tallennettaessa. Yritä uudelleen.";
                         throw;
                     }
                 }
                 return RedirectToAction(nameof(Index));
             }
+            TempData["ErrorMessage"] = "Pyörämatkan päivitys epäonnistui. Tarkista lomakkeen tiedot.";
             return View(biketripsMay2021);
         }
 
@@ -206,10 +212,16 @@ namespace MVCCitybike.Controllers
             var biketripsMay2021 = await _context.BiketripsMay2021.FindAsync(id);
             if (biketripsMay2021 != null)
             {
+                var tripInfo = $"{biketripsMay2021.Departure_station_name} → {biketripsMay2021.Return_station_name}";
                 _context.BiketripsMay2021.Remove(biketripsMay2021);
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = $"Pyörämatka ({tripInfo}) poistettu onnistuneesti!";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Pyörämatkaa ei löytynyt poistettavaksi.";
             }
             
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

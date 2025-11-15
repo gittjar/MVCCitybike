@@ -117,8 +117,10 @@ namespace MVCCitybike.Controllers
             {
                 _context.Add(station);
                 await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = $"Asema '{station.Nimi}' luotu onnistuneesti!";
                 return RedirectToAction(nameof(Index));
             }
+            TempData["ErrorMessage"] = "Aseman luominen epäonnistui. Tarkista lomakkeen tiedot.";
             return View(station);
         }
         
@@ -159,20 +161,24 @@ namespace MVCCitybike.Controllers
                 {
                     _context.Update(station);
                     await _context.SaveChangesAsync();
+                    TempData["SuccessMessage"] = $"Asema '{station.Nimi}' päivitetty onnistuneesti!";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!StationExists(station.ID))
                     {
+                        TempData["ErrorMessage"] = "Asemaa ei löytynyt. Se on saatettu poistaa.";
                         return NotFound();
                     }
                     else
                     {
+                        TempData["ErrorMessage"] = "Virhe tallennettaessa. Yritä uudelleen.";
                         throw;
                     }
                 }
                 return RedirectToAction(nameof(Index));
             }
+            TempData["ErrorMessage"] = "Aseman päivitys epäonnistui. Tarkista lomakkeen tiedot.";
             return View(station);
         }
     
@@ -207,10 +213,16 @@ namespace MVCCitybike.Controllers
             var station = await _context.Station.FindAsync(id);
             if (station != null)
             {
+                var stationName = station.Nimi;
                 _context.Station.Remove(station);
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = $"Asema '{stationName}' poistettu onnistuneesti!";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Asemaa ei löytynyt poistettavaksi.";
             }
             
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
