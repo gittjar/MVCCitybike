@@ -20,10 +20,11 @@ namespace MVCCitybike.Controllers
         }
 
         // GET: Station
-        public async Task<IActionResult> Index(string stationKaupunki, string searchItem, string sortOrder)
+        public async Task<IActionResult> Index(string[] cities, string searchItem, string sortOrder)
         {
 
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["SearchItem"] = searchItem; // Pass search term back to view
 
             /*
            return _context.Station != null ?
@@ -63,9 +64,11 @@ namespace MVCCitybike.Controllers
 
             //return View(await stations.ToListAsync());
 
-            if (!string.IsNullOrEmpty(stationKaupunki))
+            // Filter by multiple selected cities
+            if (cities != null && cities.Length > 0)
             {
-                stations = stations.Where(x => x.Kaupunki == stationKaupunki);
+                stations = stations.Where(x => cities.Contains(x.Kaupunki));
+                ViewData["SelectedCities"] = cities;
             }
 
             var stationKaupunkiVM = new StationCityViewModel

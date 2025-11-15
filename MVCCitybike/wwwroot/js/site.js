@@ -1,8 +1,10 @@
 ﻿// Hide infobox after load 5s
 function fadeOutInfobox() {
+    const infobox = document.getElementById('infobox');
+    if (!infobox) return; // Exit if element doesn't exist
+    
     let opacity = 1;
     const intervalID = setInterval(() => {
-        const infobox = document.getElementById('infobox');
         if (opacity > 0) {
             opacity -= 0.1;
             infobox.style.opacity = opacity;
@@ -30,12 +32,20 @@ function showErrorToast() {
 
 
 // Fetch and display user IP address
-$.getJSON("https://api.ipify.org?format=json", function(data) {
-    $("#yourip").html(data.ip);
-});
+const yourIpElement = document.getElementById('yourip');
+if (yourIpElement) {
+    $.getJSON("https://api.ipify.org?format=json", function(data) {
+        $("#yourip").html(data.ip);
+    });
+}
 
 // Update clock and date
 function updateClock() {
+    const clockElement = document.getElementById('clock');
+    const dateElement = document.getElementById('date');
+    
+    if (!clockElement || !dateElement) return; // Exit if elements don't exist
+    
     const now = new Date();
     const hours = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
@@ -45,16 +55,20 @@ function updateClock() {
     const month = String(now.getMonth() + 1).padStart(2, '0');
     const day = String(now.getDate()).padStart(2, '0');
     const date = `${day}.${month}.${year}`;
-    document.getElementById('clock').textContent = time;
-    document.getElementById('date').textContent = date;
+    clockElement.textContent = time;
+    dateElement.textContent = date;
 }
 
-updateClock();
-setInterval(updateClock, 1000);
+if (document.getElementById('clock') && document.getElementById('date')) {
+    updateClock();
+    setInterval(updateClock, 1000);
+}
 
 // Create FontAwesome icons
 function createIcons() {
     const iconContainer = document.getElementById('icon-container');
+    if (!iconContainer) return; // Exit if element doesn't exist
+    
     const icons = ['arrow-left', 'arrow-right', 'arrow-down', 'arrow-up'];
     icons.forEach(icon => {
         const iconElement = document.createElement('i');
@@ -67,17 +81,21 @@ createIcons();
 
 // Change text container styles
 function changeFont(font) {
-    document.getElementById('textContainer').style.fontFamily = font;
+    const textContainer = document.getElementById('textContainer');
+    if (textContainer) textContainer.style.fontFamily = font;
 }
 
 function changeFontSize(fontSize) {
-    document.getElementById('textContainer').style.fontSize = fontSize + 'px';
+    const textContainer = document.getElementById('textContainer');
+    if (textContainer) textContainer.style.fontSize = fontSize + 'px';
 }
 
 function changeFontColor(color) {
-    document.getElementById('textContainer').style.color = color;
+    const textContainer = document.getElementById('textContainer');
+    if (textContainer) textContainer.style.color = color;
 }
 
 function changeTableBGColor(backgroundColor) {
-    document.getElementById('textContainer').style.backgroundColor = backgroundColor;
+    const textContainer = document.getElementById('textContainer');
+    if (textContainer) textContainer.style.backgroundColor = backgroundColor;
 }

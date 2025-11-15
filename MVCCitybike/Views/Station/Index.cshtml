@@ -21,18 +21,37 @@
     <!-- Search Section -->
     <div class="citybike-search-section">
         <form asp-controller="Station" asp-action="Index" method="get" class="citybike-search-form">
-            <div class="citybike-search-inputs">
-                <div class="citybike-input-group">
-                    <select class="citybike-select" asp-for="StationKaupunki" asp-items="Model.Kaupungit">
-                        <option value="">Valitse kaupunki</option>
-                    </select>
+            <div class="citybike-filter-group">
+                <label class="citybike-filter-label">Kaupungit:</label>
+                <div class="citybike-checkbox-group">
+                    @if (Model.Kaupungit != null)
+                    {
+                        var selectedCities = ViewData["SelectedCities"] as string[] ?? Array.Empty<string>();
+                        @foreach (var city in Model.Kaupungit)
+                        {
+                            var cityName = city.Text ?? city.Value;
+                            <label class="citybike-checkbox-label">
+                                <input type="checkbox" name="cities" value="@cityName" class="citybike-checkbox" 
+                                       @(selectedCities.Contains(cityName) ? "checked" : "") />
+                                <span class="citybike-checkbox-text">@cityName</span>
+                            </label>
+                        }
+                    }
                 </div>
+            </div>
+            <div class="citybike-search-inputs">
                 <div class="citybike-input-group flex-grow">
-                    <input type="text" class="citybike-input" name="SearchItem" placeholder="Etsi aseman nimellä...">
+                    <input type="text" class="citybike-input" name="SearchItem" value="@ViewData["SearchItem"]" placeholder="Etsi aseman nimellä...">
                 </div>
                 <button class="citybike-btn citybike-btn-search" type="submit">
                     <span>Etsi</span>
                 </button>
+                @if (!string.IsNullOrEmpty(ViewData["SearchItem"]?.ToString()) || (ViewData["SelectedCities"] as string[])?.Length > 0)
+                {
+                    <a asp-action="Index" class="citybike-btn citybike-btn-outline">
+                        <span>Tyhjennä</span>
+                    </a>
+                }
             </div>
         </form>
     </div>

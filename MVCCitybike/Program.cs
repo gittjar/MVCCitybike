@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MvcStation.Data;
 using MvcBiketripsMay2021.Data;
+using System.Globalization;
 
 // MIGRATIONS FOR DB
 // dotnet ef migrations add InitMigrate --context MvcBiketripsMay2021Context
@@ -11,6 +12,12 @@ using MvcBiketripsMay2021.Data;
 
 // Use SqlServer get Citybiketrips Data
 var builder = WebApplication.CreateBuilder(args);
+
+// Configure globalization to use invariant culture (accepts dot as decimal separator)
+var cultureInfo = new CultureInfo("en-US");
+CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+
 builder.Services.AddDbContext<MvcBiketripsMay2021Context>(options =>
     // use here same connection string than bellow StationContext!
     options.UseSqlServer(builder.Configuration.GetConnectionString("CitybikeDBContext") ??

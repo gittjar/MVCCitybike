@@ -24,11 +24,9 @@ namespace MVCCitybike.Models
         [Required(ErrorMessage = "Kaupunki is required")]
         public string? Kaupunki { get; set; }
         
-        [Required(ErrorMessage = "x is required")]
         [Column(TypeName = "decimal(8, 6)")]
         public decimal x { get; set; }
         
-        [Required(ErrorMessage = "y is required")]
         [Column(TypeName = "decimal(9, 6)")]
         public decimal y { get; set; }
         
