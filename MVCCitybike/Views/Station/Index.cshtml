@@ -4,33 +4,33 @@
     ViewData["Title"] = "Index";
 }
 
-<div class="nike-container">
+<div class="citybike-container">
     <!-- Hero Section -->
-    <div class="nike-hero">
-        <h1 class="nike-title">ASEMALUETTELO</h1>
-        <p class="nike-subtitle">Hallinnoi pyöräasemia moderneilla työkaluilla</p>
+    <div class="citybike-hero">
+        <h1 class="citybike-title">ASEMALUETTELO</h1>
+        <p class="citybike-subtitle">Hallinnoi pyöräasemia moderneilla työkaluilla</p>
     </div>
 
     <!-- Action Bar -->
-    <div class="nike-action-bar">
-        <a asp-action="Create" class="nike-btn nike-btn-primary">
+    <div class="citybike-action-bar">
+        <a asp-action="Create" class="citybike-btn citybike-btn-primary">
             <span>+ Luo Uusi Asema</span>
         </a>
     </div>
 
     <!-- Search Section -->
-    <div class="nike-search-section">
-        <form asp-controller="Station" asp-action="Index" method="get" class="nike-search-form">
-            <div class="nike-search-inputs">
-                <div class="nike-input-group">
-                    <select class="nike-select" asp-for="StationKaupunki" asp-items="Model.Kaupungit">
+    <div class="citybike-search-section">
+        <form asp-controller="Station" asp-action="Index" method="get" class="citybike-search-form">
+            <div class="citybike-search-inputs">
+                <div class="citybike-input-group">
+                    <select class="citybike-select" asp-for="StationKaupunki" asp-items="Model.Kaupungit">
                         <option value="">Valitse kaupunki</option>
                     </select>
                 </div>
-                <div class="nike-input-group flex-grow">
-                    <input type="text" class="nike-input" name="SearchItem" placeholder="Etsi aseman nimellä...">
+                <div class="citybike-input-group flex-grow">
+                    <input type="text" class="citybike-input" name="SearchItem" placeholder="Etsi aseman nimellä...">
                 </div>
-                <button class="nike-btn nike-btn-search" type="submit">
+                <button class="citybike-btn citybike-btn-search" type="submit">
                     <span>Etsi</span>
                 </button>
             </div>
@@ -38,43 +38,43 @@
     </div>
 
     <!-- Stations Grid -->
-    <div class="nike-stations-grid">
+    <div class="citybike-stations-grid">
         @foreach (var item in Model.Stations!)
         {
-            <div class="nike-station-card">
-                <div class="nike-card-header">
-                    <span class="nike-card-id">ID: @item.FID</span>
-                    <span class="nike-card-capacity">@item.Kapasiteet kapasiteetti</span>
+            <div class="citybike-station-card">
+                <div class="citybike-card-header">
+                    <span class="citybike-card-id">ID: @item.FID</span>
+                    <span class="citybike-card-capacity">@item.Kapasiteet kapasiteetti</span>
                 </div>
-                <div class="nike-card-body">
-                    <h3 class="nike-card-title">@item.Nimi</h3>
-                    <div class="nike-card-info">
-                        <div class="nike-info-item">
-                            <span class="nike-info-label">Osoite</span>
-                            <span class="nike-info-value">@item.Osoite</span>
+                <div class="citybike-card-body">
+                    <h3 class="citybike-card-title">@item.Nimi</h3>
+                    <div class="citybike-card-info">
+                        <div class="citybike-info-item">
+                            <span class="citybike-info-label">Osoite</span>
+                            <span class="citybike-info-value">@item.Osoite</span>
                         </div>
-                        <div class="nike-info-item">
-                            <span class="nike-info-label">Kaupunki</span>
-                            <span class="nike-info-value">@item.Kaupunki</span>
+                        <div class="citybike-info-item">
+                            <span class="citybike-info-label">Kaupunki</span>
+                            <span class="citybike-info-value">@item.Kaupunki</span>
                         </div>
-                        <div class="nike-info-item">
-                            <span class="nike-info-label">Operaattori</span>
-                            <span class="nike-info-value">@item.Operaattor</span>
+                        <div class="citybike-info-item">
+                            <span class="citybike-info-label">Operaattori</span>
+                            <span class="citybike-info-value">@item.Operaattor</span>
                         </div>
-                        <div class="nike-info-item">
-                            <span class="nike-info-label">Koordinaatit</span>
-                            <span class="nike-info-value">@item.y, @item.x</span>
+                        <div class="citybike-info-item">
+                            <span class="citybike-info-label">Koordinaatit</span>
+                            <span class="citybike-info-value">@item.y, @item.x</span>
                         </div>
                     </div>
                 </div>
-                <div class="nike-card-actions">
-                    <a asp-action="Details" asp-route-id="@item.ID" class="nike-action-link">
+                <div class="citybike-card-actions">
+                    <a asp-action="Details" asp-route-id="@item.ID" class="citybike-action-link">
                         <span>Lisätiedot</span>
                     </a>
-                    <a asp-action="Edit" asp-route-id="@item.ID" class="nike-action-link">
+                    <a asp-action="Edit" asp-route-id="@item.ID" class="citybike-action-link">
                         <span>Muokkaa</span>
                     </a>
-                    <a asp-action="Delete" asp-route-id="@item.ID" class="nike-action-link nike-action-link-danger">
+                    <a asp-action="Delete" asp-route-id="@item.ID" class="citybike-action-link citybike-action-link-danger">
                         <span>Poista</span>
                     </a>
                 </div>

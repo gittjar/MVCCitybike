@@ -4,97 +4,97 @@
     ViewData["Title"] = "Details";
 }
 
-<div class="nike-container">
+<div class="citybike-container">
     <!-- Header -->
-    <div class="nike-details-header">
-        <h1 class="nike-details-title">ASEMAN TIEDOT</h1>
-        <div class="nike-details-actions">
-            <a asp-action="Edit" asp-route-id="@Model?.ID" class="nike-btn nike-btn-secondary">
+    <div class="citybike-details-header">
+        <h1 class="citybike-details-title">ASEMAN TIEDOT</h1>
+        <div class="citybike-details-actions">
+            <a asp-action="Edit" asp-route-id="@Model?.ID" class="citybike-btn citybike-btn-secondary">
                 <span>Muokkaa</span>
             </a>
-            <a asp-action="Index" class="nike-btn nike-btn-outline">
+            <a asp-action="Index" class="citybike-btn citybike-btn-outline">
                 <span>Takaisin</span>
             </a>
         </div>
     </div>
 
     <!-- Details Card -->
-    <div class="nike-details-card">
+    <div class="citybike-details-card">
         <!-- Image Section -->
         @if (!string.IsNullOrEmpty(Model?.Kuva))
         {
-            <div class="nike-details-image">
+            <div class="citybike-details-image">
                 <img src="@Model.Kuva" alt="@Model.Nimi">
             </div>
         }
 
         <!-- Info Grid -->
-        <div class="nike-details-grid">
-            <div class="nike-details-section">
-                <h2 class="nike-section-title">Perustiedot</h2>
+        <div class="citybike-details-grid">
+            <div class="citybike-details-section">
+                <h2 class="citybike-section-title">Perustiedot</h2>
                 
-                <div class="nike-detail-item">
-                    <span class="nike-detail-label">FID</span>
-                    <span class="nike-detail-value">@Model?.FID</span>
+                <div class="citybike-detail-item">
+                    <span class="citybike-detail-label">FID</span>
+                    <span class="citybike-detail-value">@Model?.FID</span>
                 </div>
 
-                <div class="nike-detail-item">
-                    <span class="nike-detail-label">Nimi (FI)</span>
-                    <span class="nike-detail-value">@Model?.Nimi</span>
+                <div class="citybike-detail-item">
+                    <span class="citybike-detail-label">Nimi (FI)</span>
+                    <span class="citybike-detail-value">@Model?.Nimi</span>
                 </div>
 
-                <div class="nike-detail-item">
-                    <span class="nike-detail-label">Namn (SE)</span>
-                    <span class="nike-detail-value">@Model?.Namn</span>
+                <div class="citybike-detail-item">
+                    <span class="citybike-detail-label">Namn (SE)</span>
+                    <span class="citybike-detail-value">@Model?.Namn</span>
                 </div>
 
-                <div class="nike-detail-item">
-                    <span class="nike-detail-label">Name (EN)</span>
-                    <span class="nike-detail-value">@Model?.Name</span>
+                <div class="citybike-detail-item">
+                    <span class="citybike-detail-label">Name (EN)</span>
+                    <span class="citybike-detail-value">@Model?.Name</span>
                 </div>
 
-                <div class="nike-detail-item">
-                    <span class="nike-detail-label">Kapasiteetti</span>
-                    <span class="nike-detail-value">@Model?.Kapasiteet</span>
+                <div class="citybike-detail-item">
+                    <span class="citybike-detail-label">Kapasiteetti</span>
+                    <span class="citybike-detail-value">@Model?.Kapasiteet</span>
                 </div>
 
-                <div class="nike-detail-item">
-                    <span class="nike-detail-label">Operaattori</span>
-                    <span class="nike-detail-value">@Model?.Operaattor</span>
+                <div class="citybike-detail-item">
+                    <span class="citybike-detail-label">Operaattori</span>
+                    <span class="citybike-detail-value">@Model?.Operaattor</span>
                 </div>
             </div>
 
-            <div class="nike-details-section">
-                <h2 class="nike-section-title">Sijainti</h2>
+            <div class="citybike-details-section">
+                <h2 class="citybike-section-title">Sijainti</h2>
                 
-                <div class="nike-detail-item">
-                    <span class="nike-detail-label">Osoite (FI)</span>
-                    <span class="nike-detail-value">@Model?.Osoite</span>
+                <div class="citybike-detail-item">
+                    <span class="citybike-detail-label">Osoite (FI)</span>
+                    <span class="citybike-detail-value">@Model?.Osoite</span>
                 </div>
 
-                <div class="nike-detail-item">
-                    <span class="nike-detail-label">Adress (SE)</span>
-                    <span class="nike-detail-value">@Model?.Adress</span>
+                <div class="citybike-detail-item">
+                    <span class="citybike-detail-label">Adress (SE)</span>
+                    <span class="citybike-detail-value">@Model?.Adress</span>
                 </div>
 
-                <div class="nike-detail-item">
-                    <span class="nike-detail-label">Kaupunki (FI)</span>
-                    <span class="nike-detail-value">@Model?.Kaupunki</span>
+                <div class="citybike-detail-item">
+                    <span class="citybike-detail-label">Kaupunki (FI)</span>
+                    <span class="citybike-detail-value">@Model?.Kaupunki</span>
                 </div>
 
-                <div class="nike-detail-item">
-                    <span class="nike-detail-label">Stad (SE)</span>
-                    <span class="nike-detail-value">@Model?.Stad</span>
+                <div class="citybike-detail-item">
+                    <span class="citybike-detail-label">Stad (SE)</span>
+                    <span class="citybike-detail-value">@Model?.Stad</span>
                 </div>
 
-                <div class="nike-detail-item">
-                    <span class="nike-detail-label">Longitude (X)</span>
-                    <span class="nike-detail-value">@Model?.x</span>
+                <div class="citybike-detail-item">
+                    <span class="citybike-detail-label">Longitude (X)</span>
+                    <span class="citybike-detail-value">@Model?.x</span>
                 </div>
 
-                <div class="nike-detail-item">
-                    <span class="nike-detail-label">Latitude (Y)</span>
-                    <span class="nike-detail-value">@Model?.y</span>
+                <div class="citybike-detail-item">
+                    <span class="citybike-detail-label">Latitude (Y)</span>
+                    <span class="citybike-detail-value">@Model?.y</span>
                 </div>
             </div>
         </div>

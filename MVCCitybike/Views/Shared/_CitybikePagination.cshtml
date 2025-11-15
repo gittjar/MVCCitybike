@@ -1,0 +1,43 @@
+@* Reusable Pagination Component *@
+@model dynamic
+
+<div class="citybike-pagination">
+    <div class="citybike-pagination-info">
+        <span>Sivu @Model.PageIndex / @Model.TotalPages</span>
+    </div>
+    <div class="citybike-pagination-controls">
+        @if (Model.HasPreviousPage)
+        {
+            <a asp-action="Index"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-pageNumber="@(Model.PageIndex - 1)"
+               asp-route-searchString="@ViewData["CurrentFilter"]"
+               class="citybike-btn citybike-btn-secondary">
+                <span>← Edellinen</span>
+            </a>
+        }
+        else
+        {
+            <button class="citybike-btn citybike-btn-secondary" disabled>
+                <span>← Edellinen</span>
+            </button>
+        }
+
+        @if (Model.HasNextPage)
+        {
+            <a asp-action="Index"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-pageNumber="@(Model.PageIndex + 1)"
+               asp-route-searchString="@ViewData["CurrentFilter"]"
+               class="citybike-btn citybike-btn-secondary">
+                <span>Seuraava →</span>
+            </a>
+        }
+        else
+        {
+            <button class="citybike-btn citybike-btn-secondary" disabled>
+                <span>Seuraava →</span>
+            </button>
+        }
+    </div>
+</div>

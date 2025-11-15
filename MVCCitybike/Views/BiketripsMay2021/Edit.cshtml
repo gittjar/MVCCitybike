@@ -4,81 +4,81 @@
     ViewData["Title"] = "Edit";
 }
 
-<div class="nike-container">
+<div class="citybike-container">
     <!-- Header -->
-    <div class="nike-form-header">
-        <h1 class="nike-form-title">MUOKKAA MATKAA</h1>
-        <p class="nike-form-subtitle">Päivitä pyörämatkan tiedot alla olevassa lomakkeessa</p>
+    <div class="citybike-form-header">
+        <h1 class="citybike-form-title">MUOKKAA MATKAA</h1>
+        <p class="citybike-form-subtitle">Päivitä pyörämatkan tiedot alla olevassa lomakkeessa</p>
     </div>
 
     <!-- Form Card -->
-    <div class="nike-form-card">
+    <div class="citybike-form-card">
         <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="nike-validation-summary"></div>
+            <div asp-validation-summary="ModelOnly" class="citybike-validation-summary"></div>
             <input type="hidden" asp-for="ID" />
             
-            <div class="nike-form-grid">
+            <div class="citybike-form-grid">
                 <!-- Column 1 -->
-                <div class="nike-form-column">
-                    <div class="nike-form-group">
-                        <label asp-for="Departure" class="nike-label">Lähtöaika</label>
-                        <input asp-for="Departure" class="nike-input" type="datetime-local" />
-                        <span asp-validation-for="Departure" class="nike-validation"></span>
+                <div class="citybike-form-column">
+                    <div class="citybike-form-group">
+                        <label asp-for="Departure" class="citybike-label">Lähtöaika</label>
+                        <input asp-for="Departure" class="citybike-input" type="datetime-local" />
+                        <span asp-validation-for="Departure" class="citybike-validation"></span>
                     </div>
 
-                    <div class="nike-form-group">
-                        <label asp-for="Return" class="nike-label">Palautusaika</label>
-                        <input asp-for="Return" class="nike-input" type="datetime-local" />
-                        <span asp-validation-for="Return" class="nike-validation"></span>
+                    <div class="citybike-form-group">
+                        <label asp-for="Return" class="citybike-label">Palautusaika</label>
+                        <input asp-for="Return" class="citybike-input" type="datetime-local" />
+                        <span asp-validation-for="Return" class="citybike-validation"></span>
                     </div>
 
-                    <div class="nike-form-group">
-                        <label asp-for="Departure_station_id" class="nike-label">Lähtöaseman ID</label>
-                        <input asp-for="Departure_station_id" class="nike-input" type="number" />
-                        <span asp-validation-for="Departure_station_id" class="nike-validation"></span>
+                    <div class="citybike-form-group">
+                        <label asp-for="Departure_station_id" class="citybike-label">Lähtöaseman ID</label>
+                        <input asp-for="Departure_station_id" class="citybike-input" type="number" />
+                        <span asp-validation-for="Departure_station_id" class="citybike-validation"></span>
                     </div>
 
-                    <div class="nike-form-group">
-                        <label asp-for="Departure_station_name" class="nike-label">Lähtöaseman Nimi</label>
-                        <input asp-for="Departure_station_name" class="nike-input" />
-                        <span asp-validation-for="Departure_station_name" class="nike-validation"></span>
+                    <div class="citybike-form-group">
+                        <label asp-for="Departure_station_name" class="citybike-label">Lähtöaseman Nimi</label>
+                        <input asp-for="Departure_station_name" class="citybike-input" />
+                        <span asp-validation-for="Departure_station_name" class="citybike-validation"></span>
                     </div>
                 </div>
 
                 <!-- Column 2 -->
-                <div class="nike-form-column">
-                    <div class="nike-form-group">
-                        <label asp-for="Return_station_id" class="nike-label">Palautusaseman ID</label>
-                        <input asp-for="Return_station_id" class="nike-input" type="number" />
-                        <span asp-validation-for="Return_station_id" class="nike-validation"></span>
+                <div class="citybike-form-column">
+                    <div class="citybike-form-group">
+                        <label asp-for="Return_station_id" class="citybike-label">Palautusaseman ID</label>
+                        <input asp-for="Return_station_id" class="citybike-input" type="number" />
+                        <span asp-validation-for="Return_station_id" class="citybike-validation"></span>
                     </div>
 
-                    <div class="nike-form-group">
-                        <label asp-for="Return_station_name" class="nike-label">Palautusaseman Nimi</label>
-                        <input asp-for="Return_station_name" class="nike-input" />
-                        <span asp-validation-for="Return_station_name" class="nike-validation"></span>
+                    <div class="citybike-form-group">
+                        <label asp-for="Return_station_name" class="citybike-label">Palautusaseman Nimi</label>
+                        <input asp-for="Return_station_name" class="citybike-input" />
+                        <span asp-validation-for="Return_station_name" class="citybike-validation"></span>
                     </div>
 
-                    <div class="nike-form-group">
-                        <label asp-for="Covered_distance_m" class="nike-label">Ajettu Matka (m)</label>
-                        <input asp-for="Covered_distance_m" class="nike-input" type="number" step="0.01" />
-                        <span asp-validation-for="Covered_distance_m" class="nike-validation"></span>
+                    <div class="citybike-form-group">
+                        <label asp-for="Covered_distance_m" class="citybike-label">Ajettu Matka (m)</label>
+                        <input asp-for="Covered_distance_m" class="citybike-input" type="number" step="0.01" />
+                        <span asp-validation-for="Covered_distance_m" class="citybike-validation"></span>
                     </div>
 
-                    <div class="nike-form-group">
-                        <label asp-for="Duration_sec" class="nike-label">Kesto (s)</label>
-                        <input asp-for="Duration_sec" class="nike-input" type="number" />
-                        <span asp-validation-for="Duration_sec" class="nike-validation"></span>
+                    <div class="citybike-form-group">
+                        <label asp-for="Duration_sec" class="citybike-label">Kesto (s)</label>
+                        <input asp-for="Duration_sec" class="citybike-input" type="number" />
+                        <span asp-validation-for="Duration_sec" class="citybike-validation"></span>
                     </div>
                 </div>
             </div>
 
             <!-- Action Buttons -->
-            <div class="nike-form-actions">
-                <button type="submit" class="nike-btn nike-btn-primary nike-btn-large">
+            <div class="citybike-form-actions">
+                <button type="submit" class="citybike-btn citybike-btn-primary citybike-btn-large">
                     <span>Tallenna Muutokset</span>
                 </button>
-                <a asp-action="Index" class="nike-btn nike-btn-secondary nike-btn-large">
+                <a asp-action="Index" class="citybike-btn citybike-btn-secondary citybike-btn-large">
                     <span>Peruuta</span>
                 </a>
             </div>

@@ -4,33 +4,29 @@
     ViewData["Title"] = "Index";
 }
 
-<div class="nike-container">
-    <!-- Hero Section -->
-    <div class="nike-hero">
-        <h1 class="nike-title">PYÖRÄMATKAT</h1>
-        <p class="nike-subtitle">Selaa ja hallinnoi pyörämatkoja</p>
-    </div>
+<div class="citybike-container">
+    @await Html.PartialAsync("_CitybikeHero", ("PYÖRÄMATKAT", "Selaa ja hallinnoi pyörämatkoja"))
 
     <!-- Action Bar -->
-    <div class="nike-action-bar">
-        <a asp-action="Create" class="nike-btn nike-btn-primary">
+    <div class="citybike-action-bar">
+        <a asp-action="Create" class="citybike-btn citybike-btn-primary">
             <span>+ Luo Uusi Matka</span>
         </a>
     </div>
 
     <!-- Search Section -->
-    <div class="nike-search-section">
-        <form asp-action="Index" method="get" class="nike-search-form">
-            <div class="nike-search-inputs">
-                <div class="nike-input-group flex-grow">
-                    <input type="text" class="nike-input" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Etsi lähtö- tai palautusaseman nimellä...">
+    <div class="citybike-search-section">
+        <form asp-action="Index" method="get" class="citybike-search-form">
+            <div class="citybike-search-inputs">
+                <div class="citybike-input-group flex-grow">
+                    <input type="text" class="citybike-input" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Etsi lähtö- tai palautusaseman nimellä...">
                 </div>
-                <button class="nike-btn nike-btn-search" type="submit">
+                <button class="citybike-btn citybike-btn-search" type="submit">
                     <span>Etsi</span>
                 </button>
                 @if (!string.IsNullOrEmpty(ViewData["CurrentFilter"]?.ToString()))
                 {
-                    <a asp-action="Index" class="nike-btn nike-btn-outline">
+                    <a asp-action="Index" class="citybike-btn citybike-btn-outline">
                         <span>Tyhjennä</span>
                     </a>
                 }
@@ -39,58 +35,58 @@
     </div>
 
     <!-- Trips Grid -->
-    <div class="nike-trips-grid">
+    <div class="citybike-trips-grid">
         @foreach (var item in Model)
         {
-            <div class="nike-trip-card">
-                <div class="nike-trip-header">
-                    <div class="nike-trip-route">
-                        <div class="nike-trip-station">
-                            <span class="nike-trip-label">Lähtö</span>
-                            <span class="nike-trip-station-name">@item.Departure_station_name</span>
-                            <span class="nike-trip-station-id">ID: @item.Departure_station_id</span>
+            <div class="citybike-trip-card">
+                <div class="citybike-trip-header">
+                    <div class="citybike-trip-route">
+                        <div class="citybike-trip-station">
+                            <span class="citybike-trip-label">Lähtö</span>
+                            <span class="citybike-trip-station-name">@item.Departure_station_name</span>
+                            <span class="citybike-trip-station-id">ID: @item.Departure_station_id</span>
                         </div>
-                        <div class="nike-trip-arrow">→</div>
-                        <div class="nike-trip-station">
-                            <span class="nike-trip-label">Palautus</span>
-                            <span class="nike-trip-station-name">@item.Return_station_name</span>
-                            <span class="nike-trip-station-id">ID: @item.Return_station_id</span>
+                        <div class="citybike-trip-arrow">→</div>
+                        <div class="citybike-trip-station">
+                            <span class="citybike-trip-label">Palautus</span>
+                            <span class="citybike-trip-station-name">@item.Return_station_name</span>
+                            <span class="citybike-trip-station-id">ID: @item.Return_station_id</span>
                         </div>
                     </div>
                 </div>
                 
-                <div class="nike-trip-body">
-                    <div class="nike-trip-stats">
-                        <div class="nike-trip-stat">
-                            <span class="nike-stat-value">@((item.Covered_distance_m / 1000).ToString("F2")) km</span>
-                            <span class="nike-stat-label">Matka</span>
+                <div class="citybike-trip-body">
+                    <div class="citybike-trip-stats">
+                        <div class="citybike-trip-stat">
+                            <span class="citybike-stat-value">@((item.Covered_distance_m / 1000).ToString("F2")) km</span>
+                            <span class="citybike-stat-label">Matka</span>
                         </div>
-                        <div class="nike-trip-stat">
-                            <span class="nike-stat-value">@TimeSpan.FromSeconds(item.Duration_sec).ToString(@"hh\:mm\:ss")</span>
-                            <span class="nike-stat-label">Kesto</span>
+                        <div class="citybike-trip-stat">
+                            <span class="citybike-stat-value">@TimeSpan.FromSeconds(item.Duration_sec).ToString(@"hh\:mm\:ss")</span>
+                            <span class="citybike-stat-label">Kesto</span>
                         </div>
                     </div>
                     
-                    <div class="nike-trip-times">
-                        <div class="nike-trip-time">
-                            <span class="nike-time-label">Lähtöaika</span>
-                            <span class="nike-time-value">@item.Departure.ToString("dd.MM.yyyy HH:mm")</span>
+                    <div class="citybike-trip-times">
+                        <div class="citybike-trip-time">
+                            <span class="citybike-time-label">Lähtöaika</span>
+                            <span class="citybike-time-value">@item.Departure.ToString("dd.MM.yyyy HH:mm")</span>
                         </div>
-                        <div class="nike-trip-time">
-                            <span class="nike-time-label">Palautusaika</span>
-                            <span class="nike-time-value">@item.Return.ToString("dd.MM.yyyy HH:mm")</span>
+                        <div class="citybike-trip-time">
+                            <span class="citybike-time-label">Palautusaika</span>
+                            <span class="citybike-time-value">@item.Return.ToString("dd.MM.yyyy HH:mm")</span>
                         </div>
                     </div>
                 </div>
                 
-                <div class="nike-card-actions">
-                    <a asp-action="Details" asp-route-id="@item.ID" class="nike-action-link">
+                <div class="citybike-card-actions">
+                    <a asp-action="Details" asp-route-id="@item.ID" class="citybike-action-link">
                         <span>Lisätiedot</span>
                     </a>
-                    <a asp-action="Edit" asp-route-id="@item.ID" class="nike-action-link">
+                    <a asp-action="Edit" asp-route-id="@item.ID" class="citybike-action-link">
                         <span>Muokkaa</span>
                     </a>
-                    <a asp-action="Delete" asp-route-id="@item.ID" class="nike-action-link nike-action-link-danger">
+                    <a asp-action="Delete" asp-route-id="@item.ID" class="citybike-action-link citybike-action-link-danger">
                         <span>Poista</span>
                     </a>
                 </div>
@@ -98,45 +94,5 @@
         }
     </div>
 
-    <!-- Pagination -->
-    <div class="nike-pagination">
-        <div class="nike-pagination-info">
-            <span>Sivu @Model.PageIndex / @Model.TotalPages</span>
-        </div>
-        <div class="nike-pagination-controls">
-            @if (Model.HasPreviousPage)
-            {
-                <a asp-action="Index"
-                   asp-route-sortOrder="@ViewData["CurrentSort"]"
-                   asp-route-pageNumber="@(Model.PageIndex - 1)"
-                   asp-route-searchString="@ViewData["CurrentFilter"]"
-                   class="nike-btn nike-btn-secondary">
-                    <span>← Edellinen</span>
-                </a>
-            }
-            else
-            {
-                <button class="nike-btn nike-btn-secondary" disabled>
-                    <span>← Edellinen</span>
-                </button>
-            }
-
-            @if (Model.HasNextPage)
-            {
-                <a asp-action="Index"
-                   asp-route-sortOrder="@ViewData["CurrentSort"]"
-                   asp-route-pageNumber="@(Model.PageIndex + 1)"
-                   asp-route-searchString="@ViewData["CurrentFilter"]"
-                   class="nike-btn nike-btn-secondary">
-                    <span>Seuraava →</span>
-                </a>
-            }
-            else
-            {
-                <button class="nike-btn nike-btn-secondary" disabled>
-                    <span>Seuraava →</span>
-                </button>
-            }
-        </div>
-    </div>
+    @await Html.PartialAsync("_CitybikePagination", Model)
 </div>

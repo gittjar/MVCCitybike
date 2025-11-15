@@ -1,0 +1,11 @@
+@* Reusable Form Action Buttons *@
+@model (string SubmitText, string CancelAction)
+
+<div class="citybike-form-actions">
+    <button type="submit" class="citybike-btn citybike-btn-primary citybike-btn-large">
+        <span>@Model.SubmitText</span>
+    </button>
+    <a asp-action="@Model.CancelAction" class="citybike-btn citybike-btn-secondary citybike-btn-large">
+        <span>Peruuta</span>
+    </a>
+</div>

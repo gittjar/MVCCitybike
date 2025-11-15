@@ -4,90 +4,90 @@
     ViewData["Title"] = "Details";
 }
 
-<div class="nike-container">
+<div class="citybike-container">
     <!-- Header -->
-    <div class="nike-details-header">
-        <h1 class="nike-details-title">MATKAN TIEDOT</h1>
-        <div class="nike-details-actions">
-            <a asp-action="Edit" asp-route-id="@Model?.ID" class="nike-btn nike-btn-secondary">
+    <div class="citybike-details-header">
+        <h1 class="citybike-details-title">MATKAN TIEDOT</h1>
+        <div class="citybike-details-actions">
+            <a asp-action="Edit" asp-route-id="@Model?.ID" class="citybike-btn citybike-btn-secondary">
                 <span>Muokkaa</span>
             </a>
-            <a asp-action="Index" class="nike-btn nike-btn-outline">
+            <a asp-action="Index" class="citybike-btn citybike-btn-outline">
                 <span>Takaisin</span>
             </a>
         </div>
     </div>
 
     <!-- Details Card -->
-    <div class="nike-details-card">
+    <div class="citybike-details-card">
         <!-- Route Overview -->
-        <div class="nike-trip-route-detail">
-            <div class="nike-route-station">
-                <span class="nike-route-label">Lähtöasema</span>
-                <h2 class="nike-route-name">@Model?.Departure_station_name</h2>
-                <span class="nike-route-id">ID: @Model?.Departure_station_id</span>
+        <div class="citybike-trip-route-detail">
+            <div class="citybike-route-station">
+                <span class="citybike-route-label">Lähtöasema</span>
+                <h2 class="citybike-route-name">@Model?.Departure_station_name</h2>
+                <span class="citybike-route-id">ID: @Model?.Departure_station_id</span>
             </div>
-            <div class="nike-route-arrow">→</div>
-            <div class="nike-route-station">
-                <span class="nike-route-label">Palautusasema</span>
-                <h2 class="nike-route-name">@Model?.Return_station_name</h2>
-                <span class="nike-route-id">ID: @Model?.Return_station_id</span>
+            <div class="citybike-route-arrow">→</div>
+            <div class="citybike-route-station">
+                <span class="citybike-route-label">Palautusasema</span>
+                <h2 class="citybike-route-name">@Model?.Return_station_name</h2>
+                <span class="citybike-route-id">ID: @Model?.Return_station_id</span>
             </div>
         </div>
 
         <!-- Stats -->
-        <div class="nike-trip-stats-detail">
-            <div class="nike-stat-box">
-                <span class="nike-stat-value-large">@(((double)Model!.Covered_distance_m / 1000).ToString("F2")) km</span>
-                <span class="nike-stat-label">Kokonaismatka</span>
+        <div class="citybike-trip-stats-detail">
+            <div class="citybike-stat-box">
+                <span class="citybike-stat-value-large">@(((double)Model!.Covered_distance_m / 1000).ToString("F2")) km</span>
+                <span class="citybike-stat-label">Kokonaismatka</span>
             </div>
-            <div class="nike-stat-box">
-                <span class="nike-stat-value-large">@TimeSpan.FromSeconds(Model.Duration_sec).ToString(@"hh\:mm\:ss")</span>
-                <span class="nike-stat-label">Matkan Kesto</span>
+            <div class="citybike-stat-box">
+                <span class="citybike-stat-value-large">@TimeSpan.FromSeconds(Model.Duration_sec).ToString(@"hh\:mm\:ss")</span>
+                <span class="citybike-stat-label">Matkan Kesto</span>
             </div>
-            <div class="nike-stat-box">
-                <span class="nike-stat-value-large">@((((double)Model.Covered_distance_m / 1000) / (Model.Duration_sec / 3600.0)).ToString("F1")) km/h</span>
-                <span class="nike-stat-label">Keskinopeus</span>
+            <div class="citybike-stat-box">
+                <span class="citybike-stat-value-large">@((((double)Model.Covered_distance_m / 1000) / (Model.Duration_sec / 3600.0)).ToString("F1")) km/h</span>
+                <span class="citybike-stat-label">Keskinopeus</span>
             </div>
         </div>
 
         <!-- Info Grid -->
-        <div class="nike-details-grid">
-            <div class="nike-details-section">
-                <h2 class="nike-section-title">Lähtötiedot</h2>
+        <div class="citybike-details-grid">
+            <div class="citybike-details-section">
+                <h2 class="citybike-section-title">Lähtötiedot</h2>
                 
-                <div class="nike-detail-item">
-                    <span class="nike-detail-label">Lähtöaika</span>
-                    <span class="nike-detail-value">@Model?.Departure.ToString("dd.MM.yyyy HH:mm:ss")</span>
+                <div class="citybike-detail-item">
+                    <span class="citybike-detail-label">Lähtöaika</span>
+                    <span class="citybike-detail-value">@Model?.Departure.ToString("dd.MM.yyyy HH:mm:ss")</span>
                 </div>
 
-                <div class="nike-detail-item">
-                    <span class="nike-detail-label">Lähtöasema</span>
-                    <span class="nike-detail-value">@Model?.Departure_station_name</span>
+                <div class="citybike-detail-item">
+                    <span class="citybike-detail-label">Lähtöasema</span>
+                    <span class="citybike-detail-value">@Model?.Departure_station_name</span>
                 </div>
 
-                <div class="nike-detail-item">
-                    <span class="nike-detail-label">Aseman ID</span>
-                    <span class="nike-detail-value">@Model?.Departure_station_id</span>
+                <div class="citybike-detail-item">
+                    <span class="citybike-detail-label">Aseman ID</span>
+                    <span class="citybike-detail-value">@Model?.Departure_station_id</span>
                 </div>
             </div>
 
-            <div class="nike-details-section">
-                <h2 class="nike-section-title">Palautustiedot</h2>
+            <div class="citybike-details-section">
+                <h2 class="citybike-section-title">Palautustiedot</h2>
                 
-                <div class="nike-detail-item">
-                    <span class="nike-detail-label">Palautusaika</span>
-                    <span class="nike-detail-value">@Model?.Return.ToString("dd.MM.yyyy HH:mm:ss")</span>
+                <div class="citybike-detail-item">
+                    <span class="citybike-detail-label">Palautusaika</span>
+                    <span class="citybike-detail-value">@Model?.Return.ToString("dd.MM.yyyy HH:mm:ss")</span>
                 </div>
 
-                <div class="nike-detail-item">
-                    <span class="nike-detail-label">Palautusasema</span>
-                    <span class="nike-detail-value">@Model?.Return_station_name</span>
+                <div class="citybike-detail-item">
+                    <span class="citybike-detail-label">Palautusasema</span>
+                    <span class="citybike-detail-value">@Model?.Return_station_name</span>
                 </div>
 
-                <div class="nike-detail-item">
-                    <span class="nike-detail-label">Aseman ID</span>
-                    <span class="nike-detail-value">@Model?.Return_station_id</span>
+                <div class="citybike-detail-item">
+                    <span class="citybike-detail-label">Aseman ID</span>
+                    <span class="citybike-detail-value">@Model?.Return_station_id</span>
                 </div>
             </div>
         </div>

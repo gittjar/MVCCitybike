@@ -4,16 +4,16 @@
     ViewData["Title"] = "Delete";
 }
 
-<div class="nike-container">
+<div class="citybike-container">
     <!-- Header -->
-    <div class="nike-delete-header">
-        <h1 class="nike-delete-title">POISTA ASEMA</h1>
-        <p class="nike-delete-warning">⚠️ Tämä toiminto ei ole palautettavissa</p>
+    <div class="citybike-delete-header">
+        <h1 class="citybike-delete-title">POISTA ASEMA</h1>
+        <p class="citybike-delete-warning">⚠️ Tämä toiminto ei ole palautettavissa</p>
     </div>
 
     <!-- Delete Card -->
-    <div class="nike-delete-card">
-        <div class="nike-delete-message">
+    <div class="citybike-delete-card">
+        <div class="citybike-delete-message">
             <h3>Oletko varma, että haluat poistaa tämän aseman?</h3>
             <p>Kaikki asemaan liittyvät tiedot poistetaan pysyvästi.</p>
         </div>
@@ -21,61 +21,61 @@
         <!-- Station Info -->
         @if (!string.IsNullOrEmpty(Model?.Kuva))
         {
-            <div class="nike-delete-image">
+            <div class="citybike-delete-image">
                 <img src="@Model.Kuva" alt="@Model.Nimi">
             </div>
         }
 
-        <div class="nike-delete-info">
-            <div class="nike-delete-highlight">
+        <div class="citybike-delete-info">
+            <div class="citybike-delete-highlight">
                 <h2>@Model?.Nimi</h2>
                 <p>@Model?.Osoite, @Model?.Kaupunki</p>
             </div>
 
-            <div class="nike-delete-details">
-                <div class="nike-delete-item">
-                    <span class="nike-detail-label">FID</span>
-                    <span class="nike-detail-value">@Model?.FID</span>
+            <div class="citybike-delete-details">
+                <div class="citybike-delete-item">
+                    <span class="citybike-detail-label">FID</span>
+                    <span class="citybike-detail-value">@Model?.FID</span>
                 </div>
 
-                <div class="nike-delete-item">
-                    <span class="nike-detail-label">Nimi (FI)</span>
-                    <span class="nike-detail-value">@Model?.Nimi</span>
+                <div class="citybike-delete-item">
+                    <span class="citybike-detail-label">Nimi (FI)</span>
+                    <span class="citybike-detail-value">@Model?.Nimi</span>
                 </div>
 
-                <div class="nike-delete-item">
-                    <span class="nike-detail-label">Namn (SE)</span>
-                    <span class="nike-detail-value">@Model?.Namn</span>
+                <div class="citybike-delete-item">
+                    <span class="citybike-detail-label">Namn (SE)</span>
+                    <span class="citybike-detail-value">@Model?.Namn</span>
                 </div>
 
-                <div class="nike-delete-item">
-                    <span class="nike-detail-label">Name (EN)</span>
-                    <span class="nike-detail-value">@Model?.Name</span>
+                <div class="citybike-delete-item">
+                    <span class="citybike-detail-label">Name (EN)</span>
+                    <span class="citybike-detail-value">@Model?.Name</span>
                 </div>
 
-                <div class="nike-delete-item">
-                    <span class="nike-detail-label">Osoite</span>
-                    <span class="nike-detail-value">@Model?.Osoite</span>
+                <div class="citybike-delete-item">
+                    <span class="citybike-detail-label">Osoite</span>
+                    <span class="citybike-detail-value">@Model?.Osoite</span>
                 </div>
 
-                <div class="nike-delete-item">
-                    <span class="nike-detail-label">Kaupunki</span>
-                    <span class="nike-detail-value">@Model?.Kaupunki</span>
+                <div class="citybike-delete-item">
+                    <span class="citybike-detail-label">Kaupunki</span>
+                    <span class="citybike-detail-value">@Model?.Kaupunki</span>
                 </div>
 
-                <div class="nike-delete-item">
-                    <span class="nike-detail-label">Operaattori</span>
-                    <span class="nike-detail-value">@Model?.Operaattor</span>
+                <div class="citybike-delete-item">
+                    <span class="citybike-detail-label">Operaattori</span>
+                    <span class="citybike-detail-value">@Model?.Operaattor</span>
                 </div>
 
-                <div class="nike-delete-item">
-                    <span class="nike-detail-label">Kapasiteetti</span>
-                    <span class="nike-detail-value">@Model?.Kapasiteet</span>
+                <div class="citybike-delete-item">
+                    <span class="citybike-detail-label">Kapasiteetti</span>
+                    <span class="citybike-detail-value">@Model?.Kapasiteet</span>
                 </div>
 
-                <div class="nike-delete-item">
-                    <span class="nike-detail-label">Koordinaatit</span>
-                    <span class="nike-detail-value">@Model?.y, @Model?.x</span>
+                <div class="citybike-delete-item">
+                    <span class="citybike-detail-label">Koordinaatit</span>
+                    <span class="citybike-detail-value">@Model?.y, @Model?.x</span>
                 </div>
             </div>
         </div>
@@ -83,11 +83,11 @@
         <!-- Action Buttons -->
         <form asp-action="Delete">
             <input type="hidden" asp-for="ID" />
-            <div class="nike-delete-actions">
-                <button type="submit" class="nike-btn nike-btn-danger nike-btn-large">
+            <div class="citybike-delete-actions">
+                <button type="submit" class="citybike-btn citybike-btn-danger citybike-btn-large">
                     <span>Kyllä, Poista Asema</span>
                 </button>
-                <a asp-action="Index" class="nike-btn nike-btn-secondary nike-btn-large">
+                <a asp-action="Index" class="citybike-btn citybike-btn-secondary citybike-btn-large">
                     <span>Peruuta</span>
                 </a>
             </div>
