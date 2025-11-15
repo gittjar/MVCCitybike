@@ -778,3 +778,311 @@ body {
     }
 }
 
+/* ========================================
+   BIKE TRIPS SPECIFIC STYLES
+   ======================================== */
+
+/* Trips Grid */
+.nike-trips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.nike-trip-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid #e5e5e5;
+    display: flex;
+    flex-direction: column;
+}
+
+.nike-trip-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    border-color: #111;
+}
+
+.nike-trip-header {
+    padding: 24px;
+    background: #f5f5f5;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.nike-trip-route {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nike-trip-station {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.nike-trip-label {
+    font-size: 0.75rem;
+    color: #757575;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.nike-trip-station-name {
+    font-size: 1.125rem;
+    font-weight: 800;
+    color: #111;
+    line-height: 1.3;
+}
+
+.nike-trip-station-id {
+    font-size: 0.8125rem;
+    color: #757575;
+    font-weight: 500;
+}
+
+.nike-trip-arrow {
+    font-size: 2rem;
+    color: #111;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.nike-trip-body {
+    padding: 24px;
+    flex: 1;
+}
+
+.nike-trip-stats {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid #f5f5f5;
+}
+
+.nike-trip-stat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.nike-stat-value {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #111;
+    letter-spacing: -0.5px;
+}
+
+.nike-stat-label {
+    font-size: 0.875rem;
+    color: #757575;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.nike-trip-times {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.nike-trip-time {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+}
+
+.nike-time-label {
+    font-size: 0.875rem;
+    color: #757575;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.nike-time-value {
+    font-size: 0.9375rem;
+    color: #111;
+    font-weight: 700;
+    text-align: right;
+}
+
+/* Pagination */
+.nike-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 60px;
+    padding: 30px 0;
+    border-top: 2px solid #e5e5e5;
+}
+
+.nike-pagination-info {
+    font-size: 1rem;
+    color: #757575;
+    font-weight: 600;
+}
+
+.nike-pagination-controls {
+    display: flex;
+    gap: 15px;
+}
+
+.nike-pagination-controls .nike-btn[disabled] {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.nike-pagination-controls .nike-btn[disabled]:hover {
+    background: #757575;
+    transform: none;
+}
+
+/* Trip Route Detail (for Details/Delete pages) */
+.nike-trip-route-detail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    padding: 40px;
+    background: linear-gradient(135deg, #f5f5f5 0%, #fafafa 100%);
+    border-radius: 12px;
+    margin-bottom: 40px;
+}
+
+.nike-route-station {
+    flex: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.nike-route-label {
+    font-size: 0.875rem;
+    color: #757575;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.nike-route-name {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #111;
+    margin: 0;
+}
+
+.nike-route-id {
+    font-size: 0.9375rem;
+    color: #757575;
+    font-weight: 500;
+}
+
+.nike-route-arrow {
+    font-size: 3rem;
+    color: #111;
+    font-weight: 700;
+}
+
+/* Trip Stats Detail */
+.nike-trip-stats-detail {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.nike-stat-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 30px;
+    background: #fafafa;
+    border-radius: 12px;
+    border: 1px solid #e5e5e5;
+}
+
+.nike-stat-value-large {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #111;
+    letter-spacing: -1px;
+}
+
+/* Responsive for Trips */
+@media (max-width: 768px) {
+    .nike-trips-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .nike-trip-route {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .nike-trip-arrow {
+        transform: rotate(90deg);
+    }
+
+    .nike-trip-stats {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .nike-pagination {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+
+    .nike-trip-route-detail {
+        flex-direction: column;
+        gap: 30px;
+        padding: 30px 20px;
+    }
+
+    .nike-route-arrow {
+        transform: rotate(90deg);
+    }
+
+    .nike-trip-stats-detail {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .nike-delete-highlight h2 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .nike-trip-station-name {
+        font-size: 1rem;
+    }
+
+    .nike-stat-value {
+        font-size: 1.5rem;
+    }
+
+    .nike-stat-value-large {
+        font-size: 2rem;
+    }
+
+    .nike-route-name {
+        font-size: 1.25rem;
+    }
+}
+
+

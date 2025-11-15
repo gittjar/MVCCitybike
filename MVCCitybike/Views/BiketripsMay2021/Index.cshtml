@@ -1,145 +1,142 @@
-
 @model PaginatedList<MVCCitybike.Models.BiketripsMay2021>
-
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Pyörämatkat</h1>
+<div class="nike-container">
+    <!-- Hero Section -->
+    <div class="nike-hero">
+        <h1 class="nike-title">PYÖRÄMATKAT</h1>
+        <p class="nike-subtitle">Selaa ja hallinnoi pyörämatkoja</p>
+    </div>
 
-<p>
-    <a class="btn btn-outline-success"  asp-action="Create">Luo uusi matka</a>
-</p>
+    <!-- Action Bar -->
+    <div class="nike-action-bar">
+        <a asp-action="Create" class="nike-btn nike-btn-primary">
+            <span>+ Luo Uusi Matka</span>
+        </a>
+    </div>
 
-<section class="d-flex justify-content-evenly mb-2">
-
-    <article>
-        <form asp-action="Index" method="get">
-            <div class="form-actions no-color input-group mb-3">
-
-                <input type="text" class="form-control" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Etsi aseman mukaan..">
-                <button type="submit" class="btn btn-outline-primary" id="button-addon2">Etsi</button>
-                <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                    <span class="visually-hidden">Toggle Dropdown</span>
+    <!-- Search Section -->
+    <div class="nike-search-section">
+        <form asp-action="Index" method="get" class="nike-search-form">
+            <div class="nike-search-inputs">
+                <div class="nike-input-group flex-grow">
+                    <input type="text" class="nike-input" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Etsi lähtö- tai palautusaseman nimellä...">
+                </div>
+                <button class="nike-btn nike-btn-search" type="submit">
+                    <span>Etsi</span>
                 </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" asp-action="Index">Takaisin listaan</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" asp-action="Create">Luo uusi matka</a></li>
-
-                </ul>
-
+                @if (!string.IsNullOrEmpty(ViewData["CurrentFilter"]?.ToString()))
+                {
+                    <a asp-action="Index" class="nike-btn nike-btn-outline">
+                        <span>Tyhjennä</span>
+                    </a>
+                }
             </div>
         </form>
-    </article>
+    </div>
 
-</section>
-
-<table class="biketrips-table">
-    <thead>
-        <tr>
-            <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
-                    Lähtö
-                    <i class="fas fa-arrow-down"></i>
-                    <i class="fas fa-arrow-up"></i>
-
-                </a>
-            </th>
-            <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParmReturn"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
-                    Palautus
-                    <i class="fas fa-arrow-down"></i>
-                    <i class="fas fa-arrow-up"></i>
-
-                </a>
-            </th>
-            <th>
-                Lähtöasema ID
-            </th>
-            <th>
-                Lähtöasema nimi
-            </th>
-            <th>
-                Palautusasema ID
-            </th>
-            <th>
-                Palautusasema nimi
-            </th>
-            <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["DistanceSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
-                    Matka (m)
-                    <i class="fas fa-arrow-down"></i>
-                    <i class="fas fa-arrow-up"></i>
-
-                </a>
-            </th>
-            <th>
-                Kesto (sec)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+    <!-- Trips Grid -->
+    <div class="nike-trips-grid">
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Departure)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Return)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Departure_station_id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Departure_station_name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Return_station_id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Return_station_name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Covered_distance_m)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Duration_sec)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">Muokkaa</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID">Lisätiedot</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID">Poista</a>
-                </td>
-            </tr>
+            <div class="nike-trip-card">
+                <div class="nike-trip-header">
+                    <div class="nike-trip-route">
+                        <div class="nike-trip-station">
+                            <span class="nike-trip-label">Lähtö</span>
+                            <span class="nike-trip-station-name">@item.Departure_station_name</span>
+                            <span class="nike-trip-station-id">ID: @item.Departure_station_id</span>
+                        </div>
+                        <div class="nike-trip-arrow">→</div>
+                        <div class="nike-trip-station">
+                            <span class="nike-trip-label">Palautus</span>
+                            <span class="nike-trip-station-name">@item.Return_station_name</span>
+                            <span class="nike-trip-station-id">ID: @item.Return_station_id</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="nike-trip-body">
+                    <div class="nike-trip-stats">
+                        <div class="nike-trip-stat">
+                            <span class="nike-stat-value">@((item.Covered_distance_m / 1000).ToString("F2")) km</span>
+                            <span class="nike-stat-label">Matka</span>
+                        </div>
+                        <div class="nike-trip-stat">
+                            <span class="nike-stat-value">@TimeSpan.FromSeconds(item.Duration_sec).ToString(@"hh\:mm\:ss")</span>
+                            <span class="nike-stat-label">Kesto</span>
+                        </div>
+                    </div>
+                    
+                    <div class="nike-trip-times">
+                        <div class="nike-trip-time">
+                            <span class="nike-time-label">Lähtöaika</span>
+                            <span class="nike-time-value">@item.Departure.ToString("dd.MM.yyyy HH:mm")</span>
+                        </div>
+                        <div class="nike-trip-time">
+                            <span class="nike-time-label">Palautusaika</span>
+                            <span class="nike-time-value">@item.Return.ToString("dd.MM.yyyy HH:mm")</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="nike-card-actions">
+                    <a asp-action="Details" asp-route-id="@item.ID" class="nike-action-link">
+                        <span>Lisätiedot</span>
+                    </a>
+                    <a asp-action="Edit" asp-route-id="@item.ID" class="nike-action-link">
+                        <span>Muokkaa</span>
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@item.ID" class="nike-action-link nike-action-link-danger">
+                        <span>Poista</span>
+                    </a>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+    </div>
 
-@{
-    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-}
+    <!-- Pagination -->
+    <div class="nike-pagination">
+        <div class="nike-pagination-info">
+            <span>Sivu @Model.PageIndex / @Model.TotalPages</span>
+        </div>
+        <div class="nike-pagination-controls">
+            @if (Model.HasPreviousPage)
+            {
+                <a asp-action="Index"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@(Model.PageIndex - 1)"
+                   asp-route-searchString="@ViewData["CurrentFilter"]"
+                   class="nike-btn nike-btn-secondary">
+                    <span>← Edellinen</span>
+                </a>
+            }
+            else
+            {
+                <button class="nike-btn nike-btn-secondary" disabled>
+                    <span>← Edellinen</span>
+                </button>
+            }
 
-    <a asp-action="Index"
-       asp-route-sortOrder="@ViewData["CurrentSort"]"
-       asp-route-pageNumber="@(Model.PageIndex - 1)"
-       asp-route-currentFilter="@ViewData["CurrentFilter"]"
-       class="btn btn-sm btn-outline-info @prevDisabled">
-        <i class="fas fa-arrow-left"></i>
-        Edellinen
-    </a>
-
-    <a asp-action="Index"
-       asp-route-sortOrder="@ViewData["CurrentSort"]"
-       asp-route-pageNumber="@(Model.PageIndex + 1)"
-       asp-route-currentFilter="@ViewData["CurrentFilter"]"
-       class="btn btn-sm btn-outline-info @nextDisabled">
-        Seuraava <i class="fas fa-arrow-right"></i>
-
-    </a>
-   
-
+            @if (Model.HasNextPage)
+            {
+                <a asp-action="Index"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@(Model.PageIndex + 1)"
+                   asp-route-searchString="@ViewData["CurrentFilter"]"
+                   class="nike-btn nike-btn-secondary">
+                    <span>Seuraava →</span>
+                </a>
+            }
+            else
+            {
+                <button class="nike-btn nike-btn-secondary" disabled>
+                    <span>Seuraava →</span>
+                </button>
+            }
+        </div>
+    </div>
+</div>

@@ -4,66 +4,75 @@
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
+<div class="nike-container">
+    <!-- Header -->
+    <div class="nike-delete-header">
+        <h1 class="nike-delete-title">POISTA MATKA</h1>
+        <p class="nike-delete-warning">⚠️ Tämä toiminto ei ole palautettavissa</p>
+    </div>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>BiketripsMay2021</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Departure)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Departure)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Return)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Return)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Departure_station_id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Departure_station_id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Departure_station_name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Departure_station_name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Return_station_id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Return_station_id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Return_station_name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Return_station_name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Covered_distance_m)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Covered_distance_m)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Duration_sec)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Duration_sec)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="ID" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+    <!-- Delete Card -->
+    <div class="nike-delete-card">
+        <div class="nike-delete-message">
+            <h3>Oletko varma, että haluat poistaa tämän matkan?</h3>
+            <p>Kaikki matkaan liittyvät tiedot poistetaan pysyvästi.</p>
+        </div>
+
+        <!-- Trip Info -->
+        <div class="nike-delete-info">
+            <div class="nike-delete-highlight">
+                <h2>@Model?.Departure_station_name → @Model?.Return_station_name</h2>
+                <p>@Model?.Departure.ToString("dd.MM.yyyy HH:mm")</p>
+            </div>
+
+            <div class="nike-trip-route-detail">
+                <div class="nike-route-station">
+                    <span class="nike-route-label">Lähtöasema</span>
+                    <h3 class="nike-route-name">@Model?.Departure_station_name</h3>
+                    <span class="nike-route-id">ID: @Model?.Departure_station_id</span>
+                </div>
+                <div class="nike-route-arrow">→</div>
+                <div class="nike-route-station">
+                    <span class="nike-route-label">Palautusasema</span>
+                    <h3 class="nike-route-name">@Model?.Return_station_name</h3>
+                    <span class="nike-route-id">ID: @Model?.Return_station_id</span>
+                </div>
+            </div>
+
+            <div class="nike-delete-details">
+                <div class="nike-delete-item">
+                    <span class="nike-detail-label">Lähtöaika</span>
+                    <span class="nike-detail-value">@Model?.Departure.ToString("dd.MM.yyyy HH:mm:ss")</span>
+                </div>
+
+                <div class="nike-delete-item">
+                    <span class="nike-detail-label">Palautusaika</span>
+                    <span class="nike-detail-value">@Model?.Return.ToString("dd.MM.yyyy HH:mm:ss")</span>
+                </div>
+
+                <div class="nike-delete-item">
+                    <span class="nike-detail-label">Matka</span>
+                    <span class="nike-detail-value">@(((double)Model!.Covered_distance_m / 1000).ToString("F2")) km</span>
+                </div>
+
+                <div class="nike-delete-item">
+                    <span class="nike-detail-label">Kesto</span>
+                    <span class="nike-detail-value">@TimeSpan.FromSeconds(Model.Duration_sec).ToString(@"hh\:mm\:ss")</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="ID" />
+            <div class="nike-delete-actions">
+                <button type="submit" class="nike-btn nike-btn-danger nike-btn-large">
+                    <span>Kyllä, Poista Matka</span>
+                </button>
+                <a asp-action="Index" class="nike-btn nike-btn-secondary nike-btn-large">
+                    <span>Peruuta</span>
+                </a>
+            </div>
+        </form>
+    </div>
 </div>
