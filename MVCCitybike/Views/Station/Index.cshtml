@@ -4,104 +4,82 @@
     ViewData["Title"] = "Index";
 }
 
-<button class="btn btn-outline-secondary" onclick="changeTableBGColor('white'),changeFontColor('black'),changeFont('Arial, sans-serif'), changeFontSize(10)">Oletusasetukset</button>
-<button class="btn btn-outline-secondary" onclick="changeFontSize(15)">Suurenna teksti (15px)</button>
-<button class="btn btn-outline-secondary" onclick="changeFontColor('olive'), changeFont('Roboto')">Vaihda tekstin väriä ja tyyliä</button>
-<button class="btn btn-outline-secondary" onclick="changeTableBGColor('lightgrey')">Muuta taulukon otsikon taustaväri</button>
-<hr />
-<h1>Asemaluettelo</h1>
+<div class="nike-container">
+    <!-- Hero Section -->
+    <div class="nike-hero">
+        <h1 class="nike-title">ASEMALUETTELO</h1>
+        <p class="nike-subtitle">Hallinnoi pyöräasemia moderneilla työkaluilla</p>
+    </div>
 
-<p>
-    <a asp-action="Create" class="btn btn-outline-success">
-        Luo uusi
-    </a>
-</p>
+    <!-- Action Bar -->
+    <div class="nike-action-bar">
+        <a asp-action="Create" class="nike-btn nike-btn-primary">
+            <span>+ Luo Uusi Asema</span>
+        </a>
+    </div>
 
-<section class="d-flex justify-content-evenly mb-2">
-    <article>
-        <form asp-controller="Station" asp-action="Index" method="get">
-            <p>
-                <div class="input-group mb-3">
-                    <select class="form-select form-select-l" asp-for="StationKaupunki" asp-items="Model.Kaupungit">
-                        <option value="">Kaupunki</option>
+    <!-- Search Section -->
+    <div class="nike-search-section">
+        <form asp-controller="Station" asp-action="Index" method="get" class="nike-search-form">
+            <div class="nike-search-inputs">
+                <div class="nike-input-group">
+                    <select class="nike-select" asp-for="StationKaupunki" asp-items="Model.Kaupungit">
+                        <option value="">Valitse kaupunki</option>
                     </select>
-                    <input type="text" class="form-control" name="SearchItem" placeholder="Aseman nimi..">
-                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Etsi</button>
                 </div>
-            </p>
+                <div class="nike-input-group flex-grow">
+                    <input type="text" class="nike-input" name="SearchItem" placeholder="Etsi aseman nimellä...">
+                </div>
+                <button class="nike-btn nike-btn-search" type="submit">
+                    <span>Etsi</span>
+                </button>
+            </div>
         </form>
-    </article>
-</section>
+    </div>
 
-<table class="stations-table text-container" id="textContainer">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Stations![0].FID)
-            </th>
-            <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">
-                    Aseman nimi
-                    <i class="fas fa-arrow-down"></i>
-                    <i class="fas fa-arrow-up"></i>
-                </a>
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Stations![0].Osoite)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Stations![0].Kaupunki)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Stations![0].Operaattor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Stations![0].Kapasiteet)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Stations![0].x) (LNG)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Stations![0].y) (LAT)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+    <!-- Stations Grid -->
+    <div class="nike-stations-grid">
         @foreach (var item in Model.Stations!)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nimi)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Osoite)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Kaupunki)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Operaattor)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Kapasiteet)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.x)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.y)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">Muokkaa</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID">Lisätiedot</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID">Poista</a>
-                </td>
-            </tr>
+            <div class="nike-station-card">
+                <div class="nike-card-header">
+                    <span class="nike-card-id">ID: @item.FID</span>
+                    <span class="nike-card-capacity">@item.Kapasiteet kapasiteetti</span>
+                </div>
+                <div class="nike-card-body">
+                    <h3 class="nike-card-title">@item.Nimi</h3>
+                    <div class="nike-card-info">
+                        <div class="nike-info-item">
+                            <span class="nike-info-label">Osoite</span>
+                            <span class="nike-info-value">@item.Osoite</span>
+                        </div>
+                        <div class="nike-info-item">
+                            <span class="nike-info-label">Kaupunki</span>
+                            <span class="nike-info-value">@item.Kaupunki</span>
+                        </div>
+                        <div class="nike-info-item">
+                            <span class="nike-info-label">Operaattori</span>
+                            <span class="nike-info-value">@item.Operaattor</span>
+                        </div>
+                        <div class="nike-info-item">
+                            <span class="nike-info-label">Koordinaatit</span>
+                            <span class="nike-info-value">@item.y, @item.x</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="nike-card-actions">
+                    <a asp-action="Details" asp-route-id="@item.ID" class="nike-action-link">
+                        <span>Lisätiedot</span>
+                    </a>
+                    <a asp-action="Edit" asp-route-id="@item.ID" class="nike-action-link">
+                        <span>Muokkaa</span>
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@item.ID" class="nike-action-link nike-action-link-danger">
+                        <span>Poista</span>
+                    </a>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+    </div>
+</div>
 

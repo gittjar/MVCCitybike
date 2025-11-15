@@ -4,92 +4,115 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Luo uusi asema</h1>
+<div class="nike-container">
+    <!-- Header -->
+    <div class="nike-form-header">
+        <h1 class="nike-form-title">LUO UUSI ASEMA</h1>
+        <p class="nike-form-subtitle">Täytä aseman tiedot alla olevaan lomakkeeseen</p>
+    </div>
 
-<h4>Asema</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+    <!-- Form Card -->
+    <div class="nike-form-card">
         <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="FID" class="control-label"></label>
-                <input asp-for="FID" class="form-control" />
-                <span asp-validation-for="FID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Nimi" class="control-label"></label>
-                <input asp-for="Nimi" class="form-control" />
-                <span asp-validation-for="Nimi" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Namn" class="control-label"></label>
-                <input asp-for="Namn" class="form-control" />
-                <span asp-validation-for="Namn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Osoite" class="control-label"></label>
-                <input asp-for="Osoite" class="form-control" />
-                <span asp-validation-for="Osoite" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Adress" class="control-label"></label>
-                <input asp-for="Adress" class="form-control" />
-                <span asp-validation-for="Adress" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Kaupunki" class="control-label"></label>
-                <input asp-for="Kaupunki" class="form-control" />
-                <span asp-validation-for="Kaupunki" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Stad" class="control-label"></label>
-                <input asp-for="Stad" class="form-control" />
-                <span asp-validation-for="Stad" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Operaattor" class="control-label"></label>
-                <input asp-for="Operaattor" class="form-control" />
-                <span asp-validation-for="Operaattor" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Kapasiteet" class="control-label"></label>
-                <input asp-for="Kapasiteet" class="form-control" />
-                <span asp-validation-for="Kapasiteet" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                LNG
-                <label asp-for="x" class="control-label"></label>
-                <input asp-for="x" class="form-control" />
-                <span asp-validation-for="x" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                LAT
-                <label asp-for="y" class="control-label"></label>
-                <input asp-for="y" class="form-control" />
-                <span asp-validation-for="y" class="text-danger"></span>
-            </div>
-           
-            <div class="form-group">
-                <label asp-for="Kuva" class="control-label"></label>
-                <input asp-for="Kuva" class="form-control" />
-            </div>
-       
+            <div asp-validation-summary="ModelOnly" class="nike-validation-summary"></div>
+            
+            <div class="nike-form-grid">
+                <!-- Column 1 -->
+                <div class="nike-form-column">
+                    <div class="nike-form-group">
+                        <label asp-for="FID" class="nike-label">FID</label>
+                        <input asp-for="FID" class="nike-input" />
+                        <span asp-validation-for="FID" class="nike-validation"></span>
+                    </div>
 
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                    <div class="nike-form-group">
+                        <label asp-for="Nimi" class="nike-label">Nimi (FI)</label>
+                        <input asp-for="Nimi" class="nike-input" />
+                        <span asp-validation-for="Nimi" class="nike-validation"></span>
+                    </div>
+
+                    <div class="nike-form-group">
+                        <label asp-for="Namn" class="nike-label">Namn (SE)</label>
+                        <input asp-for="Namn" class="nike-input" />
+                        <span asp-validation-for="Namn" class="nike-validation"></span>
+                    </div>
+
+                    <div class="nike-form-group">
+                        <label asp-for="Name" class="nike-label">Name (EN)</label>
+                        <input asp-for="Name" class="nike-input" />
+                        <span asp-validation-for="Name" class="nike-validation"></span>
+                    </div>
+
+                    <div class="nike-form-group">
+                        <label asp-for="Osoite" class="nike-label">Osoite (FI)</label>
+                        <input asp-for="Osoite" class="nike-input" />
+                        <span asp-validation-for="Osoite" class="nike-validation"></span>
+                    </div>
+
+                    <div class="nike-form-group">
+                        <label asp-for="Adress" class="nike-label">Adress (SE)</label>
+                        <input asp-for="Adress" class="nike-input" />
+                        <span asp-validation-for="Adress" class="nike-validation"></span>
+                    </div>
+                </div>
+
+                <!-- Column 2 -->
+                <div class="nike-form-column">
+                    <div class="nike-form-group">
+                        <label asp-for="Kaupunki" class="nike-label">Kaupunki (FI)</label>
+                        <input asp-for="Kaupunki" class="nike-input" />
+                        <span asp-validation-for="Kaupunki" class="nike-validation"></span>
+                    </div>
+
+                    <div class="nike-form-group">
+                        <label asp-for="Stad" class="nike-label">Stad (SE)</label>
+                        <input asp-for="Stad" class="nike-input" />
+                        <span asp-validation-for="Stad" class="nike-validation"></span>
+                    </div>
+
+                    <div class="nike-form-group">
+                        <label asp-for="Operaattor" class="nike-label">Operaattori</label>
+                        <input asp-for="Operaattor" class="nike-input" />
+                        <span asp-validation-for="Operaattor" class="nike-validation"></span>
+                    </div>
+
+                    <div class="nike-form-group">
+                        <label asp-for="Kapasiteet" class="nike-label">Kapasiteetti</label>
+                        <input asp-for="Kapasiteet" class="nike-input" />
+                        <span asp-validation-for="Kapasiteet" class="nike-validation"></span>
+                    </div>
+
+                    <div class="nike-form-group">
+                        <label asp-for="x" class="nike-label">Longitude (X)</label>
+                        <input asp-for="x" class="nike-input" />
+                        <span asp-validation-for="x" class="nike-validation"></span>
+                    </div>
+
+                    <div class="nike-form-group">
+                        <label asp-for="y" class="nike-label">Latitude (Y)</label>
+                        <input asp-for="y" class="nike-input" />
+                        <span asp-validation-for="y" class="nike-validation"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Full Width -->
+            <div class="nike-form-group nike-form-full">
+                <label asp-for="Kuva" class="nike-label">Kuvan URL</label>
+                <input asp-for="Kuva" class="nike-input" />
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="nike-form-actions">
+                <button type="submit" class="nike-btn nike-btn-primary nike-btn-large">
+                    <span>Luo Asema</span>
+                </button>
+                <a asp-action="Index" class="nike-btn nike-btn-secondary nike-btn-large">
+                    <span>Peruuta</span>
+                </a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
