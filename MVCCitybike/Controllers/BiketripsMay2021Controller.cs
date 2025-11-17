@@ -118,10 +118,23 @@ namespace MVCCitybike.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(biketripsMay2021);
-                await _context.SaveChangesAsync();
-                TempData["SuccessMessage"] = $"Pyörämatka {biketripsMay2021.Departure_station_name} → {biketripsMay2021.Return_station_name} luotu onnistuneesti!";
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    _context.Add(biketripsMay2021);
+                    await _context.SaveChangesAsync();
+                    TempData["SuccessMessage"] = $"Pyörämatka {biketripsMay2021.Departure_station_name} → {biketripsMay2021.Return_station_name} luotu onnistuneesti!";
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException ex)
+                {
+                    TempData["ErrorMessage"] = $"Tietokantavirhe: {ex.InnerException?.Message ?? ex.Message}";
+                    return View(biketripsMay2021);
+                }
+                catch (Exception ex)
+                {
+                    TempData["ErrorMessage"] = $"Virhe tallennettaessa: {ex.Message}";
+                    return View(biketripsMay2021);
+                }
             }
             TempData["ErrorMessage"] = "Pyörämatkan luominen epäonnistui. Tarkista lomakkeen tiedot.";
             return View(biketripsMay2021);
@@ -172,9 +185,19 @@ namespace MVCCitybike.Controllers
                     }
                     else
                     {
-                        TempData["ErrorMessage"] = "Virhe tallennettaessa. Yritä uudelleen.";
-                        throw;
+                        TempData["ErrorMessage"] = "Samanaikainen muokkaus havaittiin. Yritä uudelleen.";
+                        return View(biketripsMay2021);
                     }
+                }
+                catch (DbUpdateException ex)
+                {
+                    TempData["ErrorMessage"] = $"Tietokantavirhe: {ex.InnerException?.Message ?? ex.Message}";
+                    return View(biketripsMay2021);
+                }
+                catch (Exception ex)
+                {
+                    TempData["ErrorMessage"] = $"Virhe tallennettaessa: {ex.Message}";
+                    return View(biketripsMay2021);
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -209,17 +232,29 @@ namespace MVCCitybike.Controllers
             {
                 return Problem("Entity set 'MvcBiketripsMay2021Context.BiketripsMay2021'  is null.");
             }
-            var biketripsMay2021 = await _context.BiketripsMay2021.FindAsync(id);
-            if (biketripsMay2021 != null)
+            
+            try
             {
-                var tripInfo = $"{biketripsMay2021.Departure_station_name} → {biketripsMay2021.Return_station_name}";
-                _context.BiketripsMay2021.Remove(biketripsMay2021);
-                await _context.SaveChangesAsync();
-                TempData["SuccessMessage"] = $"Pyörämatka ({tripInfo}) poistettu onnistuneesti!";
+                var biketripsMay2021 = await _context.BiketripsMay2021.FindAsync(id);
+                if (biketripsMay2021 != null)
+                {
+                    var tripInfo = $"{biketripsMay2021.Departure_station_name} → {biketripsMay2021.Return_station_name}";
+                    _context.BiketripsMay2021.Remove(biketripsMay2021);
+                    await _context.SaveChangesAsync();
+                    TempData["SuccessMessage"] = $"Pyörämatka ({tripInfo}) poistettu onnistuneesti!";
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Pyörämatkaa ei löytynyt poistettavaksi.";
+                }
             }
-            else
+            catch (DbUpdateException ex)
             {
-                TempData["ErrorMessage"] = "Pyörämatkaa ei löytynyt poistettavaksi.";
+                TempData["ErrorMessage"] = $"Tietokantavirhe poistettaessa: {ex.InnerException?.Message ?? ex.Message}";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Virhe poistettaessa: {ex.Message}";
             }
             
             return RedirectToAction(nameof(Index));

@@ -115,10 +115,35 @@ namespace MVCCitybike.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(station);
-                await _context.SaveChangesAsync();
-                TempData["SuccessMessage"] = $"Asema '{station.Nimi}' luotu onnistuneesti!";
-                return RedirectToAction(nameof(Index));
+                // Set default values for nullable fields if they're empty
+                if (string.IsNullOrWhiteSpace(station.Namn))
+                    station.Namn = station.Nimi;
+                if (string.IsNullOrWhiteSpace(station.Name))
+                    station.Name = station.Nimi;
+                if (string.IsNullOrWhiteSpace(station.Adress))
+                    station.Adress = station.Osoite;
+                if (string.IsNullOrWhiteSpace(station.Stad))
+                    station.Stad = station.Kaupunki;
+                if (string.IsNullOrWhiteSpace(station.Operaattor))
+                    station.Operaattor = "CityBike Finland";
+                
+                try
+                {
+                    _context.Add(station);
+                    await _context.SaveChangesAsync();
+                    TempData["SuccessMessage"] = $"Asema '{station.Nimi}' luotu onnistuneesti!";
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException ex)
+                {
+                    TempData["ErrorMessage"] = $"Tietokantavirhe: {ex.InnerException?.Message ?? ex.Message}";
+                    return View(station);
+                }
+                catch (Exception ex)
+                {
+                    TempData["ErrorMessage"] = $"Virhe tallennettaessa: {ex.Message}";
+                    return View(station);
+                }
             }
             TempData["ErrorMessage"] = "Aseman luominen epäonnistui. Tarkista lomakkeen tiedot.";
             return View(station);
@@ -156,6 +181,17 @@ namespace MVCCitybike.Controllers
 
             if (ModelState.IsValid)
             {
+                // Set default values for nullable fields if they're empty
+                if (string.IsNullOrWhiteSpace(station.Namn))
+                    station.Namn = station.Nimi;
+                if (string.IsNullOrWhiteSpace(station.Name))
+                    station.Name = station.Nimi;
+                if (string.IsNullOrWhiteSpace(station.Adress))
+                    station.Adress = station.Osoite;
+                if (string.IsNullOrWhiteSpace(station.Stad))
+                    station.Stad = station.Kaupunki;
+                if (string.IsNullOrWhiteSpace(station.Operaattor))
+                    station.Operaattor = "CityBike Finland";
 
                 try
                 {
@@ -172,9 +208,19 @@ namespace MVCCitybike.Controllers
                     }
                     else
                     {
-                        TempData["ErrorMessage"] = "Virhe tallennettaessa. Yritä uudelleen.";
-                        throw;
+                        TempData["ErrorMessage"] = "Samanaikainen muokkaus havaittiin. Yritä uudelleen.";
+                        return View(station);
                     }
+                }
+                catch (DbUpdateException ex)
+                {
+                    TempData["ErrorMessage"] = $"Tietokantavirhe: {ex.InnerException?.Message ?? ex.Message}";
+                    return View(station);
+                }
+                catch (Exception ex)
+                {
+                    TempData["ErrorMessage"] = $"Virhe tallennettaessa: {ex.Message}";
+                    return View(station);
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -210,17 +256,29 @@ namespace MVCCitybike.Controllers
             {
                 return Problem("Entity set 'MvcStationContext.Station'  is null.");
             }
-            var station = await _context.Station.FindAsync(id);
-            if (station != null)
+            
+            try
             {
-                var stationName = station.Nimi;
-                _context.Station.Remove(station);
-                await _context.SaveChangesAsync();
-                TempData["SuccessMessage"] = $"Asema '{stationName}' poistettu onnistuneesti!";
+                var station = await _context.Station.FindAsync(id);
+                if (station != null)
+                {
+                    var stationName = station.Nimi;
+                    _context.Station.Remove(station);
+                    await _context.SaveChangesAsync();
+                    TempData["SuccessMessage"] = $"Asema '{stationName}' poistettu onnistuneesti!";
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Asemaa ei löytynyt poistettavaksi.";
+                }
             }
-            else
+            catch (DbUpdateException ex)
             {
-                TempData["ErrorMessage"] = "Asemaa ei löytynyt poistettavaksi.";
+                TempData["ErrorMessage"] = $"Tietokantavirhe poistettaessa: {ex.InnerException?.Message ?? ex.Message}";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Virhe poistettaessa: {ex.Message}";
             }
             
             return RedirectToAction(nameof(Index));
