@@ -22,7 +22,7 @@ FEATURES
 
 ENVIRONMENT SETUP
 -----------------
-Required: .NET 10.0 SDK
+Required: .NET 8.0 SDK (LTS)
 Install:  brew install --cask dotnet-sdk
 
 Create .env file in /MVCCitybike/MVCCitybike/.env:
@@ -69,7 +69,7 @@ Missing Packages:
 
 TECH STACK
 ----------
-- ASP.NET Core MVC (.NET 10.0)
+- ASP.NET Core MVC (.NET 8.0 LTS)
 - Entity Framework Core 8.0
 - Azure SQL Database / SQLite
 - Bootstrap 5 (UI)
