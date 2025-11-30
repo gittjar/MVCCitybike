@@ -36,12 +36,9 @@ foreach (var path in envPaths)
 
 if (!envLoaded)
 {
-    Console.WriteLine($"❌ ERROR: .env file not found in any of these locations:");
-    foreach (var path in envPaths)
-    {
-        Console.WriteLine($"   - {Path.GetFullPath(path)}");
-    }
-    throw new FileNotFoundException("Required .env file not found!");
+    Console.WriteLine($"⚠️  .env file not found - checking if environment variables are already set (Azure App Service)");
+    // In Azure, environment variables come from Application Settings, not .env file
+    // So we don't throw an error if .env is missing
 }
 
 // Build connection string from environment variables
