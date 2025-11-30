@@ -1,0 +1,125 @@
+@model MVCCitybike.Controllers.TestResultViewModel
+@{
+    ViewData["Title"] = "Test Results";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>🧪 Test Results</h1>
+            
+            @if (Model.Success)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <h4 class="alert-heading">✅ All Tests Passed!</h4>
+                    <p>All automated tests completed successfully. Your application is working correctly!</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <h4 class="alert-heading">❌ Tests Failed</h4>
+                    <p>Some tests did not pass. Please review the output below for details.</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            <!-- Test Summary Cards -->
+            <div class="row mt-4 mb-4">
+                <div class="col-md-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Tests</h5>
+                            <h2 class="text-primary">@Model.TotalTests</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">Passed</h5>
+                            <h2 class="text-success">@Model.PassedTests</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">Failed</h5>
+                            <h2 class="text-danger">@Model.FailedTests</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">Duration</h5>
+                            <h2 class="text-info">@Model.Duration.TotalSeconds.ToString("F1")s</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Output -->
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">📄 Detailed Output</h5>
+                </div>
+                <div class="card-body">
+                    <pre class="test-output bg-light p-3" style="max-height: 600px; overflow-y: auto;">@Model.Output</pre>
+                </div>
+            </div>
+
+            <!-- Test Info -->
+            <div class="card mt-4">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Started:</strong> @Model.StartTime.ToString("yyyy-MM-dd HH:mm:ss")</p>
+                            <p><strong>Completed:</strong> @Model.EndTime.ToString("yyyy-MM-dd HH:mm:ss")</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Exit Code:</strong> @Model.ExitCode</p>
+                            <p><strong>Status:</strong> 
+                                @if (Model.Success)
+                                {
+                                    <span class="badge bg-success">Success</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">Failed</span>
+                                }
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="mt-4 text-center">
+                <a asp-action="Index" class="btn btn-primary btn-lg">
+                    <i class="bi bi-arrow-repeat"></i> Run Tests Again
+                </a>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-secondary btn-lg">
+                    <i class="bi bi-house"></i> Back to Home
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .test-output {
+        font-family: 'Courier New', monospace;
+        font-size: 0.9rem;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        border: 1px solid #dee2e6;
+        border-radius: 0.25rem;
+    }
+    
+    .card {
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+</style>
