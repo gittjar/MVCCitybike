@@ -1,16 +1,15 @@
-# ASP.NET Core
-# Build and test ASP.NET Core projects targeting .NET 8.0
-# Updated for modern .NET Core deployment
+# ASP.NET Core - Ubuntu (Alternative)
+# Faster Linux-based pipeline for .NET 8.0
+# Use this if you want faster build times
 
 trigger:
 - develop
 
 pool:
-  vmImage: 'windows-2022'  # Using Windows Server 2022 (supported until 2026+)
+  vmImage: 'ubuntu-latest'  # Ubuntu 22.04 - faster than Windows
 
 variables:
   solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   dotnetVersion: '8.x'
 
