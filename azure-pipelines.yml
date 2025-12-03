@@ -1,12 +1,14 @@
 # ASP.NET Core
-# Build and test ASP.NET Core projects targeting .NET 8.0
-# Simplified pipeline to avoid service connection issues
+# Minimal pipeline using Microsoft-hosted agents
+# Avoids deprecated Windows 2019 pool
 
 trigger:
 - develop
 
+# Use Microsoft-hosted agent (not specific pool)
 pool:
-  vmImage: 'windows-latest'  # Will use latest available Windows (currently 2022)
+  name: Azure Pipelines
+  vmImage: 'windows-latest'
 
 variables:
   buildConfiguration: 'Release'
@@ -14,51 +16,47 @@ variables:
 steps:
 # Install .NET 8.0 SDK
 - task: UseDotNet@2
-  displayName: 'Install .NET 8 SDK'
+  displayName: 'Use .NET 8.0'
   inputs:
-    version: '8.x'
-    packageType: sdk
+    version: '8.0.x'
     
-# Restore dependencies
-- script: dotnet restore
-  displayName: 'Restore NuGet packages'
+# Restore
+- task: CmdLine@2
+  displayName: 'Restore packages'
+  inputs:
+    script: 'dotnet restore'
     
 # Build
-- script: dotnet build --configuration $(buildConfiguration) --no-restore
-  displayName: 'Build solution'
+- task: CmdLine@2
+  displayName: 'Build'
+  inputs:
+    script: 'dotnet build --configuration $(buildConfiguration) --no-restore'
     
 # Test
-- script: dotnet test --configuration $(buildConfiguration) --no-build --logger trx --results-directory $(Build.ArtifactStagingDirectory)/TestResults
-  displayName: 'Run tests'
+- task: CmdLine@2
+  displayName: 'Test'
+  inputs:
+    script: 'dotnet test --configuration $(buildConfiguration) --no-build --logger trx'
   continueOnError: true
     
-# Publish test results
-- task: PublishTestResults@2
-  displayName: 'Publish test results'
+# Publish
+- task: CmdLine@2
+  displayName: 'Publish'
   inputs:
-    testResultsFormat: 'VSTest'
-    testResultsFiles: '$(Build.ArtifactStagingDirectory)/TestResults/*.trx'
-    mergeTestResults: true
-  condition: always()
+    script: 'dotnet publish MVCCitybike/MVCCitybike.csproj --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/app --no-build'
     
-# Publish application
-- script: dotnet publish MVCCitybike/MVCCitybike.csproj --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/publish --no-build
-  displayName: 'Publish application'
-    
-# Create zip archive
+# Zip
 - task: ArchiveFiles@2
-  displayName: 'Create deployment package'
+  displayName: 'Archive files'
   inputs:
-    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/publish'
+    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/app'
     includeRootFolder: false
     archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
+    archiveFile: '$(Build.ArtifactStagingDirectory)/app.zip'
     
-# Publish artifacts
+# Upload
 - task: PublishBuildArtifacts@1
-  displayName: 'Publish artifacts'
+  displayName: 'Publish artifact'
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/app.zip'
     ArtifactName: 'drop'
-    publishLocation: 'Container'
