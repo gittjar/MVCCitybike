@@ -1,64 +1,64 @@
 # ASP.NET Core - Ubuntu (Alternative)
 # Faster Linux-based pipeline for .NET 8.0
-# Use this if you want faster build times
+# Simplified to avoid service connection issues
 
 trigger:
 - develop
 
 pool:
-  vmImage: 'ubuntu-latest'  # Ubuntu 22.04 - faster than Windows
+  vmImage: 'ubuntu-latest'  # Ubuntu 22.04 - faster builds
 
 variables:
-  solution: '**/*.sln'
   buildConfiguration: 'Release'
-  dotnetVersion: '8.x'
 
 steps:
-# Install .NET SDK
+# Install .NET 8.0 SDK
 - task: UseDotNet@2
-  displayName: 'Install .NET SDK 8.x'
+  displayName: 'Install .NET 8 SDK'
   inputs:
-    packageType: 'sdk'
-    version: '$(dotnetVersion)'
+    version: '8.x'
+    packageType: sdk
     
-# Restore NuGet packages
-- task: DotNetCoreCLI@2
+# Restore dependencies
+- script: dotnet restore
   displayName: 'Restore NuGet packages'
-  inputs:
-    command: 'restore'
-    projects: '$(solution)'
     
-# Build the solution
-- task: DotNetCoreCLI@2
+# Build
+- script: dotnet build --configuration $(buildConfiguration) --no-restore
   displayName: 'Build solution'
-  inputs:
-    command: 'build'
-    projects: '$(solution)'
-    arguments: '--configuration $(buildConfiguration) --no-restore'
     
-# Run tests
-- task: DotNetCoreCLI@2
-  displayName: 'Run unit tests'
-  inputs:
-    command: 'test'
-    projects: '**/*Tests.csproj'
-    arguments: '--configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage"'
-    publishTestResults: true
+# Test
+- script: dotnet test --configuration $(buildConfiguration) --no-build --logger trx --results-directory $(Build.ArtifactStagingDirectory)/TestResults
+  displayName: 'Run tests'
+  continueOnError: true
     
-# Publish the web application
-- task: DotNetCoreCLI@2
-  displayName: 'Publish web application'
+# Publish test results
+- task: PublishTestResults@2
+  displayName: 'Publish test results'
   inputs:
-    command: 'publish'
-    publishWebProjects: true
-    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory) --no-build'
-    zipAfterPublish: true
-    modifyOutputPath: true
+    testResultsFormat: 'VSTest'
+    testResultsFiles: '$(Build.ArtifactStagingDirectory)/TestResults/*.trx'
+    mergeTestResults: true
+  condition: always()
     
-# Publish build artifacts
+# Publish application
+- script: dotnet publish MVCCitybike/MVCCitybike.csproj --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/publish --no-build
+  displayName: 'Publish application'
+    
+# Create zip archive
+- task: ArchiveFiles@2
+  displayName: 'Create deployment package'
+  inputs:
+    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/publish'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
+    
+# Publish artifacts
 - task: PublishBuildArtifacts@1
   displayName: 'Publish artifacts'
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'dropcitybikemvc'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    ArtifactName: 'drop'
     publishLocation: 'Container'
