@@ -1,3 +1,5 @@
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment HostEnvironment
+
 @{
     ViewData["Title"] = "Run Tests";
 }
@@ -7,6 +9,20 @@
         <div class="col-md-12">
             <h1>🧪 Automated Testing Dashboard</h1>
             <p class="lead">Run automated unit tests to verify application functionality</p>
+            
+            @if (!HostEnvironment.IsDevelopment())
+            {
+                <div class="alert alert-warning">
+                    <h5><i class="bi bi-exclamation-triangle"></i> Production Environment Detected</h5>
+                    <p>
+                        Test execution is limited in production environments for security and performance reasons.
+                        The test dashboard is available to view test information, but running tests requires a development environment.
+                    </p>
+                    <p class="mb-0">
+                        <strong>To run tests:</strong> Clone the repository and run <code>dotnet test</code> locally.
+                    </p>
+                </div>
+            }
             
             <div class="card mt-4">
                 <div class="card-header bg-primary text-white">

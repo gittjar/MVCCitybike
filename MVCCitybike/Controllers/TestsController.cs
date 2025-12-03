@@ -6,6 +6,13 @@ namespace MVCCitybike.Controllers
 {
     public class TestsController : Controller
     {
+        private readonly IWebHostEnvironment _environment;
+
+        public TestsController(IWebHostEnvironment environment)
+        {
+            _environment = environment;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -22,6 +29,20 @@ namespace MVCCitybike.Controllers
 
             try
             {
+                // Check if test project exists (only in development)
+                var testProjectPath = Path.Combine(Directory.GetCurrentDirectory(), "..", "MVCCitybike.Tests");
+                
+                if (!Directory.Exists(testProjectPath))
+                {
+                    testResults.Success = false;
+                    testResults.Output = "⚠️ Test execution is only available in development environment.\n\n" +
+                                       "Tests are not deployed to production for security and performance reasons.\n" +
+                                       "Please run tests locally using: dotnet test\n\n" +
+                                       "Environment: " + _environment.EnvironmentName;
+                    testResults.EndTime = DateTime.Now;
+                    return View("Results", testResults);
+                }
+
                 // Run dotnet test command
                 var process = new Process
                 {
@@ -29,7 +50,7 @@ namespace MVCCitybike.Controllers
                     {
                         FileName = "dotnet",
                         Arguments = "test --no-build --verbosity normal",
-                        WorkingDirectory = Path.Combine(Directory.GetCurrentDirectory(), "..", "MVCCitybike.Tests"),
+                        WorkingDirectory = testProjectPath,
                         RedirectStandardOutput = true,
                         RedirectStandardError = true,
                         UseShellExecute = false,
