@@ -4,60 +4,121 @@
     ViewData["Title"] = "Delete";
 }
 
-<div class="citybike-container">
-    @await Html.PartialAsync("_CitybikeDeleteWarning", ("POISTA MATKA", "matkan"))
+<div class="container-fluid py-4">
+    <div class="text-center mb-4">
+        <h1 class="display-5 fw-bold text-danger">⚠️ POISTA MATKA</h1>
+        <p class="lead text-muted">Tämä toiminto ei ole palautettavissa</p>
+    </div>
 
-    <div class="citybike-delete-card">
-        <div class="citybike-delete-info">
-            <div class="citybike-delete-highlight">
-                <h2>@Model?.Departure_station_name → @Model?.Return_station_name</h2>
-                <p>@Model?.Departure.ToString("dd.MM.yyyy HH:mm")</p>
-            </div>
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <div class="card shadow-lg border-danger">
+                <div class="card-header bg-danger text-white text-center py-4">
+                    <h3 class="mb-0">Oletko varma, että haluat poistaa tämän matkan?</h3>
+                    <small>Kaikki matkaan liittyvät tiedot poistetaan pysyvästi.</small>
+                </div>
 
-            <div class="citybike-trip-route-detail">
-                <div class="citybike-route-station">
-                    <span class="citybike-route-label">Lähtöasema</span>
-                    <h3 class="citybike-route-name">@Model?.Departure_station_name</h3>
-                    <span class="citybike-route-id">ID: @Model?.Departure_station_id</span>
-                </div>
-                <div class="citybike-route-arrow">→</div>
-                <div class="citybike-route-station">
-                    <span class="citybike-route-label">Palautusasema</span>
-                    <h3 class="citybike-route-name">@Model?.Return_station_name</h3>
-                    <span class="citybike-route-id">ID: @Model?.Return_station_id</span>
-                </div>
-            </div>
+                <div class="card-body">
+                    <div class="alert alert-warning text-center mb-4">
+                        <h4 class="fw-bold mb-1">@Model?.Departure_station_name → @Model?.Return_station_name</h4>
+                        <p class="mb-0">@Model?.Departure.ToString("dd.MM.yyyy HH:mm")</p>
+                    </div>
 
-            <div class="citybike-delete-details">
-                <div class="citybike-delete-item">
-                    <span class="citybike-detail-label">Lähtöaika</span>
-                    <span class="citybike-detail-value">@Model?.Departure.ToString("dd.MM.yyyy HH:mm:ss")</span>
+                    <!-- Route Overview -->
+                    <div class="card bg-light mb-4">
+                        <div class="card-body">
+                            <div class="row align-items-center text-center">
+                                <div class="col-md-5">
+                                    <small class="text-muted text-uppercase">Lähtöasema</small>
+                                    <h5 class="fw-bold mb-1">@Model?.Departure_station_name</h5>
+                                    <small class="text-muted">ID: @Model?.Departure_station_id</small>
+                                </div>
+                                <div class="col-md-2">
+                                    <h2 class="mb-0 text-primary">→</h2>
+                                </div>
+                                <div class="col-md-5">
+                                    <small class="text-muted text-uppercase">Palautusasema</small>
+                                    <h5 class="fw-bold mb-1">@Model?.Return_station_name</h5>
+                                    <small class="text-muted">ID: @Model?.Return_station_id</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Trip Stats -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-4">
+                            <div class="card text-center border-primary">
+                                <div class="card-body">
+                                    <h4 class="text-primary fw-bold">@(((double)Model!.Covered_distance_m / 1000).ToString("F2")) km</h4>
+                                    <small class="text-muted">Matka</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card text-center border-success">
+                                <div class="card-body">
+                                    <h4 class="text-success fw-bold">@TimeSpan.FromSeconds(Model.Duration_sec).ToString(@"hh\:mm\:ss")</h4>
+                                    <small class="text-muted">Kesto</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card text-center border-info">
+                                <div class="card-body">
+                                    <h4 class="text-info fw-bold">@Html.CalculateSpeed(Model.Covered_distance_m, Model.Duration_sec)</h4>
+                                    <small class="text-muted">Keskinopeus</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Trip Details -->
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <h5 class="fw-bold text-success border-bottom pb-2 mb-3">Lähtötiedot</h5>
+                            <dl class="row mb-0">
+                                <dt class="col-sm-5 text-muted">Lähtöaika</dt>
+                                <dd class="col-sm-7 fw-bold">@Model?.Departure.ToString("dd.MM.yyyy HH:mm:ss")</dd>
+                                
+                                <dt class="col-sm-5 text-muted">Lähtöasema</dt>
+                                <dd class="col-sm-7 fw-bold">@Model?.Departure_station_name</dd>
+                                
+                                <dt class="col-sm-5 text-muted">Aseman ID</dt>
+                                <dd class="col-sm-7"><span class="badge bg-success">@Model?.Departure_station_id</span></dd>
+                            </dl>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <h5 class="fw-bold text-danger border-bottom pb-2 mb-3">Palautustiedot</h5>
+                            <dl class="row mb-0">
+                                <dt class="col-sm-5 text-muted">Palautusaika</dt>
+                                <dd class="col-sm-7 fw-bold">@Model?.Return.ToString("dd.MM.yyyy HH:mm:ss")</dd>
+                                
+                                <dt class="col-sm-5 text-muted">Palautusasema</dt>
+                                <dd class="col-sm-7 fw-bold">@Model?.Return_station_name</dd>
+                                
+                                <dt class="col-sm-5 text-muted">Aseman ID</dt>
+                                <dd class="col-sm-7"><span class="badge bg-danger">@Model?.Return_station_id</span></dd>
+                            </dl>
+                        </div>
+                    </div>
                 </div>
-                <div class="citybike-delete-item">
-                    <span class="citybike-detail-label">Palautusaika</span>
-                    <span class="citybike-detail-value">@Model?.Return.ToString("dd.MM.yyyy HH:mm:ss")</span>
-                </div>
-                <div class="citybike-delete-item">
-                    <span class="citybike-detail-label">Matka</span>
-                    <span class="citybike-detail-value">@(((double)Model!.Covered_distance_m / 1000).ToString("F2")) km</span>
-                </div>
-                <div class="citybike-delete-item">
-                    <span class="citybike-detail-label">Kesto</span>
-                    <span class="citybike-detail-value">@TimeSpan.FromSeconds(Model.Duration_sec).ToString(@"hh\:mm\:ss")</span>
+
+                <div class="card-footer bg-light py-4">
+                    <form asp-action="Delete">
+                        <input type="hidden" asp-for="ID" />
+                        <div class="d-grid gap-3 d-md-flex justify-content-md-center">
+                            <button type="submit" class="btn btn-danger btn-lg px-5">
+                                <i class="fas fa-trash-alt me-2"></i>Kyllä, Poista Matka
+                            </button>
+                            <a asp-action="Index" class="btn btn-secondary btn-lg px-5">
+                                <i class="fas fa-times me-2"></i>Peruuta
+                            </a>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-
-        <form asp-action="Delete">
-            <input type="hidden" asp-for="ID" />
-            <div class="citybike-delete-actions">
-                <button type="submit" class="citybike-btn citybike-btn-danger citybike-btn-large">
-                    <span>Kyllä, Poista Matka</span>
-                </button>
-                <a asp-action="Index" class="citybike-btn citybike-btn-secondary citybike-btn-large">
-                    <span>Peruuta</span>
-                </a>
-            </div>
-        </form>
     </div>
 </div>

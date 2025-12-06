@@ -1,0 +1,12 @@
+@* Reusable Form Input Field *@
+@model dynamic
+
+<div class="citybike-form-group">
+    <label class="citybike-label">@Model.Label</label>
+    @Model.Input
+    @Model.Validation
+    @if (Model.Hint != null)
+    {
+        <small class="citybike-form-hint">@Model.Hint</small>
+    }
+</div>

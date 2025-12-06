@@ -4,91 +4,102 @@
     ViewData["Title"] = "Details";
 }
 
-<div class="citybike-container">
-    <!-- Header -->
-    <div class="citybike-details-header">
-        <h1 class="citybike-details-title">MATKAN TIEDOT</h1>
-        <div class="citybike-details-actions">
-            <a asp-action="Edit" asp-route-id="@Model?.ID" class="citybike-btn citybike-btn-secondary">
-                <span>Muokkaa</span>
-            </a>
-            <a asp-action="Index" class="citybike-btn citybike-btn-outline">
-                <span>Takaisin</span>
-            </a>
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="display-5 fw-bold">MATKAN TIEDOT</h1>
+        <div class="btn-group">
+            <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-outline-secondary">Muokkaa</a>
+            <a asp-action="Index" class="btn btn-outline-dark">Takaisin</a>
         </div>
     </div>
 
-    <!-- Details Card -->
-    <div class="citybike-details-card">
+    <div class="card shadow-sm">
         <!-- Route Overview -->
-        <div class="citybike-trip-route-detail">
-            <div class="citybike-route-station">
-                <span class="citybike-route-label">Lähtöasema</span>
-                <h2 class="citybike-route-name">@Model?.Departure_station_name</h2>
-                <span class="citybike-route-id">ID: @Model?.Departure_station_id</span>
-            </div>
-            <div class="citybike-route-arrow">→</div>
-            <div class="citybike-route-station">
-                <span class="citybike-route-label">Palautusasema</span>
-                <h2 class="citybike-route-name">@Model?.Return_station_name</h2>
-                <span class="citybike-route-id">ID: @Model?.Return_station_id</span>
+        <div class="card-header bg-primary text-white p-4">
+            <div class="row align-items-center text-center">
+                <div class="col-md-5">
+                    <small class="text-uppercase">Lähtöasema</small>
+                    <h3 class="fw-bold mb-1">@Model?.Departure_station_name</h3>
+                    <small>ID: @Model?.Departure_station_id</small>
+                </div>
+                <div class="col-md-2">
+                    <h1 class="display-4 mb-0">→</h1>
+                </div>
+                <div class="col-md-5">
+                    <small class="text-uppercase">Palautusasema</small>
+                    <h3 class="fw-bold mb-1">@Model?.Return_station_name</h3>
+                    <small>ID: @Model?.Return_station_id</small>
+                </div>
             </div>
         </div>
 
         <!-- Stats -->
-        <div class="citybike-trip-stats-detail">
-            <div class="citybike-stat-box">
-                <span class="citybike-stat-value-large">@(((double)Model!.Covered_distance_m / 1000).ToString("F2")) km</span>
-                <span class="citybike-stat-label">Kokonaismatka</span>
-            </div>
-            <div class="citybike-stat-box">
-                <span class="citybike-stat-value-large">@TimeSpan.FromSeconds(Model.Duration_sec).ToString(@"hh\:mm\:ss")</span>
-                <span class="citybike-stat-label">Matkan Kesto</span>
-            </div>
-            <div class="citybike-stat-box">
-                <span class="citybike-stat-value-large">@((((double)Model.Covered_distance_m / 1000) / (Model.Duration_sec / 3600.0)).ToString("F1")) km/h</span>
-                <span class="citybike-stat-label">Keskinopeus</span>
+        <div class="card-body bg-light">
+            <div class="row g-3 text-center">
+                <div class="col-md-4">
+                    <div class="card border-primary">
+                        <div class="card-body">
+                            <h2 class="display-6 fw-bold text-primary mb-0">@Html.FormatDistance(Model!.Covered_distance_m)</h2>
+                            <p class="text-muted mb-0">Kokonaismatka</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-success">
+                        <div class="card-body">
+                            <h2 class="display-6 fw-bold text-success mb-0">@Html.FormatDuration(Model.Duration_sec)</h2>
+                            <p class="text-muted mb-0">Matkan Kesto</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-info">
+                        <div class="card-body">
+                            <h2 class="display-6 fw-bold text-info mb-0">@Html.CalculateSpeed(Model.Covered_distance_m, Model.Duration_sec)</h2>
+                            <p class="text-muted mb-0">Keskinopeus</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Info Grid -->
-        <div class="citybike-details-grid">
-            <div class="citybike-details-section">
-                <h2 class="citybike-section-title">Lähtötiedot</h2>
-                
-                <div class="citybike-detail-item">
-                    <span class="citybike-detail-label">Lähtöaika</span>
-                    <span class="citybike-detail-value">@Model?.Departure.ToString("dd.MM.yyyy HH:mm:ss")</span>
+        <div class="card-body">
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <h3 class="h4 mb-3 fw-bold border-bottom pb-2 text-success">Lähtötiedot</h3>
+                    <dl class="row">
+                        <dt class="col-sm-4 text-muted">Lähtöaika</dt>
+                        <dd class="col-sm-8 fw-bold">@DataFormatters.FormatDateTimeWithSeconds(Model!.Departure)</dd>
+                        
+                        <dt class="col-sm-4 text-muted">Lähtöasema</dt>
+                        <dd class="col-sm-8 fw-bold">@Model?.Departure_station_name</dd>
+                        
+                        <dt class="col-sm-4 text-muted">Aseman ID</dt>
+                        <dd class="col-sm-8"><span class="badge bg-success">@Model?.Departure_station_id</span></dd>
+                    </dl>
                 </div>
 
-                <div class="citybike-detail-item">
-                    <span class="citybike-detail-label">Lähtöasema</span>
-                    <span class="citybike-detail-value">@Model?.Departure_station_name</span>
-                </div>
-
-                <div class="citybike-detail-item">
-                    <span class="citybike-detail-label">Aseman ID</span>
-                    <span class="citybike-detail-value">@Model?.Departure_station_id</span>
+                <div class="col-md-6">
+                    <h3 class="h4 mb-3 fw-bold border-bottom pb-2 text-danger">Palautustiedot</h3>
+                    <dl class="row">
+                        <dt class="col-sm-4 text-muted">Palautusaika</dt>
+                        <dd class="col-sm-8 fw-bold">@DataFormatters.FormatDateTimeWithSeconds(Model!.Return)</dd>
+                        
+                        <dt class="col-sm-4 text-muted">Palautusasema</dt>
+                        <dd class="col-sm-8 fw-bold">@Model?.Return_station_name</dd>
+                        
+                        <dt class="col-sm-4 text-muted">Aseman ID</dt>
+                        <dd class="col-sm-8"><span class="badge bg-danger">@Model?.Return_station_id</span></dd>
+                    </dl>
                 </div>
             </div>
-
-            <div class="citybike-details-section">
-                <h2 class="citybike-section-title">Palautustiedot</h2>
-                
-                <div class="citybike-detail-item">
-                    <span class="citybike-detail-label">Palautusaika</span>
-                    <span class="citybike-detail-value">@Model?.Return.ToString("dd.MM.yyyy HH:mm:ss")</span>
-                </div>
-
-                <div class="citybike-detail-item">
-                    <span class="citybike-detail-label">Palautusasema</span>
-                    <span class="citybike-detail-value">@Model?.Return_station_name</span>
-                </div>
-
-                <div class="citybike-detail-item">
-                    <span class="citybike-detail-label">Aseman ID</span>
-                    <span class="citybike-detail-value">@Model?.Return_station_id</span>
-                </div>
+        </div>
+        
+        <div class="card-footer bg-light">
+            <div class="d-flex justify-content-between">
+                <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-secondary">Muokkaa</a>
+                <a asp-action="Index" class="btn btn-dark">Takaisin Listaan</a>
             </div>
         </div>
     </div>

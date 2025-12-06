@@ -1,0 +1,14 @@
+@* Reusable Details Section with Label-Value Pairs *@
+@model (string Title, Dictionary<string, string?> Items)
+
+<div class="citybike-details-section">
+    <h2 class="citybike-section-title">@Model.Title</h2>
+    
+    @foreach (var item in Model.Items)
+    {
+        <div class="citybike-detail-item">
+            <span class="citybike-detail-label">@item.Key</span>
+            <span class="citybike-detail-value">@item.Value</span>
+        </div>
+    }
+</div>

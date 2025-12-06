@@ -4,93 +4,80 @@
     ViewData["Title"] = "Delete";
 }
 
-<div class="citybike-container">
-    <!-- Header -->
-    <div class="citybike-delete-header">
-        <h1 class="citybike-delete-title">POISTA ASEMA</h1>
-        <p class="citybike-delete-warning">⚠️ Tämä toiminto ei ole palautettavissa</p>
+<div class="container-fluid py-4">
+    <div class="text-center mb-4">
+        <h1 class="display-5 fw-bold text-danger">⚠️ POISTA ASEMA</h1>
+        <p class="lead text-muted">Tämä toiminto ei ole palautettavissa</p>
     </div>
 
-    <!-- Delete Card -->
-    <div class="citybike-delete-card">
-        <div class="citybike-delete-message">
-            <h3>Oletko varma, että haluat poistaa tämän aseman?</h3>
-            <p>Kaikki asemaan liittyvät tiedot poistetaan pysyvästi.</p>
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-danger">
+                <div class="card-header bg-danger text-white text-center py-4">
+                    <h3 class="mb-0">Oletko varma, että haluat poistaa tämän aseman?</h3>
+                    <small>Kaikki asemaan liittyvät tiedot poistetaan pysyvästi.</small>
+                </div>
+
+                <div class="card-body">
+                    @if (!string.IsNullOrEmpty(Model?.Kuva))
+                    {
+                        <img src="@Model.Kuva" alt="@Model.Nimi" class="img-fluid rounded mb-4" style="max-height: 300px; width: 100%; object-fit: cover;">
+                    }
+
+                    <div class="alert alert-warning text-center mb-4">
+                        <h4 class="fw-bold mb-1">@Model?.Nimi</h4>
+                        <p class="mb-0">@Model?.Osoite, @Model?.Kaupunki</p>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <dl class="row mb-0">
+                                <dt class="col-sm-5 text-muted">FID</dt>
+                                <dd class="col-sm-7 fw-bold">@Model?.FID</dd>
+                                
+                                <dt class="col-sm-5 text-muted">Nimi (FI)</dt>
+                                <dd class="col-sm-7 fw-bold">@Model?.Nimi</dd>
+                                
+                                <dt class="col-sm-5 text-muted">Namn (SE)</dt>
+                                <dd class="col-sm-7">@Model?.Namn</dd>
+                                
+                                <dt class="col-sm-5 text-muted">Name (EN)</dt>
+                                <dd class="col-sm-7">@Model?.Name</dd>
+                            </dl>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <dl class="row mb-0">
+                                <dt class="col-sm-5 text-muted">Osoite</dt>
+                                <dd class="col-sm-7 fw-bold">@Model?.Osoite</dd>
+                                
+                                <dt class="col-sm-5 text-muted">Kaupunki</dt>
+                                <dd class="col-sm-7 fw-bold">@Model?.Kaupunki</dd>
+                                
+                                <dt class="col-sm-5 text-muted">Operaattori</dt>
+                                <dd class="col-sm-7">@Model?.Operaattor</dd>
+                                
+                                <dt class="col-sm-5 text-muted">Kapasiteetti</dt>
+                                <dd class="col-sm-7"><span class="badge bg-primary">@Model?.Kapasiteet</span></dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer bg-light py-4">
+                    <form asp-action="Delete">
+                        <input type="hidden" asp-for="ID" />
+                        <div class="d-grid gap-3 d-md-flex justify-content-md-center">
+                            <button type="submit" class="btn btn-danger btn-lg px-5">
+                                <i class="fas fa-trash-alt me-2"></i>Kyllä, Poista Asema
+                            </button>
+                            <a asp-action="Index" class="btn btn-secondary btn-lg px-5">
+                                <i class="fas fa-times me-2"></i>Peruuta
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-
-        <!-- Station Info -->
-        @if (!string.IsNullOrEmpty(Model?.Kuva))
-        {
-            <div class="citybike-delete-image">
-                <img src="@Model.Kuva" alt="@Model.Nimi">
-            </div>
-        }
-
-        <div class="citybike-delete-info">
-            <div class="citybike-delete-highlight">
-                <h2>@Model?.Nimi</h2>
-                <p>@Model?.Osoite, @Model?.Kaupunki</p>
-            </div>
-
-            <div class="citybike-delete-details">
-                <div class="citybike-delete-item">
-                    <span class="citybike-detail-label">FID</span>
-                    <span class="citybike-detail-value">@Model?.FID</span>
-                </div>
-
-                <div class="citybike-delete-item">
-                    <span class="citybike-detail-label">Nimi (FI)</span>
-                    <span class="citybike-detail-value">@Model?.Nimi</span>
-                </div>
-
-                <div class="citybike-delete-item">
-                    <span class="citybike-detail-label">Namn (SE)</span>
-                    <span class="citybike-detail-value">@Model?.Namn</span>
-                </div>
-
-                <div class="citybike-delete-item">
-                    <span class="citybike-detail-label">Name (EN)</span>
-                    <span class="citybike-detail-value">@Model?.Name</span>
-                </div>
-
-                <div class="citybike-delete-item">
-                    <span class="citybike-detail-label">Osoite</span>
-                    <span class="citybike-detail-value">@Model?.Osoite</span>
-                </div>
-
-                <div class="citybike-delete-item">
-                    <span class="citybike-detail-label">Kaupunki</span>
-                    <span class="citybike-detail-value">@Model?.Kaupunki</span>
-                </div>
-
-                <div class="citybike-delete-item">
-                    <span class="citybike-detail-label">Operaattori</span>
-                    <span class="citybike-detail-value">@Model?.Operaattor</span>
-                </div>
-
-                <div class="citybike-delete-item">
-                    <span class="citybike-detail-label">Kapasiteetti</span>
-                    <span class="citybike-detail-value">@Model?.Kapasiteet</span>
-                </div>
-
-                <div class="citybike-delete-item">
-                    <span class="citybike-detail-label">Koordinaatit</span>
-                    <span class="citybike-detail-value">@Model?.y, @Model?.x</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Action Buttons -->
-        <form asp-action="Delete">
-            <input type="hidden" asp-for="ID" />
-            <div class="citybike-delete-actions">
-                <button type="submit" class="citybike-btn citybike-btn-danger citybike-btn-large">
-                    <span>Kyllä, Poista Asema</span>
-                </button>
-                <a asp-action="Index" class="citybike-btn citybike-btn-secondary citybike-btn-large">
-                    <span>Peruuta</span>
-                </a>
-            </div>
-        </form>
     </div>
 </div>

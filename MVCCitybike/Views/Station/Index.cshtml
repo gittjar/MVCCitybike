@@ -4,101 +4,76 @@
     ViewData["Title"] = "Index";
 }
 
-<div class="citybike-container">
-    <!-- Hero Section -->
-    <div class="citybike-hero">
-        <h1 class="citybike-title">ASEMALUETTELO</h1>
-        <p class="citybike-subtitle">Hallinnoi pyöräasemia moderneilla työkaluilla</p>
+<div class="container-fluid py-4">
+    <div class="text-center mb-4">
+        <h1 class="display-4 fw-bold">ASEMALUETTELO</h1>
+        <p class="lead">Hallinnoi pyöräasemia moderneilla työkaluilla</p>
     </div>
 
-    <!-- Action Bar -->
-    <div class="citybike-action-bar">
-        <a asp-action="Create" class="citybike-btn citybike-btn-primary">
-            <span>+ Luo Uusi Asema</span>
-        </a>
+    <div class="mb-3">
+        <a asp-action="Create" class="btn btn-primary btn-lg">+ Luo Uusi Asema</a>
     </div>
 
     <!-- Search Section -->
-    <div class="citybike-search-section">
-        <form asp-controller="Station" asp-action="Index" method="get" class="citybike-search-form">
-            <div class="citybike-filter-group">
-                <label class="citybike-filter-label">Kaupungit:</label>
-                <div class="citybike-checkbox-group">
-                    @if (Model.Kaupungit != null)
-                    {
-                        var selectedCities = ViewData["SelectedCities"] as string[] ?? Array.Empty<string>();
-                        @foreach (var city in Model.Kaupungit)
+    <div class="card mb-4 sticky-top" style="top: 70px; z-index: 100;">
+        <div class="card-body">
+            <form asp-controller="Station" asp-action="Index" method="get">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Kaupungit:</label>
+                    <div class="d-flex flex-wrap gap-3">
+                        @if (Model.Kaupungit != null)
                         {
-                            var cityName = city.Text ?? city.Value;
-                            <label class="citybike-checkbox-label">
-                                <input type="checkbox" name="cities" value="@cityName" class="citybike-checkbox" 
-                                       @(selectedCities.Contains(cityName) ? "checked" : "") />
-                                <span class="citybike-checkbox-text">@cityName</span>
-                            </label>
+                            var selectedCities = ViewData["SelectedCities"] as string[] ?? Array.Empty<string>();
+                            @foreach (var city in Model.Kaupungit)
+                            {
+                                var cityName = city.Text ?? city.Value;
+                                <div class="form-check">
+                                    <input type="checkbox" name="cities" value="@cityName" class="form-check-input" id="city_@cityName"
+                                           @(selectedCities.Contains(cityName) ? "checked" : "") />
+                                    <label class="form-check-label" for="city_@cityName">@cityName</label>
+                                </div>
+                            }
                         }
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+                    <input type="text" class="form-control" name="SearchItem" value="@ViewData["SearchItem"]" placeholder="Etsi aseman nimellä...">
+                    <button class="btn btn-dark" type="submit">Etsi</button>
+                    @if (!string.IsNullOrEmpty(ViewData["SearchItem"]?.ToString()) || (ViewData["SelectedCities"] as string[])?.Length > 0)
+                    {
+                        <a asp-action="Index" class="btn btn-outline-secondary">Tyhjennä</a>
                     }
                 </div>
-            </div>
-            <div class="citybike-search-inputs">
-                <div class="citybike-input-group flex-grow">
-                    <input type="text" class="citybike-input" name="SearchItem" value="@ViewData["SearchItem"]" placeholder="Etsi aseman nimellä...">
-                </div>
-                <button class="citybike-btn citybike-btn-search" type="submit">
-                    <span>Etsi</span>
-                </button>
-                @if (!string.IsNullOrEmpty(ViewData["SearchItem"]?.ToString()) || (ViewData["SelectedCities"] as string[])?.Length > 0)
-                {
-                    <a asp-action="Index" class="citybike-btn citybike-btn-outline">
-                        <span>Tyhjennä</span>
-                    </a>
-                }
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 
     <!-- Stations Grid -->
-    <div class="citybike-stations-grid">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
         @foreach (var item in Model.Stations!)
         {
-            <div class="citybike-station-card">
-                <div class="citybike-card-header">
-                    <span class="citybike-card-id">ID: @item.FID</span>
-                    <span class="citybike-card-capacity">@item.Kapasiteet kapasiteetti</span>
-                </div>
-                <div class="citybike-card-body">
-                    <h3 class="citybike-card-title">@item.Nimi</h3>
-                    <div class="citybike-card-info">
-                        <div class="citybike-info-item">
-                            <span class="citybike-info-label">Osoite</span>
-                            <span class="citybike-info-value">@item.Osoite</span>
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                        <span class="fw-bold">ID: @item.FID</span>
+                        <span class="badge bg-secondary">@item.Kapasiteet kapasiteetti</span>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title fw-bold">@item.Nimi</h5>
+                        <div class="mb-3 flex-grow-1">
+                            <p class="mb-2"><strong>Osoite:</strong> @item.Osoite</p>
+                            <p class="mb-2"><strong>Kaupunki:</strong> @item.Kaupunki</p>
+                            <p class="mb-2"><strong>Operaattori:</strong> @item.Operaattor</p>
+                            <p class="mb-2"><strong>Koordinaatit:</strong> @item.y, @item.x</p>
                         </div>
-                        <div class="citybike-info-item">
-                            <span class="citybike-info-label">Kaupunki</span>
-                            <span class="citybike-info-value">@item.Kaupunki</span>
-                        </div>
-                        <div class="citybike-info-item">
-                            <span class="citybike-info-label">Operaattori</span>
-                            <span class="citybike-info-value">@item.Operaattor</span>
-                        </div>
-                        <div class="citybike-info-item">
-                            <span class="citybike-info-label">Koordinaatit</span>
-                            <span class="citybike-info-value">@item.y, @item.x</span>
+                        <div class="d-flex justify-content-between mt-auto">
+                            <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-sm btn-outline-primary">Lisätiedot</a>
+                            <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-sm btn-outline-secondary">Muokkaa</a>
+                            <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-sm btn-outline-danger">Poista</a>
                         </div>
                     </div>
-                </div>
-                <div class="citybike-card-actions">
-                    <a asp-action="Details" asp-route-id="@item.ID" class="citybike-action-link">
-                        <span>Lisätiedot</span>
-                    </a>
-                    <a asp-action="Edit" asp-route-id="@item.ID" class="citybike-action-link">
-                        <span>Muokkaa</span>
-                    </a>
-                    <a asp-action="Delete" asp-route-id="@item.ID" class="citybike-action-link citybike-action-link-danger">
-                        <span>Poista</span>
-                    </a>
                 </div>
             </div>
         }
     </div>
 </div>
-

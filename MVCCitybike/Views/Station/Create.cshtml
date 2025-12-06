@@ -5,11 +5,7 @@
 }
 
 <div class="citybike-container">
-    <!-- Header -->
-    <div class="citybike-form-header">
-        <h1 class="citybike-form-title">LUO UUSI ASEMA</h1>
-        <p class="citybike-form-subtitle">Täytä aseman tiedot alla olevaan lomakkeeseen</p>
-    </div>
+    <citybike-form-header title="LUO UUSI ASEMA" subtitle="Täytä aseman tiedot alla olevaan lomakkeeseen" />
 
     <!-- Form Card -->
     <div class="citybike-form-card">
@@ -104,15 +100,7 @@
                 <input asp-for="Kuva" class="citybike-input" />
             </div>
 
-            <!-- Action Buttons -->
-            <div class="citybike-form-actions">
-                <button type="submit" class="citybike-btn citybike-btn-primary citybike-btn-large">
-                    <span>Luo Asema</span>
-                </button>
-                <a asp-action="Index" class="citybike-btn citybike-btn-secondary citybike-btn-large">
-                    <span>Peruuta</span>
-                </a>
-            </div>
+            @await Html.PartialAsync("_CitybikeFormActions", ("Luo Asema", "Index"))
         </form>
     </div>
 </div>

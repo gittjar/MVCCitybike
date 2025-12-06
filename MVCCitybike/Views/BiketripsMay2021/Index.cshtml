@@ -4,95 +4,109 @@
     ViewData["Title"] = "Index";
 }
 
-<div class="citybike-container">
-    @await Html.PartialAsync("_CitybikeHero", ("PYÖRÄMATKAT", "Selaa ja hallinnoi pyörämatkoja"))
+<div class="container-fluid py-4">
+    <div class="text-center mb-4">
+        <h1 class="display-4 fw-bold">PYÖRÄMATKAT</h1>
+        <p class="lead">Selaa ja hallinnoi pyörämatkoja</p>
+    </div>
 
-    <!-- Action Bar -->
-    <div class="citybike-action-bar">
-        <a asp-action="Create" class="citybike-btn citybike-btn-primary">
-            <span>+ Luo Uusi Matka</span>
-        </a>
+    <div class="mb-3">
+        <a asp-action="Create" class="btn btn-primary btn-lg">+ Luo Uusi Matka</a>
     </div>
 
     <!-- Search Section -->
-    <div class="citybike-search-section">
-        <form asp-action="Index" method="get" class="citybike-search-form">
-            <div class="citybike-search-inputs">
-                <div class="citybike-input-group flex-grow">
-                    <input type="text" class="citybike-input" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Etsi lähtö- tai palautusaseman nimellä...">
+    <div class="card mb-4 sticky-top" style="top: 70px; z-index: 100;">
+        <div class="card-body">
+            <form asp-action="Index" method="get">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Etsi lähtö- tai palautusaseman nimellä..." />
+                    <button class="btn btn-dark" type="submit">Etsi</button>
+                    @if (!string.IsNullOrEmpty(ViewData["CurrentFilter"]?.ToString()))
+                    {
+                        <a asp-action="Index" class="btn btn-outline-secondary">Tyhjennä</a>
+                    }
                 </div>
-                <button class="citybike-btn citybike-btn-search" type="submit">
-                    <span>Etsi</span>
-                </button>
-                @if (!string.IsNullOrEmpty(ViewData["CurrentFilter"]?.ToString()))
-                {
-                    <a asp-action="Index" class="citybike-btn citybike-btn-outline">
-                        <span>Tyhjennä</span>
-                    </a>
-                }
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 
     <!-- Trips Grid -->
-    <div class="citybike-trips-grid">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4">
         @foreach (var item in Model)
         {
-            <div class="citybike-trip-card">
-                <div class="citybike-trip-header">
-                    <div class="citybike-trip-route">
-                        <div class="citybike-trip-station">
-                            <span class="citybike-trip-label">Lähtö</span>
-                            <span class="citybike-trip-station-name">@item.Departure_station_name</span>
-                            <span class="citybike-trip-station-id">ID: @item.Departure_station_id</span>
-                        </div>
-                        <div class="citybike-trip-arrow">→</div>
-                        <div class="citybike-trip-station">
-                            <span class="citybike-trip-label">Palautus</span>
-                            <span class="citybike-trip-station-name">@item.Return_station_name</span>
-                            <span class="citybike-trip-station-id">ID: @item.Return_station_id</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="citybike-trip-body">
-                    <div class="citybike-trip-stats">
-                        <div class="citybike-trip-stat">
-                            <span class="citybike-stat-value">@((item.Covered_distance_m / 1000).ToString("F2")) km</span>
-                            <span class="citybike-stat-label">Matka</span>
-                        </div>
-                        <div class="citybike-trip-stat">
-                            <span class="citybike-stat-value">@TimeSpan.FromSeconds(item.Duration_sec).ToString(@"hh\:mm\:ss")</span>
-                            <span class="citybike-stat-label">Kesto</span>
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header bg-light">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-start flex-fill">
+                                <div class="text-uppercase text-muted small">Lähtö</div>
+                                <div class="fw-bold">@item.Departure_station_name</div>
+                                <div class="text-muted">ID: @item.Departure_station_id</div>
+                            </div>
+                            <div class="px-3 fs-4">→</div>
+                            <div class="text-end flex-fill">
+                                <div class="text-uppercase text-muted small">Palautus</div>
+                                <div class="fw-bold">@item.Return_station_name</div>
+                                <div class="text-muted">ID: @item.Return_station_id</div>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="citybike-trip-times">
-                        <div class="citybike-trip-time">
-                            <span class="citybike-time-label">Lähtöaika</span>
-                            <span class="citybike-time-value">@item.Departure.ToString("dd.MM.yyyy HH:mm")</span>
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-around mb-3 pb-3 border-bottom">
+                            <div class="text-center">
+                                <div class="fs-4 fw-bold">@Html.FormatDistance(item.Covered_distance_m)</div>
+                                <div class="text-muted small">Matka</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="fs-4 fw-bold">@Html.FormatDuration(item.Duration_sec)</div>
+                                <div class="text-muted small">Kesto</div>
+                            </div>
                         </div>
-                        <div class="citybike-trip-time">
-                            <span class="citybike-time-label">Palautusaika</span>
-                            <span class="citybike-time-value">@item.Return.ToString("dd.MM.yyyy HH:mm")</span>
+                        
+                        <div class="mb-3 flex-grow-1">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted">Lähtöaika:</span>
+                                <span class="fw-bold">@DataFormatters.FormatDateTime(item.Departure)</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="text-muted">Palautusaika:</span>
+                                <span class="fw-bold">@DataFormatters.FormatDateTime(item.Return)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-auto">
+                            <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-sm btn-outline-primary">Lisätiedot</a>
+                            <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-sm btn-outline-secondary">Muokkaa</a>
+                            <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-sm btn-outline-danger">Poista</a>
                         </div>
                     </div>
-                </div>
-                
-                <div class="citybike-card-actions">
-                    <a asp-action="Details" asp-route-id="@item.ID" class="citybike-action-link">
-                        <span>Lisätiedot</span>
-                    </a>
-                    <a asp-action="Edit" asp-route-id="@item.ID" class="citybike-action-link">
-                        <span>Muokkaa</span>
-                    </a>
-                    <a asp-action="Delete" asp-route-id="@item.ID" class="citybike-action-link citybike-action-link-danger">
-                        <span>Poista</span>
-                    </a>
                 </div>
             </div>
         }
     </div>
 
-    @await Html.PartialAsync("_CitybikePagination", Model)
+    <!-- Pagination -->
+    @if (Model.HasPreviousPage || Model.HasNextPage)
+    {
+        <div class="d-flex justify-content-between align-items-center py-3 border-top">
+            <div class="text-muted">
+                Sivu @Model.PageIndex / @Model.TotalPages
+            </div>
+            <div class="btn-group">
+                <a asp-action="Index" 
+                   asp-route-pageNumber="@(Model.PageIndex - 1)" 
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="btn btn-outline-dark @(!Model.HasPreviousPage ? "disabled" : "")">
+                    Edellinen
+                </a>
+                <a asp-action="Index" 
+                   asp-route-pageNumber="@(Model.PageIndex + 1)" 
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="btn btn-outline-dark @(!Model.HasNextPage ? "disabled" : "")">
+                    Seuraava
+                </a>
+            </div>
+        </div>
+    }
 </div>

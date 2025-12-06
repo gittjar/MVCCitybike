@@ -1,0 +1,21 @@
+@* Reusable Search Bar Component *@
+@model (string Controller, string SearchPlaceholder, string? CurrentFilter)
+
+<div class="citybike-search-section">
+    <form asp-controller="@Model.Controller" asp-action="Index" method="get" class="citybike-search-form">
+        <div class="citybike-search-inputs">
+            <div class="citybike-input-group flex-grow">
+                <input type="text" class="citybike-input" name="SearchString" value="@Model.CurrentFilter" placeholder="@Model.SearchPlaceholder">
+            </div>
+            <button class="citybike-btn citybike-btn-search" type="submit">
+                <span>Etsi</span>
+            </button>
+            @if (!string.IsNullOrEmpty(Model.CurrentFilter))
+            {
+                <a asp-action="Index" class="citybike-btn citybike-btn-outline">
+                    <span>Tyhjennä</span>
+                </a>
+            }
+        </div>
+    </form>
+</div>

@@ -4,98 +4,75 @@
     ViewData["Title"] = "Details";
 }
 
-<div class="citybike-container">
-    <!-- Header -->
-    <div class="citybike-details-header">
-        <h1 class="citybike-details-title">ASEMAN TIEDOT</h1>
-        <div class="citybike-details-actions">
-            <a asp-action="Edit" asp-route-id="@Model?.ID" class="citybike-btn citybike-btn-secondary">
-                <span>Muokkaa</span>
-            </a>
-            <a asp-action="Index" class="citybike-btn citybike-btn-outline">
-                <span>Takaisin</span>
-            </a>
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="display-5 fw-bold">ASEMAN TIEDOT</h1>
+        <div class="btn-group">
+            <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-outline-secondary">Muokkaa</a>
+            <a asp-action="Index" class="btn btn-outline-dark">Takaisin</a>
         </div>
     </div>
 
-    <!-- Details Card -->
-    <div class="citybike-details-card">
-        <!-- Image Section -->
+    <div class="card shadow-sm">
         @if (!string.IsNullOrEmpty(Model?.Kuva))
         {
-            <div class="citybike-details-image">
-                <img src="@Model.Kuva" alt="@Model.Nimi">
-            </div>
+            <img src="@Model.Kuva" alt="@Model.Nimi" class="card-img-top" style="max-height: 400px; object-fit: cover;">
         }
-
-        <!-- Info Grid -->
-        <div class="citybike-details-grid">
-            <div class="citybike-details-section">
-                <h2 class="citybike-section-title">Perustiedot</h2>
-                
-                <div class="citybike-detail-item">
-                    <span class="citybike-detail-label">FID</span>
-                    <span class="citybike-detail-value">@Model?.FID</span>
+        
+        <div class="card-body">
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <h3 class="h4 mb-3 fw-bold border-bottom pb-2">Perustiedot</h3>
+                    <dl class="row">
+                        <dt class="col-sm-4 text-muted">FID</dt>
+                        <dd class="col-sm-8 fw-bold">@Model?.FID</dd>
+                        
+                        <dt class="col-sm-4 text-muted">Nimi (FI)</dt>
+                        <dd class="col-sm-8 fw-bold">@Model?.Nimi</dd>
+                        
+                        <dt class="col-sm-4 text-muted">Namn (SE)</dt>
+                        <dd class="col-sm-8">@Model?.Namn</dd>
+                        
+                        <dt class="col-sm-4 text-muted">Name (EN)</dt>
+                        <dd class="col-sm-8">@Model?.Name</dd>
+                        
+                        <dt class="col-sm-4 text-muted">Kapasiteetti</dt>
+                        <dd class="col-sm-8"><span class="badge bg-primary fs-6">@Model?.Kapasiteet</span></dd>
+                        
+                        <dt class="col-sm-4 text-muted">Operaattori</dt>
+                        <dd class="col-sm-8">@Model?.Operaattor</dd>
+                    </dl>
                 </div>
 
-                <div class="citybike-detail-item">
-                    <span class="citybike-detail-label">Nimi (FI)</span>
-                    <span class="citybike-detail-value">@Model?.Nimi</span>
-                </div>
-
-                <div class="citybike-detail-item">
-                    <span class="citybike-detail-label">Namn (SE)</span>
-                    <span class="citybike-detail-value">@Model?.Namn</span>
-                </div>
-
-                <div class="citybike-detail-item">
-                    <span class="citybike-detail-label">Name (EN)</span>
-                    <span class="citybike-detail-value">@Model?.Name</span>
-                </div>
-
-                <div class="citybike-detail-item">
-                    <span class="citybike-detail-label">Kapasiteetti</span>
-                    <span class="citybike-detail-value">@Model?.Kapasiteet</span>
-                </div>
-
-                <div class="citybike-detail-item">
-                    <span class="citybike-detail-label">Operaattori</span>
-                    <span class="citybike-detail-value">@Model?.Operaattor</span>
+                <div class="col-md-6">
+                    <h3 class="h4 mb-3 fw-bold border-bottom pb-2">Sijainti</h3>
+                    <dl class="row">
+                        <dt class="col-sm-4 text-muted">Osoite (FI)</dt>
+                        <dd class="col-sm-8 fw-bold">@Model?.Osoite</dd>
+                        
+                        <dt class="col-sm-4 text-muted">Adress (SE)</dt>
+                        <dd class="col-sm-8">@Model?.Adress</dd>
+                        
+                        <dt class="col-sm-4 text-muted">Kaupunki (FI)</dt>
+                        <dd class="col-sm-8 fw-bold">@Model?.Kaupunki</dd>
+                        
+                        <dt class="col-sm-4 text-muted">Stad (SE)</dt>
+                        <dd class="col-sm-8">@Model?.Stad</dd>
+                        
+                        <dt class="col-sm-4 text-muted">Longitude (X)</dt>
+                        <dd class="col-sm-8"><code>@Model?.x</code></dd>
+                        
+                        <dt class="col-sm-4 text-muted">Latitude (Y)</dt>
+                        <dd class="col-sm-8"><code>@Model?.y</code></dd>
+                    </dl>
                 </div>
             </div>
-
-            <div class="citybike-details-section">
-                <h2 class="citybike-section-title">Sijainti</h2>
-                
-                <div class="citybike-detail-item">
-                    <span class="citybike-detail-label">Osoite (FI)</span>
-                    <span class="citybike-detail-value">@Model?.Osoite</span>
-                </div>
-
-                <div class="citybike-detail-item">
-                    <span class="citybike-detail-label">Adress (SE)</span>
-                    <span class="citybike-detail-value">@Model?.Adress</span>
-                </div>
-
-                <div class="citybike-detail-item">
-                    <span class="citybike-detail-label">Kaupunki (FI)</span>
-                    <span class="citybike-detail-value">@Model?.Kaupunki</span>
-                </div>
-
-                <div class="citybike-detail-item">
-                    <span class="citybike-detail-label">Stad (SE)</span>
-                    <span class="citybike-detail-value">@Model?.Stad</span>
-                </div>
-
-                <div class="citybike-detail-item">
-                    <span class="citybike-detail-label">Longitude (X)</span>
-                    <span class="citybike-detail-value">@Model?.x</span>
-                </div>
-
-                <div class="citybike-detail-item">
-                    <span class="citybike-detail-label">Latitude (Y)</span>
-                    <span class="citybike-detail-value">@Model?.y</span>
-                </div>
+        </div>
+        
+        <div class="card-footer bg-light">
+            <div class="d-flex justify-content-between">
+                <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-secondary">Muokkaa</a>
+                <a asp-action="Index" class="btn btn-dark">Takaisin Listaan</a>
             </div>
         </div>
     </div>
