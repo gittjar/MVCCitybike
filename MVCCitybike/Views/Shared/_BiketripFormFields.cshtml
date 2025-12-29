@@ -1,0 +1,59 @@
+@model MVCCitybike.Models.BiketripsMay2021
+
+<div class="citybike-form-grid">
+    <!-- Column 1: Departure Info -->
+    <div class="citybike-form-column">
+        <div class="citybike-form-group">
+            <label asp-for="Departure" class="citybike-label">Lähtöaika</label>
+            <input asp-for="Departure" class="citybike-input" type="datetime-local" />
+            <span asp-validation-for="Departure" class="citybike-validation"></span>
+        </div>
+
+        <div class="citybike-form-group">
+            <label asp-for="Departure_station_id" class="citybike-label">Lähtöaseman ID</label>
+            <input asp-for="Departure_station_id" class="citybike-input" type="number" />
+            <span asp-validation-for="Departure_station_id" class="citybike-validation"></span>
+        </div>
+
+        <div class="citybike-form-group">
+            <label asp-for="Departure_station_name" class="citybike-label">Lähtöaseman nimi</label>
+            <input asp-for="Departure_station_name" class="citybike-input" />
+            <span asp-validation-for="Departure_station_name" class="citybike-validation"></span>
+        </div>
+
+        <div class="citybike-form-group">
+            <label asp-for="Covered_distance_m" class="citybike-label">Matka (metriä)</label>
+            <input asp-for="Covered_distance_m" class="citybike-input" type="number" step="0.01" placeholder="Esim. 2500" />
+            <small class="citybike-form-hint">Esim. 2500 (= 2.5 km)</small>
+            <span asp-validation-for="Covered_distance_m" class="citybike-validation"></span>
+        </div>
+    </div>
+
+    <!-- Column 2: Return Info -->
+    <div class="citybike-form-column">
+        <div class="citybike-form-group">
+            <label asp-for="Return" class="citybike-label">Paluuaika</label>
+            <input asp-for="Return" class="citybike-input" type="datetime-local" />
+            <span asp-validation-for="Return" class="citybike-validation"></span>
+        </div>
+
+        <div class="citybike-form-group">
+            <label asp-for="Return_station_id" class="citybike-label">Paluuaseman ID</label>
+            <input asp-for="Return_station_id" class="citybike-input" type="number" />
+            <span asp-validation-for="Return_station_id" class="citybike-validation"></span>
+        </div>
+
+        <div class="citybike-form-group">
+            <label asp-for="Return_station_name" class="citybike-label">Paluuaseman nimi</label>
+            <input asp-for="Return_station_name" class="citybike-input" />
+            <span asp-validation-for="Return_station_name" class="citybike-validation"></span>
+        </div>
+
+        <div class="citybike-form-group">
+            <label asp-for="Duration_sec" class="citybike-label">Kesto (sekuntia)</label>
+            <input asp-for="Duration_sec" class="citybike-input" type="number" placeholder="Esim. 500" />
+            <small class="citybike-form-hint">Esim. 500 (= 8 min 20 sek)</small>
+            <span asp-validation-for="Duration_sec" class="citybike-validation"></span>
+        </div>
+    </div>
+</div>

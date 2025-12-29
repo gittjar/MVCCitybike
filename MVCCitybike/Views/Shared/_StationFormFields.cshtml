@@ -1,0 +1,89 @@
+@model MVCCitybike.Models.Station
+
+<div class="citybike-form-grid">
+    <!-- Column 1 -->
+    <div class="citybike-form-column">
+        <div class="citybike-form-group">
+            <label asp-for="FID" class="citybike-label">FID</label>
+            <input asp-for="FID" class="citybike-input" />
+            <span asp-validation-for="FID" class="citybike-validation"></span>
+        </div>
+
+        <div class="citybike-form-group">
+            <label asp-for="Nimi" class="citybike-label">Nimi (FI)</label>
+            <input asp-for="Nimi" class="citybike-input" />
+            <span asp-validation-for="Nimi" class="citybike-validation"></span>
+        </div>
+
+        <div class="citybike-form-group">
+            <label asp-for="Namn" class="citybike-label">Namn (SE)</label>
+            <input asp-for="Namn" class="citybike-input" placeholder="Täytetään automaattisesti jos tyhjä" />
+            <span asp-validation-for="Namn" class="citybike-validation"></span>
+        </div>
+
+        <div class="citybike-form-group">
+            <label asp-for="Name" class="citybike-label">Name (EN)</label>
+            <input asp-for="Name" class="citybike-input" placeholder="Täytetään automaattisesti jos tyhjä" />
+            <span asp-validation-for="Name" class="citybike-validation"></span>
+        </div>
+
+        <div class="citybike-form-group">
+            <label asp-for="Osoite" class="citybike-label">Osoite (FI)</label>
+            <input asp-for="Osoite" class="citybike-input" />
+            <span asp-validation-for="Osoite" class="citybike-validation"></span>
+        </div>
+
+        <div class="citybike-form-group">
+            <label asp-for="Adress" class="citybike-label">Adress (SE)</label>
+            <input asp-for="Adress" class="citybike-input" placeholder="Täytetään automaattisesti jos tyhjä" />
+            <span asp-validation-for="Adress" class="citybike-validation"></span>
+        </div>
+    </div>
+
+    <!-- Column 2 -->
+    <div class="citybike-form-column">
+        <div class="citybike-form-group">
+            <label asp-for="Kaupunki" class="citybike-label">Kaupunki (FI)</label>
+            <input asp-for="Kaupunki" class="citybike-input" />
+            <span asp-validation-for="Kaupunki" class="citybike-validation"></span>
+        </div>
+
+        <div class="citybike-form-group">
+            <label asp-for="Stad" class="citybike-label">Stad (SE)</label>
+            <input asp-for="Stad" class="citybike-input" placeholder="Täytetään automaattisesti jos tyhjä" />
+            <span asp-validation-for="Stad" class="citybike-validation"></span>
+        </div>
+
+        <div class="citybike-form-group">
+            <label asp-for="Operaattor" class="citybike-label">Operaattori</label>
+            <input asp-for="Operaattor" class="citybike-input" placeholder="Täytetään automaattisesti jos tyhjä" />
+            <span asp-validation-for="Operaattor" class="citybike-validation"></span>
+        </div>
+
+        <div class="citybike-form-group">
+            <label asp-for="Kapasiteet" class="citybike-label">Kapasiteetti</label>
+            <input asp-for="Kapasiteet" class="citybike-input" />
+            <span asp-validation-for="Kapasiteet" class="citybike-validation"></span>
+        </div>
+
+        <div class="citybike-form-group">
+            <label class="citybike-label">Longitude (X)</label>
+            <input name="x" value="@Model?.x" class="citybike-input" type="text" placeholder="esim. 24.9384 tai 24,9384" />
+            <small class="citybike-form-hint">Käytä pistettä (.) tai pilkkua (,) desimaalierottimena</small>
+        </div>
+
+        <div class="citybike-form-group">
+            <label class="citybike-label">Latitude (Y)</label>
+            <input name="y" value="@Model?.y" class="citybike-input" type="text" placeholder="esim. 60.1699 tai 60,1699" />
+            <small class="citybike-form-hint">Käytä pistettä (.) tai pilkkua (,) desimaalierottimena</small>
+        </div>
+    </div>
+</div>
+
+<!-- Full Width -->
+<div class="citybike-form-group citybike-form-full">
+    <label asp-for="Kuva" class="citybike-label">Kuvan URL</label>
+    <input asp-for="Kuva" class="citybike-input" placeholder="Jätä tyhjäksi luodaksesi placeholder-kuvan katuosoitteesta" />
+    <small class="citybike-form-hint">Tyhjä kenttä luo automaattisesti placeholder-kuvan katuosoitteen nimellä</small>
+    <span asp-validation-for="Kuva" class="citybike-validation"></span>
+</div>

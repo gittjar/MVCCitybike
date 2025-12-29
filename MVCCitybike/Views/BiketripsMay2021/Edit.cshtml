@@ -5,7 +5,7 @@
 }
 
 <div class="citybike-container">
-    <citybike-form-header title="MUOKKAA MATKAA" subtitle="Päivitä pyörämatkan tiedot alla olevassa lomakkeessa" />
+    @await Html.PartialAsync("_CitybikeHero", ("MUOKKAA MATKAA", "Päivitä pyörämatkan tiedot alla olevassa lomakkeessa"))
 
     <!-- Form Card -->
     <div class="citybike-form-card">
@@ -13,61 +13,7 @@
             <div asp-validation-summary="ModelOnly" class="citybike-validation-summary"></div>
             <input type="hidden" asp-for="ID" />
             
-            <div class="citybike-form-grid">
-                <!-- Column 1 -->
-                <div class="citybike-form-column">
-                    <div class="citybike-form-group">
-                        <label asp-for="Departure" class="citybike-label">Lähtöaika</label>
-                        <input asp-for="Departure" class="citybike-input" type="datetime-local" />
-                        <span asp-validation-for="Departure" class="citybike-validation"></span>
-                    </div>
-
-                    <div class="citybike-form-group">
-                        <label asp-for="Return" class="citybike-label">Palautusaika</label>
-                        <input asp-for="Return" class="citybike-input" type="datetime-local" />
-                        <span asp-validation-for="Return" class="citybike-validation"></span>
-                    </div>
-
-                    <div class="citybike-form-group">
-                        <label asp-for="Departure_station_id" class="citybike-label">Lähtöaseman ID</label>
-                        <input asp-for="Departure_station_id" class="citybike-input" type="number" />
-                        <span asp-validation-for="Departure_station_id" class="citybike-validation"></span>
-                    </div>
-
-                    <div class="citybike-form-group">
-                        <label asp-for="Departure_station_name" class="citybike-label">Lähtöaseman Nimi</label>
-                        <input asp-for="Departure_station_name" class="citybike-input" />
-                        <span asp-validation-for="Departure_station_name" class="citybike-validation"></span>
-                    </div>
-                </div>
-
-                <!-- Column 2 -->
-                <div class="citybike-form-column">
-                    <div class="citybike-form-group">
-                        <label asp-for="Return_station_id" class="citybike-label">Palautusaseman ID</label>
-                        <input asp-for="Return_station_id" class="citybike-input" type="number" />
-                        <span asp-validation-for="Return_station_id" class="citybike-validation"></span>
-                    </div>
-
-                    <div class="citybike-form-group">
-                        <label asp-for="Return_station_name" class="citybike-label">Palautusaseman Nimi</label>
-                        <input asp-for="Return_station_name" class="citybike-input" />
-                        <span asp-validation-for="Return_station_name" class="citybike-validation"></span>
-                    </div>
-
-                    <div class="citybike-form-group">
-                        <label asp-for="Covered_distance_m" class="citybike-label">Ajettu Matka (m)</label>
-                        <input asp-for="Covered_distance_m" class="citybike-input" type="number" step="0.01" />
-                        <span asp-validation-for="Covered_distance_m" class="citybike-validation"></span>
-                    </div>
-
-                    <div class="citybike-form-group">
-                        <label asp-for="Duration_sec" class="citybike-label">Kesto (s)</label>
-                        <input asp-for="Duration_sec" class="citybike-input" type="number" />
-                        <span asp-validation-for="Duration_sec" class="citybike-validation"></span>
-                    </div>
-                </div>
-            </div>
+            @await Html.PartialAsync("_BiketripFormFields", Model)
 
             @await Html.PartialAsync("_CitybikeFormActions", ("Tallenna Muutokset", "Index"))
         </form>

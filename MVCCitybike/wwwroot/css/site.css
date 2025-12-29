@@ -124,3 +124,211 @@ a:hover {
     font-family: Arial, sans-serif;
     font-size: 12px;
     color: black;
+}
+
+/* ===== CITYBIKE STYLES ===== */
+
+/* Container & Layout */
+.citybike-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+/* Hero Section */
+.citybike-hero {
+    text-align: center;
+    padding: 3rem 1rem;
+    margin-bottom: 2rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    color: white;
+}
+
+.citybike-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.citybike-subtitle {
+    font-size: 1.1rem;
+    font-weight: 300;
+    margin: 0;
+    opacity: 0.95;
+}
+
+/* Form Card */
+.citybike-form-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+/* Form Grid */
+.citybike-form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.citybike-form-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Form Groups */
+.citybike-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.citybike-form-full {
+    grid-column: 1 / -1;
+}
+
+/* Labels */
+.citybike-label {
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 0.95rem;
+    letter-spacing: 0.3px;
+    margin-bottom: 0.25rem;
+}
+
+/* Inputs */
+.citybike-input,
+.citybike-select {
+    padding: 0.875rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+    color: #2d3748;
+}
+
+.citybike-input:focus,
+.citybike-select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.citybike-input::placeholder {
+    color: #a0aec0;
+}
+
+/* Form Hints */
+.citybike-form-hint {
+    font-size: 0.85rem;
+    color: #718096;
+    margin-top: 0.25rem;
+    font-style: italic;
+}
+
+/* Validation */
+.citybike-validation {
+    color: #e53e3e;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.citybike-validation-summary {
+    background-color: #fff5f5;
+    border-left: 4px solid #e53e3e;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 4px;
+    color: #c53030;
+}
+
+/* Buttons */
+.citybike-btn {
+    padding: 0.875rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.citybike-btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.citybike-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+    color: white;
+    text-decoration: none;
+}
+
+.citybike-btn-secondary {
+    background: #e2e8f0;
+    color: #2d3748;
+}
+
+.citybike-btn-secondary:hover {
+    background: #cbd5e0;
+    color: #2d3748;
+    text-decoration: none;
+}
+
+.citybike-btn-danger {
+    background: linear-gradient(135deg, #f56565 0%, #c53030 100%);
+    color: white;
+}
+
+.citybike-btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(245, 101, 101, 0.3);
+    color: white;
+    text-decoration: none;
+}
+
+/* Form Actions */
+.citybike-form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    justify-content: flex-start;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .citybike-title {
+        font-size: 1.75rem;
+    }
+
+    .citybike-form-card {
+        padding: 1.5rem;
+    }
+
+    .citybike-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .citybike-form-actions {
+        flex-direction: column;
+    }
+
+    .citybike-btn {
+        width: 100%;
+    }
+}

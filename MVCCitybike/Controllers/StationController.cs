@@ -127,6 +127,13 @@ namespace MVCCitybike.Controllers
                 if (string.IsNullOrWhiteSpace(station.Operaattor))
                     station.Operaattor = "CityBike Finland";
                 
+                // Generate placeholder image if Kuva is empty
+                if (string.IsNullOrWhiteSpace(station.Kuva))
+                {
+                    var streetName = station.Osoite?.Split(' ').FirstOrDefault() ?? station.Nimi;
+                    station.Kuva = $"https://placehold.co/600x400/3498db/ffffff?text={Uri.EscapeDataString(streetName)}";
+                }
+                
                 try
                 {
                     _context.Add(station);
@@ -192,6 +199,13 @@ namespace MVCCitybike.Controllers
                     station.Stad = station.Kaupunki;
                 if (string.IsNullOrWhiteSpace(station.Operaattor))
                     station.Operaattor = "CityBike Finland";
+
+                // Generate placeholder image if Kuva is empty
+                if (string.IsNullOrWhiteSpace(station.Kuva))
+                {
+                    var streetName = station.Osoite?.Split(' ').FirstOrDefault() ?? station.Nimi;
+                    station.Kuva = $"https://placehold.co/600x400/3498db/ffffff?text={Uri.EscapeDataString(streetName)}";
+                }
 
                 try
                 {
