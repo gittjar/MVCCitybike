@@ -47,12 +47,12 @@ var dbName = Environment.GetEnvironmentVariable("DB_NAME");
 var dbUser = Environment.GetEnvironmentVariable("DB_USER");
 var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
 
-// Debug output
-Console.WriteLine("\n=== Environment Variables ===");
-Console.WriteLine($"DB_SERVER: '{dbServer ?? "NULL"}'");
-Console.WriteLine($"DB_NAME: '{dbName ?? "NULL"}'");
-Console.WriteLine($"DB_USER: '{dbUser ?? "NULL"}'");
-Console.WriteLine($"DB_PASSWORD: {(string.IsNullOrEmpty(dbPassword) ? "NOT SET" : $"***SET*** (length: {dbPassword.Length})")}");
+// Validate environment variables without exposing sensitive data
+Console.WriteLine("\n=== Database Configuration Check ===");
+Console.WriteLine($"DB_SERVER: {(string.IsNullOrEmpty(dbServer) ? "❌ NOT SET" : "✅ SET")}");
+Console.WriteLine($"DB_NAME: {(string.IsNullOrEmpty(dbName) ? "❌ NOT SET" : "✅ SET")}");
+Console.WriteLine($"DB_USER: {(string.IsNullOrEmpty(dbUser) ? "❌ NOT SET" : "✅ SET")}");
+Console.WriteLine($"DB_PASSWORD: {(string.IsNullOrEmpty(dbPassword) ? "❌ NOT SET" : "✅ SET")}");
 
 if (string.IsNullOrEmpty(dbServer) || string.IsNullOrEmpty(dbName) || 
     string.IsNullOrEmpty(dbUser) || string.IsNullOrEmpty(dbPassword))
@@ -116,6 +116,30 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+// Display database statistics on startup
+Console.WriteLine("\n=== Database Statistics ===");
+try
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var stationContext = scope.ServiceProvider.GetRequiredService<MvcStationContext>();
+        var biketripContext = scope.ServiceProvider.GetRequiredService<MvcBiketripsMay2021Context>();
+        
+        var stationCount = stationContext.Station.Count();
+        var cityCount = stationContext.Station.Select(s => s.Kaupunki).Distinct().Count();
+        var biketripCount = biketripContext.BiketripsMay2021.Count();
+        
+        Console.WriteLine($"📍 Total Stations: {stationCount}");
+        Console.WriteLine($"🏙️  Cities: {cityCount}");
+        Console.WriteLine($"🚴 Total Bike Trips: {biketripCount:N0}");
+        Console.WriteLine("✅ Database connection successful!\n");
+    }
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"⚠️  Could not retrieve statistics: {ex.Message}\n");
+}
 
 app.Run();
 
