@@ -332,3 +332,95 @@ a:hover {
         width: 100%;
     }
 }
+
+/* ===== FOOTER STYLES ===== */
+.citybike-footer {
+    background: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+    padding: 1.5rem 0;
+    margin-top: 4rem;
+}
+
+.footer-minimal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+}
+
+.footer-left {
+    text-align: left;
+}
+
+.footer-brand {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin: 0 0 0.25rem 0;
+    letter-spacing: 0.5px;
+}
+
+.footer-text {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin: 0 0 0.5rem 0;
+}
+
+.footer-copy {
+    font-size: 0.8rem;
+    color: #868e96;
+    margin: 0;
+}
+
+.footer-copy a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.footer-copy a:hover {
+    color: #764ba2;
+}
+
+.footer-right {
+    display: flex;
+    align-items: center;
+}
+
+.github-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    color: #495057;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.github-link:hover {
+    background: #2d3748;
+    color: #fff;
+    border-color: #2d3748;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.github-link i {
+    font-size: 1.25rem;
+}
+
+@media (max-width: 768px) {
+    .footer-minimal {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .footer-left {
+        text-align: center;
+    }
+}
