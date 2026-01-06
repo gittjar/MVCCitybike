@@ -87,3 +87,25 @@ Clean:    dotnet clean
 Migrations:
   dotnet ef migrations add InitMigrate --context MvcBiketripsMay2021Context
   dotnet ef migrations add InitMigrate --context MvcStationContext
+
+
+RUNNING TESTS
+-------------
+Run all tests:
+  cd MVCCitybike.Tests
+  dotnet test
+
+Run tests with details:
+  dotnet test --verbosity normal
+
+Run specific test class:
+  dotnet test --filter "ClassName=DataFormattersTests"
+
+Run with coverage:
+  dotnet test /p:CollectCoverage=true
+
+Test Results:
+  ✓ 70 tests total
+  ✓ 30 DataFormatters tests
+  ✓ 26 HtmlHelperExtensions tests
+  ✓ 14 Station/Biketrip tests
