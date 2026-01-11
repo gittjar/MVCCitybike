@@ -302,6 +302,53 @@ namespace MVCCitybike.Controllers
         {
           return (_context.Station?.Any(e => e.ID == id)).GetValueOrDefault();
         }
+
+        // GET: Station/Map
+        public async Task<IActionResult> Map()
+        {
+            if (_context.Station == null)
+            {
+                return Problem("Entity set 'MvcStationContext.Station' is null.");
+            }
+
+            var stations = await _context.Station.ToListAsync();
+            return View(stations);
+        }
+
+        // GET: Station/GetStationsJson
+        [HttpGet]
+        public async Task<IActionResult> GetStationsJson(string? city = null)
+        {
+            if (_context.Station == null)
+            {
+                return Json(new { error = "Entity set 'MvcStationContext.Station' is null." });
+            }
+
+            var query = _context.Station.AsQueryable();
+
+            // Filter by city if provided
+            if (!string.IsNullOrEmpty(city) && city != "All")
+            {
+                query = query.Where(s => s.Kaupunki == city);
+            }
+
+            var stations = await query
+                .Select(s => new
+                {
+                    id = s.ID,
+                    name = s.Nimi,
+                    address = s.Osoite,
+                    city = s.Kaupunki,
+                    lat = s.y, // y is latitude
+                    lng = s.x, // x is longitude
+                    capacity = s.Kapasiteet,
+                    operator_name = s.Operaattor
+                })
+                .ToListAsync();
+
+            return Json(stations);
+        }
+
         // For search testing
         /*
         [HttpPost]
