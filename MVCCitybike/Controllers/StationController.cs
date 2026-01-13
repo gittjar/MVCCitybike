@@ -311,6 +311,15 @@ namespace MVCCitybike.Controllers
                 return Problem("Entity set 'MvcStationContext.Station' is null.");
             }
 
+            // Get all unique cities for the filter buttons
+            var cities = await _context.Station
+                .Select(s => s.Kaupunki)
+                .Distinct()
+                .OrderBy(c => c)
+                .ToListAsync();
+
+            ViewBag.Cities = cities;
+
             var stations = await _context.Station.ToListAsync();
             return View(stations);
         }

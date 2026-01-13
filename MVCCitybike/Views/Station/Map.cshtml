@@ -15,6 +15,7 @@
         width: 100%;
         border-radius: 10px;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        position: relative;
     }
     .map-controls {
         background: white;
@@ -42,6 +43,141 @@
         background: #3498db;
         color: white;
         box-shadow: 0 2px 4px rgba(52, 152, 219, 0.3);
+    }
+    .map-search-container {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 1000;
+        background: white;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        width: 300px;
+    }
+    .map-search-input {
+        width: 100%;
+        padding: 8px 12px;
+        border: 2px solid #3498db;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+    .map-search-input:focus {
+        outline: none;
+        border-color: #2980b9;
+    }
+    .search-results {
+        max-height: 200px;
+        overflow-y: auto;
+        margin-top: 10px;
+        background: white;
+        border-radius: 5px;
+    }
+    .search-result-item {
+        padding: 8px 12px;
+        cursor: pointer;
+        border-bottom: 1px solid #ecf0f1;
+        transition: background 0.2s;
+    }
+    .search-result-item:hover {
+        background: #ecf0f1;
+    }
+    .map-theme-selector {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 1000;
+        background: white;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .theme-btn {
+        margin: 3px;
+        padding: 8px 12px;
+        border: 2px solid #95a5a6;
+        background: white;
+        color: #2c3e50;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-size: 12px;
+    }
+    .theme-btn:hover {
+        background: #ecf0f1;
+    }
+    .theme-btn.active {
+        background: #3498db;
+        color: white;
+        border-color: #3498db;
+    }
+    .location-btn {
+        position: absolute;
+        bottom: 100px;
+        right: 10px;
+        z-index: 1000;
+        background: white;
+        padding: 12px;
+        border-radius: 50%;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        border: 2px solid #3498db;
+        cursor: pointer;
+        transition: all 0.3s;
+        width: 45px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .location-btn:hover {
+        background: #3498db;
+        color: white;
+    }
+    .distance-calculator {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        z-index: 1000;
+        background: white;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        max-width: 300px;
+    }
+    .distance-calculator.collapsed {
+        width: 50px;
+        height: 50px;
+        padding: 0;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .distance-calculator.collapsed .calculator-content {
+        display: none;
+    }
+    .calculator-toggle {
+        cursor: pointer;
+        color: #3498db;
+        font-size: 20px;
+    }
+    .calculator-content {
+        margin-top: 10px;
+    }
+    .station-select {
+        width: 100%;
+        padding: 6px;
+        margin: 5px 0;
+        border: 1px solid #bdc3c7;
+        border-radius: 4px;
+        font-size: 12px;
+    }
+    .distance-result {
+        margin-top: 10px;
+        padding: 10px;
+        background: #ecf0f1;
+        border-radius: 5px;
+        font-size: 13px;
     }
     .map-header {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -118,18 +254,15 @@
                 <button class="city-filter-btn active" data-city="All">
                     <i class="fas fa-globe"></i> All Cities
                 </button>
-                <button class="city-filter-btn" data-city="Helsinki">
-                    <i class="fas fa-city"></i> Helsinki
-                </button>
-                <button class="city-filter-btn" data-city="Espoo">
-                    <i class="fas fa-city"></i> Espoo
-                </button>
-                <button class="city-filter-btn" data-city="Vantaa">
-                    <i class="fas fa-city"></i> Vantaa
-                </button>
-                <button class="city-filter-btn" data-city="Hamburg">
-                    <i class="fas fa-city"></i> Hamburg
-                </button>
+                @if (ViewBag.Cities != null)
+                {
+                    foreach (var city in ViewBag.Cities)
+                    {
+                        <button class="city-filter-btn" data-city="@city">
+                            <i class="fas fa-city"></i> @city
+                        </button>
+                    }
+                }
             </div>
             <div>
                 <a asp-action="Index" class="btn btn-outline-primary">
@@ -142,7 +275,66 @@
         </div>
     </div>
 
-    <div id="map"></div>
+    <div id="map">
+        <!-- Map Theme Selector -->
+        <div class="map-theme-selector">
+            <div style="margin-bottom: 5px; font-weight: bold; font-size: 12px;">
+                <i class="fas fa-palette"></i> Map Theme
+            </div>
+            <button class="theme-btn active" data-theme="osm">
+                <i class="fas fa-map"></i> Street
+            </button>
+            <button class="theme-btn" data-theme="satellite">
+                <i class="fas fa-satellite"></i> Satellite
+            </button>
+            <button class="theme-btn" data-theme="dark">
+                <i class="fas fa-moon"></i> Dark
+            </button>
+            <button class="theme-btn" data-theme="topo">
+                <i class="fas fa-mountain"></i> Topo
+            </button>
+        </div>
+
+        <!-- Search Box -->
+        <div class="map-search-container">
+            <input type="text" 
+                   id="stationSearch" 
+                   class="map-search-input" 
+                   placeholder="🔍 Search stations by name or address...">
+            <div id="searchResults" class="search-results"></div>
+        </div>
+
+        <!-- User Location Button -->
+        <button class="location-btn" id="locateBtn" title="Find my location">
+            <i class="fas fa-location-arrow"></i>
+        </button>
+
+        <!-- Distance Calculator -->
+        <div class="distance-calculator collapsed" id="distanceCalc">
+            <div class="calculator-toggle" onclick="toggleCalculator()">
+                <i class="fas fa-ruler"></i>
+            </div>
+            <div class="calculator-content">
+                <div style="font-weight: bold; margin-bottom: 10px;">
+                    <i class="fas fa-calculator"></i> Distance Calculator
+                    <span style="float: right; cursor: pointer;" onclick="toggleCalculator()">✕</span>
+                </div>
+                <label style="font-size: 12px; display: block; margin-top: 8px;">From:</label>
+                <select id="fromStation" class="station-select">
+                    <option value="">Select start station...</option>
+                </select>
+                <label style="font-size: 12px; display: block; margin-top: 8px;">To:</label>
+                <select id="toStation" class="station-select">
+                    <option value="">Select end station...</option>
+                </select>
+                <button onclick="calculateDistance()" 
+                        style="width: 100%; margin-top: 10px; padding: 8px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    Calculate Distance
+                </button>
+                <div id="distanceResult" class="distance-result" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
 
     <div class="legend">
         <h6><i class="fas fa-info-circle"></i> Legend - Station Capacity</h6>
@@ -170,15 +362,38 @@
     let markers;
     let allStations = [];
     let currentCity = 'All';
+    let userLocationMarker = null;
+    let currentTileLayer = null;
+    let distanceLine = null;
+
+    // Map theme configurations
+    const mapThemes = {
+        osm: {
+            url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        },
+        satellite: {
+            url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+            attribution: 'Tiles &copy; Esri'
+        },
+        dark: {
+            url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+        },
+        topo: {
+            url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+            attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a>'
+        }
+    };
 
     // Initialize map
     function initMap() {
         // Create map centered on Helsinki
         map = L.map('map').setView([60.1699, 24.9384], 11);
 
-        // Add OpenStreetMap tiles
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        // Add default tile layer
+        currentTileLayer = L.tileLayer(mapThemes.osm.url, {
+            attribution: mapThemes.osm.attribution,
             maxZoom: 19
         }).addTo(map);
 
@@ -192,6 +407,270 @@
 
         // Load stations
         loadStations('All');
+
+        // Setup event listeners
+        setupEventListeners();
+    }
+
+    // Setup all event listeners
+    function setupEventListeners() {
+        // Theme selector
+        document.querySelectorAll('.theme-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                changeMapTheme(this.getAttribute('data-theme'));
+                document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Location button
+        document.getElementById('locateBtn').addEventListener('click', findUserLocation);
+
+        // Search input
+        const searchInput = document.getElementById('stationSearch');
+        searchInput.addEventListener('input', debounce(searchStations, 300));
+        searchInput.addEventListener('focus', function() {
+            if (this.value) searchStations.call(this);
+        });
+
+        // City filter buttons
+        document.querySelectorAll('.city-filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.city-filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const city = this.getAttribute('data-city');
+                currentCity = city;
+                loadStations(city);
+            });
+        });
+    }
+
+    // Change map theme
+    function changeMapTheme(themeName) {
+        if (currentTileLayer) {
+            map.removeLayer(currentTileLayer);
+        }
+        const theme = mapThemes[themeName];
+        currentTileLayer = L.tileLayer(theme.url, {
+            attribution: theme.attribution,
+            maxZoom: 19
+        }).addTo(map);
+    }
+
+    // Find user location
+    function findUserLocation() {
+        if (!navigator.geolocation) {
+            alert('Geolocation is not supported by your browser');
+            return;
+        }
+
+        const locationBtn = document.getElementById('locateBtn');
+        locationBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+        navigator.geolocation.getCurrentPosition(
+            function(position) {
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+
+                // Remove previous marker
+                if (userLocationMarker) {
+                    map.removeLayer(userLocationMarker);
+                }
+
+                // Add user location marker
+                const userIcon = L.divIcon({
+                    className: 'user-location-marker',
+                    html: '<div style="background-color: #4285F4; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.4);"></div>',
+                    iconSize: [20, 20],
+                    iconAnchor: [10, 10]
+                });
+
+                userLocationMarker = L.marker([lat, lng], { icon: userIcon })
+                    .bindPopup('<strong><i class="fas fa-user"></i> Your Location</strong>')
+                    .addTo(map);
+
+                // Find nearest station
+                const nearest = findNearestStation(lat, lng);
+                if (nearest) {
+                    const distance = (nearest.distance / 1000).toFixed(2);
+                    userLocationMarker.bindPopup(`
+                        <div>
+                            <strong><i class="fas fa-user"></i> Your Location</strong><br>
+                            <small>Nearest station: <strong>${nearest.station.name}</strong></small><br>
+                            <small>Distance: <strong>${distance} km</strong></small><br>
+                            <a href="#" onclick="flyToStation(${nearest.station.lat}, ${nearest.station.lng}); return false;">
+                                Show station
+                            </a>
+                        </div>
+                    `).openPopup();
+                }
+
+                // Zoom to user location
+                map.setView([lat, lng], 14);
+
+                locationBtn.innerHTML = '<i class="fas fa-location-arrow"></i>';
+            },
+            function(error) {
+                alert('Unable to retrieve your location: ' + error.message);
+                locationBtn.innerHTML = '<i class="fas fa-location-arrow"></i>';
+            }
+        );
+    }
+
+    // Find nearest station to coordinates
+    function findNearestStation(lat, lng) {
+        if (allStations.length === 0) return null;
+
+        let nearest = null;
+        let minDistance = Infinity;
+
+        allStations.forEach(station => {
+            const distance = calculateDistanceMeters(lat, lng, station.lat, station.lng);
+            if (distance < minDistance) {
+                minDistance = distance;
+                nearest = { station, distance };
+            }
+        });
+
+        return nearest;
+    }
+
+    // Search stations
+    function searchStations() {
+        const query = this.value.toLowerCase().trim();
+        const resultsDiv = document.getElementById('searchResults');
+
+        if (query.length < 2) {
+            resultsDiv.innerHTML = '';
+            return;
+        }
+
+        const filtered = allStations.filter(s => 
+            s.name.toLowerCase().includes(query) || 
+            s.address.toLowerCase().includes(query) ||
+            s.city.toLowerCase().includes(query)
+        );
+
+        if (filtered.length === 0) {
+            resultsDiv.innerHTML = '<div class="search-result-item">No stations found</div>';
+            return;
+        }
+
+        resultsDiv.innerHTML = filtered.slice(0, 10).map(station => `
+            <div class="search-result-item" onclick="flyToStation(${station.lat}, ${station.lng}, ${station.id})">
+                <strong>${station.name}</strong><br>
+                <small style="color: #7f8c8d;">${station.address}, ${station.city}</small>
+            </div>
+        `).join('');
+    }
+
+    // Fly to station
+    function flyToStation(lat, lng, stationId = null) {
+        map.flyTo([lat, lng], 16, {
+            duration: 1.5
+        });
+
+        // Find and open popup if stationId provided
+        if (stationId) {
+            setTimeout(() => {
+                markers.eachLayer(layer => {
+                    if (layer.getLatLng().lat === lat && layer.getLatLng().lng === lng) {
+                        layer.openPopup();
+                    }
+                });
+            }, 1500);
+        }
+
+        // Clear search results
+        document.getElementById('searchResults').innerHTML = '';
+    }
+
+    // Toggle distance calculator
+    function toggleCalculator() {
+        const calc = document.getElementById('distanceCalc');
+        calc.classList.toggle('collapsed');
+    }
+
+    // Calculate distance between two stations
+    function calculateDistance() {
+        const fromId = document.getElementById('fromStation').value;
+        const toId = document.getElementById('toStation').value;
+        const resultDiv = document.getElementById('distanceResult');
+
+        if (!fromId || !toId) {
+            alert('Please select both stations');
+            return;
+        }
+
+        const fromStation = allStations.find(s => s.id == fromId);
+        const toStation = allStations.find(s => s.id == toId);
+
+        if (!fromStation || !toStation) {
+            alert('Invalid station selection');
+            return;
+        }
+
+        const distanceKm = (calculateDistanceMeters(
+            fromStation.lat, fromStation.lng,
+            toStation.lat, toStation.lng
+        ) / 1000).toFixed(2);
+
+        // Remove previous line
+        if (distanceLine) {
+            map.removeLayer(distanceLine);
+        }
+
+        // Draw line between stations
+        distanceLine = L.polyline([
+            [fromStation.lat, fromStation.lng],
+            [toStation.lat, toStation.lng]
+        ], {
+            color: '#e74c3c',
+            weight: 3,
+            opacity: 0.7,
+            dashArray: '10, 5'
+        }).addTo(map);
+
+        // Fit bounds to show both stations
+        map.fitBounds(distanceLine.getBounds(), { padding: [50, 50] });
+
+        // Show result
+        const avgBikeSpeed = 15; // km/h
+        const estimatedTime = ((distanceKm / avgBikeSpeed) * 60).toFixed(0);
+
+        resultDiv.innerHTML = `
+            <strong><i class="fas fa-route"></i> Distance:</strong> ${distanceKm} km<br>
+            <strong><i class="fas fa-clock"></i> Est. time:</strong> ${estimatedTime} min<br>
+            <small style="color: #7f8c8d;">(at 15 km/h average speed)</small>
+        `;
+        resultDiv.style.display = 'block';
+    }
+
+    // Calculate distance in meters between two coordinates (Haversine formula)
+    function calculateDistanceMeters(lat1, lng1, lat2, lng2) {
+        const R = 6371e3; // Earth's radius in meters
+        const φ1 = lat1 * Math.PI / 180;
+        const φ2 = lat2 * Math.PI / 180;
+        const Δφ = (lat2 - lat1) * Math.PI / 180;
+        const Δλ = (lng2 - lng1) * Math.PI / 180;
+
+        const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+                  Math.cos(φ1) * Math.cos(φ2) *
+                  Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        return R * c;
+    }
+
+    // Debounce function for search
+    function debounce(func, wait) {
+        let timeout;
+        return function() {
+            const context = this;
+            const args = arguments;
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(context, args), wait);
+        };
     }
 
     // Load stations from API
@@ -213,6 +692,15 @@
     function displayStations(stations) {
         // Clear existing markers
         markers.clearLayers();
+
+        // Populate distance calculator dropdowns
+        const fromSelect = document.getElementById('fromStation');
+        const toSelect = document.getElementById('toStation');
+        const currentFrom = fromSelect.value;
+        const currentTo = toSelect.value;
+        
+        fromSelect.innerHTML = '<option value="">Select start station...</option>';
+        toSelect.innerHTML = '<option value="">Select end station...</option>';
 
         // Add markers for each station
         stations.forEach(station => {
@@ -258,7 +746,22 @@
             
             marker.bindPopup(popupContent);
             markers.addLayer(marker);
+
+            // Add to distance calculator dropdowns
+            const option1 = document.createElement('option');
+            option1.value = station.id;
+            option1.textContent = `${station.name} (${station.city})`;
+            fromSelect.appendChild(option1);
+
+            const option2 = document.createElement('option');
+            option2.value = station.id;
+            option2.textContent = `${station.name} (${station.city})`;
+            toSelect.appendChild(option2);
         });
+
+        // Restore previous selections
+        if (currentFrom) fromSelect.value = currentFrom;
+        if (currentTo) toSelect.value = currentTo;
 
         map.addLayer(markers);
 
