@@ -102,10 +102,10 @@
                         <dd class="col-sm-8">@Model?.Stad</dd>
                         
                         <dt class="col-sm-4 text-muted">Longitude (X)</dt>
-                        <dd class="col-sm-8"><code>@Model?.x</code></dd>
+                        <dd class="col-sm-8"><code>@Model?.x.ToString("G", System.Globalization.CultureInfo.InvariantCulture)</code></dd>
                         
                         <dt class="col-sm-4 text-muted">Latitude (Y)</dt>
-                        <dd class="col-sm-8"><code>@Model?.y</code></dd>
+                        <dd class="col-sm-8"><code>@Model?.y.ToString("G", System.Globalization.CultureInfo.InvariantCulture)</code></dd>
                     </dl>
                 </div>
             </div>
