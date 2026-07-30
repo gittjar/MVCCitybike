@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MvcStation.Data;
 using MvcBiketripsMay2021.Data;
 using System.Globalization;
+using AspNetCoreRateLimit;
 
 // MIGRATIONS FOR DB
 // dotnet ef migrations add InitMigrate --context MvcBiketripsMay2021Context
@@ -96,6 +97,13 @@ builder.Services.AddDbContext<MvcStationContext>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Configure IP Rate Limiting
+builder.Services.AddMemoryCache();
+builder.Services.Configure<IpRateLimitOptions>(builder.Configuration.GetSection("IpRateLimiting"));
+builder.Services.Configure<IpRateLimitPolicies>(builder.Configuration.GetSection("IpRateLimitPolicies"));
+builder.Services.AddInMemoryRateLimiting();
+builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -105,6 +113,9 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+// Enable IP Rate Limiting
+app.UseIpRateLimiting();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
