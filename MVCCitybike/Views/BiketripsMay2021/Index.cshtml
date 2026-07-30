@@ -4,14 +4,65 @@
     ViewData["Title"] = "Index";
 }
 
+<style>
+    .view-toggle {
+        background: white;
+        border-radius: 8px;
+        padding: 4px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .view-toggle-btn {
+        border: none;
+        background: transparent;
+        padding: 8px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s;
+        color: #666;
+    }
+    .view-toggle-btn:hover {
+        background: #f0f0f0;
+    }
+    .view-toggle-btn.active {
+        background: #0d6efd;
+        color: white;
+    }
+    .compact-table {
+        font-size: 0.9rem;
+    }
+    .compact-table td, .compact-table th {
+        padding: 0.5rem;
+        vertical-align: middle;
+    }
+    .compact-table .badge {
+        font-size: 0.75rem;
+        padding: 0.25em 0.6em;
+    }
+    .station-cell {
+        max-width: 180px;
+    }
+</style>
+
 <div class="container-fluid py-4">
     <div class="text-center mb-4">
         <h1 class="display-4 fw-bold">PYÖRÄMATKAT</h1>
         <p class="lead">Selaa ja hallinnoi pyörämatkoja</p>
     </div>
 
-    <div class="mb-3">
-        <a asp-action="Create" class="btn btn-primary btn-lg">+ Luo Uusi Matka</a>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <a asp-action="Create" class="btn btn-primary btn-lg">+ Luo Uusi Matka</a>
+        </div>
+        
+        <!-- View Toggle -->
+        <div class="view-toggle">
+            <button class="view-toggle-btn active" data-view="cards" onclick="switchView('cards')">
+                <i class="fas fa-th-large"></i> Kortit
+            </button>
+            <button class="view-toggle-btn" data-view="list" onclick="switchView('list')">
+                <i class="fas fa-list"></i> Lista
+            </button>
+        </div>
     </div>
 
     <!-- Search Section -->
@@ -30,8 +81,8 @@
         </div>
     </div>
 
-    <!-- Trips Grid -->
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4">
+    <!-- Trips Grid (Cards View) -->
+    <div id="cardsView" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4">
         @foreach (var item in Model)
         {
             <div class="col">
@@ -86,6 +137,69 @@
         }
     </div>
 
+    <!-- Compact List View -->
+    <div id="listView" class="mb-4" style="display: none;">
+        <div class="table-responsive">
+            <table class="table table-hover compact-table">
+                <thead class="table-light">
+                    <tr>
+                        <th>Lähtöasema</th>
+                        <th>Palautusasema</th>
+                        <th>Lähtöaika</th>
+                        <th>Palautusaika</th>
+                        <th class="text-end">Matka</th>
+                        <th class="text-end">Kesto</th>
+                        <th class="text-end">Nopeus</th>
+                        <th class="text-center">Toiminnot</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="station-cell">
+                                <div class="fw-bold">@item.Departure_station_name</div>
+                                <small class="text-muted">ID: @item.Departure_station_id</small>
+                            </td>
+                            <td class="station-cell">
+                                <div class="fw-bold">@item.Return_station_name</div>
+                                <small class="text-muted">ID: @item.Return_station_id</small>
+                            </td>
+                            <td>
+                                <small>@DataFormatters.FormatDateTime(item.Departure)</small>
+                            </td>
+                            <td>
+                                <small>@DataFormatters.FormatDateTime(item.Return)</small>
+                            </td>
+                            <td class="text-end">
+                                <span class="badge bg-primary">@Html.FormatDistance(item.Covered_distance_m)</span>
+                            </td>
+                            <td class="text-end">
+                                <span class="badge bg-info">@Html.FormatDuration(item.Duration_sec)</span>
+                            </td>
+                            <td class="text-end">
+                                <span class="badge bg-success">@Html.CalculateSpeed(item.Covered_distance_m, item.Duration_sec)</span>
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group btn-group-sm">
+                                    <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-outline-primary" title="Lisätiedot">
+                                        <i class="fas fa-info-circle"></i>
+                                    </a>
+                                    <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-outline-secondary" title="Muokkaa">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-outline-danger" title="Poista">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <!-- Pagination -->
     @if (Model.HasPreviousPage || Model.HasNextPage)
     {
@@ -110,3 +224,38 @@
         </div>
     }
 </div>
+
+<script>
+    // View switcher functionality
+    function switchView(viewType) {
+        const cardsView = document.getElementById('cardsView');
+        const listView = document.getElementById('listView');
+        const buttons = document.querySelectorAll('.view-toggle-btn');
+        
+        if (viewType === 'cards') {
+            cardsView.style.display = 'flex';
+            listView.style.display = 'none';
+        } else {
+            cardsView.style.display = 'none';
+            listView.style.display = 'block';
+        }
+        
+        // Update button states
+        buttons.forEach(btn => {
+            if (btn.getAttribute('data-view') === viewType) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+        
+        // Save preference to localStorage
+        localStorage.setItem('biketripsViewPreference', viewType);
+    }
+    
+    // Load saved preference on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedView = localStorage.getItem('biketripsViewPreference') || 'cards';
+        switchView(savedView);
+    });
+</script>
